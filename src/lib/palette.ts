@@ -1,0 +1,57 @@
+/** Brand-ish hues so each bank keeps the same colour across bar and legend. */
+const BANK_COLORS: Record<string, string> = {
+  nubank: '#8A05BE',
+  'banco itau': '#EC7000',
+  itau: '#EC7000',
+  bradesco: '#CC092F',
+  'banco do brasil': '#F9DD16',
+  santander: '#EC0000',
+  caixa: '#1C5FA8',
+  inter: '#FF7A00',
+}
+
+const FALLBACK_COLORS = ['#FFD700', '#6B21A8', '#34D399', '#38BDF8', '#F472B6', '#8B6914']
+
+export function bankColor(institutionName: string, index: number): string {
+  return (
+    BANK_COLORS[institutionName.trim().toLowerCase()] ??
+    FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+  )
+}
+
+const CATEGORY_COLORS: Record<string, string> = {
+  Food: '#F59E0B',
+  Transport: '#38BDF8',
+  Housing: '#A855F7',
+  Health: '#34D399',
+  Education: '#60A5FA',
+  Entertainment: '#F472B6',
+  Shopping: '#FB7185',
+  Bills: '#94A3B8',
+  Income: '#22C55E',
+  Transfer: '#818CF8',
+  Other: '#8B6914',
+}
+
+export function categoryColor(category: string, index: number): string {
+  return CATEGORY_COLORS[category] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+}
+
+/** The API keeps a closed English vocabulary; the UI speaks Portuguese. */
+const CATEGORY_LABELS: Record<string, string> = {
+  Food: 'Banquetes',
+  Transport: 'Montarias',
+  Housing: 'Castelo',
+  Health: 'Boticario',
+  Education: 'Escrituras',
+  Entertainment: 'Festins',
+  Shopping: 'Mercadorias',
+  Bills: 'Tributos',
+  Income: 'Rendas',
+  Transfer: 'Transferencias',
+  Other: 'Outros',
+}
+
+export function categoryLabel(category: string): string {
+  return CATEGORY_LABELS[category] ?? category
+}

@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Tailwind v4 keeps the design tokens in CSS: every entry below becomes a
+   utility (bg-surface, text-gold, ...) with no tailwind.config.js involved. */
+@theme {
+  --color-void: #0d0d0e;
+  --color-surface: #161618;
+  --color-surface-raised: #1e1e21;
+  --color-gold: #ffd700;
+  --color-gold-aged: #8b6914;
+  --color-mystic: #6b21a8;
+  --color-mystic-soft: #a855f7;
+  --color-parchment: #e8dcc0;
+  --color-blood: #b91c1c;
+  --color-emerald-coin: #34d399;
+
+  --font-royal: "Cinzel", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-shell: 48px;
+
+  --shadow-gold-glow: 0 0 24px -6px rgb(255 215 0 / 0.45);
+  --shadow-card: 0 8px 32px -12px rgb(0 0 0 / 0.8);
+
+  --animate-shimmer: shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-void);
+    color: var(--color-parchment);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* The mobile shell scrolls internally; the page itself never should. */
+  body {
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #ffd700 0%, #f0c040 45%, #8b6914 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
