@@ -1,5 +1,5 @@
 import { Crown, Loader2, ShieldCheck } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
 import { useAuth } from '@/auth/context'
@@ -15,10 +15,20 @@ export function LoginScreen() {
   const [password, setPassword] = useState(DEMO_PASSWORD)
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
+  const [slow, setSlow] = useState(false)
+
+  // A cold free-tier instance takes close to a minute to boot. Without a word on
+  // screen that wait reads as a frozen app.
+  useEffect(() => {
+    if (!pending) return
+    const timer = setTimeout(() => setSlow(true), 6_000)
+    return () => clearTimeout(timer)
+  }, [pending])
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     setError(null)
+    setSlow(false)
     setPending(true)
     try {
       await login(email, password)
@@ -84,6 +94,13 @@ export function LoginScreen() {
           {pending ? <Loader2 className="animate-spin" size={16} /> : <Crown size={16} />}
           {pending ? 'Abrindo os portoes...' : 'Entrar no Reino'}
         </button>
+
+        {slow && (
+          <p className="text-center text-[11px] leading-relaxed text-parchment/45">
+            O servidor gratuito hiberna quando ocioso e pode levar ate um minuto
+            para despertar. Aguardai — a Rainha ja foi chamada.
+          </p>
+        )}
       </form>
 
       <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-[11px] text-parchment/40">
