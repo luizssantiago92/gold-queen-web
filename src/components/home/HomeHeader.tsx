@@ -4,6 +4,8 @@ import { useAuth } from '@/auth/context'
 
 export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
   const { user, logout } = useAuth()
+  // Only the first name: the badge and logout leave little room on a 412px shell.
+  const firstName = user?.display_name.trim().split(/\s+/)[0] ?? 'nobre'
 
   return (
     <header className="flex items-center gap-3 px-5 pt-6 pb-4">
@@ -13,7 +15,7 @@ export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
 
       <div className="min-w-0 flex-1">
         <p className="truncate font-royal text-base font-semibold text-parchment">
-          Salve, {user?.display_name ?? 'nobre'}
+          Salve, {firstName}
         </p>
         {referenceMonth && (
           <p className="truncate text-[11px] text-parchment/45">{referenceMonth}</p>

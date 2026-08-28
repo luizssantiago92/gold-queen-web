@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { api } from './api'
+import { AI_TIMEOUT_MS, api } from './api'
 import type {
   BankConnection,
   CategoriesResponse,
@@ -67,7 +67,12 @@ export function useConnections() {
 export function useQueenTips(enabled: boolean) {
   return useQuery({
     queryKey: queryKeys.queenTips,
-    queryFn: async () => (await api.get<QueenTipsResponse>('/v1/advisor/queen-tips')).data,
+    queryFn: async () =>
+      (
+        await api.get<QueenTipsResponse>('/v1/advisor/queen-tips', {
+          timeout: AI_TIMEOUT_MS,
+        })
+      ).data,
     enabled,
     staleTime: Infinity,
     retry: false,
@@ -87,7 +92,13 @@ export function useSyncConnection() {
 
   return useMutation({
     mutationFn: async (itemId: string) =>
-      (await api.post<SyncResponse>('/v1/connections/sync', { item_id: itemId })).data,
+      (
+        await api.post<SyncResponse>(
+          '/v1/connections/sync',
+          { item_id: itemId },
+          { timeout: AI_TIMEOUT_MS },
+        )
+      ).data,
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.overview }),
@@ -104,6 +115,12 @@ export function useSyncConnection() {
 export function useAskQueen() {
   return useMutation({
     mutationFn: async (question: string) =>
-      (await api.post<ChatResponse>('/v1/chat/query', { question })).data,
+      (
+        await api.post<ChatResponse>(
+          '/v1/chat/query',
+          { question },
+          { timeout: AI_TIMEOUT_MS },
+        )
+      ).data,
   })
 }

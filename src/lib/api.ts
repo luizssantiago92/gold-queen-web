@@ -4,8 +4,16 @@ const TOKEN_KEY = 'gold-queen.token'
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000',
-  timeout: 30_000,
+  // Generous because the demo backend is free-tier and may be cold-starting.
+  timeout: 45_000,
 })
+
+/**
+ * Endpoints that hit Gemini answer in tens of seconds, and the backend already
+ * retries transient upstream failures. The default timeout would abort those
+ * requests before the model ever replies.
+ */
+export const AI_TIMEOUT_MS = 120_000
 
 export function readToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
@@ -47,6 +55,12 @@ export function errorMessage(error: unknown, fallback: string): string {
     const detail = (error.response?.data as { detail?: unknown } | undefined)?.detail
     if (typeof detail === 'string' && detail.length > 0) {
       return detail
+    }
+    if (error.code === 'ECONNABORTED') {
+      return 'A Rainha demorou demais a deliberar. Tentai novamente.'
+    }
+    if (!error.response) {
+      return 'Os portoes do reino estao fechados: a API nao respondeu.'
     }
   }
   return fallback
