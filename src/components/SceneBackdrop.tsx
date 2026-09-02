@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { cn } from '@/components/ui/cn'
 
 export const SCENES = {
@@ -6,37 +8,57 @@ export const SCENES = {
   profile: '/scenes/scene-treasury.jpg',
 } as const
 
+/** Home wallpaper rotates through these every few seconds. */
+export const HOME_SLIDESHOW = [
+  '/scenes/scene-castle-sunset.jpg',
+  '/scenes/scene-council.jpg',
+  '/scenes/scene-throne.jpg',
+  '/scenes/scene-vault.jpg',
+  '/scenes/scene-treasury.jpg',
+] as const
+
+const SLIDE_MS = 2500
+
 export type SceneId = keyof typeof SCENES
 
 interface Props {
   scene: SceneId
-  /** 0–1 scroll progress on home crossfades into the treasury scene. */
-  scrollProgress?: number
   className?: string
 }
 
-export function SceneBackdrop({ scene, scrollProgress = 0, className }: Props) {
-  const primary = SCENES[scene]
-  const secondary = SCENES.profile
+export function SceneBackdrop({ scene, className }: Props) {
+  const [slideIndex, setSlideIndex] = useState(0)
 
-  const blendOpacity =
-    scene === 'home' ? Math.min(Math.max(scrollProgress, 0), 1) * 0.7 : 0
+  useEffect(() => {
+    if (scene !== 'home') return
+
+    const timer = window.setInterval(() => {
+      setSlideIndex((current) => (current + 1) % HOME_SLIDESHOW.length)
+    }, SLIDE_MS)
+
+    return () => window.clearInterval(timer)
+  }, [scene])
+
+  const primary = SCENES[scene]
 
   return (
     <div className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}>
-      <img
-        key={primary}
-        src={primary}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700"
-      />
-
-      {scene === 'home' && (
+      {scene === 'home' ? (
+        HOME_SLIDESHOW.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-1000"
+            style={{ opacity: index === slideIndex ? 1 : 0 }}
+          />
+        ))
+      ) : (
         <img
-          src={secondary}
+          key={primary}
+          src={primary}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500"
-          style={{ opacity: blendOpacity }}
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
       )}
 

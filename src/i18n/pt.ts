@@ -15,8 +15,8 @@ export const pt: Messages = {
   logoutAria: 'Sair',
 
   learnWealth: 'Aprenda a gerir seu patrimonio',
-  askQueen: 'Pergunte a Rainha Dourada',
-  askQueenPlaceholder: 'Pergunte a Rainha Dourada',
+  askQueen: 'Pergunte a Rainha',
+  askQueenPlaceholder: 'Pergunte a Rainha',
 
   home: 'Inicio',
   profile: 'Perfil',
@@ -39,7 +39,24 @@ export const pt: Messages = {
   transactionsTotal: '{{count}} no total',
   transactionsEmpty: 'O pergaminho de movimentacoes esta vazio.',
 
+  transactionDetailTitle: 'Detalhes da movimentacao',
+  transactionAmount: 'Valor',
+  transactionDate: 'Data',
+  transactionCategory: 'Categoria',
+  transactionBank: 'Banco',
+  transactionAccount: 'Conta',
+  transactionAccountType: 'Tipo de conta',
+  transactionGuarded: 'Categoria validada pelos guardrails da Rainha',
+  transactionDetailError: 'Nao foi possivel carregar os detalhes desta movimentacao.',
+
   connectBank: 'Conectar um banco ao tesouro',
+  demoConnectTitle: 'Demonstracao do tesouro',
+  demoConnectSubtitle: 'Open Finance com limites propositalmente',
+  demoConnectBody:
+    'Esta versao de demonstracao foi preparada para recrutadores e visitantes. A conexao bancaria real via Pluggy fica desativada aqui para manter o cenario controlado.',
+  demoConnectLimit: 'Limite da demo',
+  demoConnectOneBank: 'Apenas 1 banco pode ficar conectado nesta demonstracao.',
+  demoConnectAlready: '{{bank}} ja esta conectado ao tesouro real.',
   syncing: 'Recolhendo o extrato real...',
   connectLimit: 'O plano livre permite apenas 3 bancos no tesouro.',
   connectError: 'Nao foi possivel abrir o portal do Open Finance.',

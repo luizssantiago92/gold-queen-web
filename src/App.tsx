@@ -17,7 +17,6 @@ export function App() {
   const [tab, setTab] = useState<Tab>('home')
   const [tipsOpen, setTipsOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   let scene: SceneId = 'home'
   if (status === 'anonymous') scene = 'login'
@@ -42,12 +41,9 @@ export function App() {
   }
 
   return (
-    <MobileShell scene={scene} scrollProgress={scrollProgress}>
+    <MobileShell scene={scene}>
       {tab === 'home' ? (
-        <HomeScreen
-          onOpenTips={() => setTipsOpen(true)}
-          onScrollProgress={setScrollProgress}
-        />
+        <HomeScreen onOpenTips={() => setTipsOpen(true)} />
       ) : (
         <ProfileScreen />
       )}

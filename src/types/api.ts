@@ -88,8 +88,15 @@ export interface Transaction {
   amount: string
   transaction_date: string
   category: string
+  display_category: string
   is_guarded: boolean
   institution_name: string
+  account_name: string
+}
+
+export interface TransactionDetail extends Transaction {
+  account_type: string
+  created_at: string
 }
 
 export interface TransactionPage {

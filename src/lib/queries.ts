@@ -11,6 +11,7 @@ import type {
   QueenTipsResponse,
   SyncResponse,
   TransactionPage,
+  TransactionDetail,
 } from '@/types/api'
 
 export const queryKeys = {
@@ -18,6 +19,7 @@ export const queryKeys = {
   categories: ['categories'] as const,
   monthlySeries: ['monthly-series'] as const,
   transactions: (page: number) => ['transactions', page] as const,
+  transactionDetail: (id: number) => ['transaction', id] as const,
   connections: ['connections'] as const,
   queenTips: ['queen-tips'] as const,
 }
@@ -26,6 +28,7 @@ export function useOverview() {
   return useQuery({
     queryKey: queryKeys.overview,
     queryFn: async () => (await api.get<OverviewResponse>('/v1/dashboard/overview')).data,
+    refetchInterval: 60_000,
   })
 }
 
@@ -50,6 +53,16 @@ export function useTransactions(page = 1, limit = 20) {
     queryFn: async () =>
       (await api.get<TransactionPage>('/v1/dashboard/transactions', { params: { page, limit } }))
         .data,
+    refetchInterval: 60_000,
+  })
+}
+
+export function useTransactionDetail(transactionId: number | null) {
+  return useQuery({
+    queryKey: queryKeys.transactionDetail(transactionId ?? 0),
+    queryFn: async () =>
+      (await api.get<TransactionDetail>(`/v1/dashboard/transactions/${transactionId}`)).data,
+    enabled: transactionId !== null,
   })
 }
 

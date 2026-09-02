@@ -24,14 +24,17 @@ export function bankColor(institutionName: string, index: number): string {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
+  Subscriptions: '#A855F7',
+  Bills: '#94A3B8',
+  AutoDebit: '#F59E0B',
+  CreditCard: '#FB7185',
   Food: '#F59E0B',
   Transport: '#38BDF8',
-  Housing: '#A855F7',
+  Housing: '#8B5CF6',
   Health: '#34D399',
   Education: '#60A5FA',
   Entertainment: '#F472B6',
   Shopping: '#FB7185',
-  Bills: '#94A3B8',
   Income: '#22C55E',
   Transfer: '#818CF8',
   Other: '#8B6914',

@@ -13,8 +13,8 @@ export const en = {
   logoutAria: 'Sign out',
 
   learnWealth: 'Learn to manage your wealth',
-  askQueen: 'Ask Gold Queen',
-  askQueenPlaceholder: 'Ask Gold Queen',
+  askQueen: 'Ask the Queen',
+  askQueenPlaceholder: 'Ask the Queen',
 
   home: 'Home',
   profile: 'Profile',
@@ -37,7 +37,24 @@ export const en = {
   transactionsTotal: '{{count}} total',
   transactionsEmpty: 'The transaction scroll is empty.',
 
+  transactionDetailTitle: 'Transaction details',
+  transactionAmount: 'Amount',
+  transactionDate: 'Date',
+  transactionCategory: 'Category',
+  transactionBank: 'Bank',
+  transactionAccount: 'Account',
+  transactionAccountType: 'Account type',
+  transactionGuarded: 'Category validated by the Queen\'s guardrails',
+  transactionDetailError: 'Could not load this transaction\'s details.',
+
   connectBank: 'Connect a bank to the treasury',
+  demoConnectTitle: 'Treasury demo',
+  demoConnectSubtitle: 'Open Finance with intentional limits',
+  demoConnectBody:
+    'This demo build is prepared for recruiters and visitors. Real Pluggy bank linking is disabled here to keep the scenario controlled.',
+  demoConnectLimit: 'Demo limit',
+  demoConnectOneBank: 'Only 1 bank can stay connected in this demonstration.',
+  demoConnectAlready: '{{bank}} is already linked to the royal treasury.',
   syncing: 'Collecting the real statement...',
   connectLimit: 'The free plan allows only 3 banks in the treasury.',
   connectError: 'Could not open the Open Finance portal.',

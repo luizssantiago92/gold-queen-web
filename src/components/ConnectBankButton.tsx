@@ -1,82 +1,53 @@
-import { Landmark, Loader2 } from 'lucide-react'
+import { CheckCircle2, Info, Landmark } from 'lucide-react'
 import { useState } from 'react'
-import { PluggyConnect } from 'react-pluggy-connect'
 
+import { Modal } from '@/components/ui/Modal'
 import { useI18n } from '@/i18n/context'
-import { errorMessage, statusOf } from '@/lib/api'
-import { useConnectToken, useSyncConnection } from '@/lib/queries'
+import { useConnections } from '@/lib/queries'
 
 export function ConnectBankButton() {
   const { t } = useI18n()
-  const connectToken = useConnectToken()
-  const sync = useSyncConnection()
-  const [token, setToken] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const connections = useConnections()
+  const [open, setOpen] = useState(false)
 
-  const busy = connectToken.isPending || sync.isPending
-
-  async function openWidget() {
-    setError(null)
-    try {
-      const { connect_token } = await connectToken.mutateAsync()
-      setToken(connect_token)
-    } catch (cause) {
-      setError(
-        statusOf(cause) === 403
-          ? errorMessage(cause, t('connectLimit'))
-          : errorMessage(cause, t('connectError')),
-      )
-    }
-  }
-
-  async function onWidgetSuccess(itemId: string) {
-    setToken(null)
-    try {
-      await sync.mutateAsync(itemId)
-    } catch (cause) {
-      setError(errorMessage(cause, t('syncError')))
-    }
-  }
+  const connectedBank = connections.data?.[0]?.institution_name
 
   return (
     <>
       <button
         type="button"
-        onClick={openWidget}
-        disabled={busy}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold disabled:opacity-60"
+        onClick={() => setOpen(true)}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold"
       >
-        {busy ? <Loader2 className="animate-spin" size={15} /> : <Landmark size={15} />}
-        {sync.isPending ? t('syncing') : t('connectBank')}
+        <Landmark size={15} />
+        {t('connectBank')}
       </button>
 
-      {error && (
-        <p role="alert" className="mt-2 text-center text-xs text-debit">
-          {error}
-        </p>
-      )}
+      <Modal
+        open={open}
+        title={t('demoConnectTitle')}
+        subtitle={t('demoConnectSubtitle')}
+        onClose={() => setOpen(false)}
+      >
+        <div className="space-y-4 text-sm text-parchment/80">
+          <p className="flex items-start gap-2">
+            <Info size={16} className="mt-0.5 shrink-0 text-gold" />
+            {t('demoConnectBody')}
+          </p>
 
-      {sync.isSuccess && !error && (
-        <p className="mt-2 text-center text-xs text-emerald-coin">
-          {t('syncSuccess', {
-            bank: sync.data.connection.institution_name,
-            count: sync.data.transactions_synced,
-          })}
-        </p>
-      )}
+          <div className="rounded-2xl border border-gold/15 bg-white/3 p-4">
+            <p className="text-xs uppercase tracking-wide text-muted">{t('demoConnectLimit')}</p>
+            <p className="mt-1 font-medium text-parchment">{t('demoConnectOneBank')}</p>
+          </div>
 
-      {token && (
-        <PluggyConnect
-          connectToken={token}
-          includeSandbox
-          onSuccess={(itemData) => void onWidgetSuccess(itemData.item.id)}
-          onError={() => {
-            setToken(null)
-            setError(t('portalInterrupted'))
-          }}
-          onClose={() => setToken(null)}
-        />
-      )}
+          {connectedBank && (
+            <p className="flex items-center gap-2 rounded-2xl border border-emerald-coin/20 bg-emerald-coin/5 px-4 py-3 text-emerald-coin">
+              <CheckCircle2 size={16} className="shrink-0" />
+              {t('demoConnectAlready', { bank: connectedBank })}
+            </p>
+          )}
+        </div>
+      </Modal>
     </>
   )
 }

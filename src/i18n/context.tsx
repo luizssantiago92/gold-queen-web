@@ -20,8 +20,7 @@ const I18nContext = createContext<I18nContextValue | null>(null)
 function detectLocale(): Locale {
   const stored = localStorage.getItem(STORAGE_KEY)
   if (stored === 'en' || stored === 'pt') return stored
-  const lang = navigator.language.toLowerCase()
-  return lang.startsWith('pt') ? 'pt' : 'en'
+  return 'pt'
 }
 
 function interpolate(template: string, vars?: Record<string, string | number>): string {

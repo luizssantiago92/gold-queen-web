@@ -9,16 +9,14 @@ import { SceneBackdrop, type SceneId } from '@/components/SceneBackdrop'
 export function MobileShell({
   children,
   scene = 'home',
-  scrollProgress = 0,
 }: {
   children: ReactNode
   scene?: SceneId
-  scrollProgress?: number
 }) {
   return (
     <div className="flex min-h-[100dvh] w-full items-center justify-center bg-void sm:bg-black">
       <div className="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-void sm:h-[860px] sm:max-h-[92dvh] sm:w-[412px] sm:rounded-shell sm:border-[6px] sm:border-[#1a1a1a] sm:shadow-2xl">
-        <SceneBackdrop scene={scene} scrollProgress={scrollProgress} />
+        <SceneBackdrop scene={scene} />
         <div className="relative z-10 flex h-full flex-col">{children}</div>
       </div>
     </div>
