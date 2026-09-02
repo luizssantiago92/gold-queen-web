@@ -6,7 +6,18 @@ export const en = {
   greetingMorning: 'Good morning',
   greetingAfternoon: 'Good afternoon',
   greetingEvening: 'Good evening',
-  greetingDemoVisitor: 'demo visitor',
+  greetingDemoVisitor: 'visitor, this app is only a demo',
+
+  demoBannerProduct:
+    'Gold Queen aggregates your accounts via Open Finance and shows balance, spending, and monthly categories in one dashboard.',
+  demoBannerOpenFinance:
+    'The product vision: link real banks, categorize transactions, and get wealth guidance powered by AI.',
+  demoBannerLimits:
+    'This demo uses Pluggy Sandbox data with intentional limits — including only one connected bank.',
+  demoBannerQueen:
+    'Ask the Queen about your treasury: guardrailed answers that never invent app limits or financial data.',
+  demoBannerPlan:
+    'On the free plan: up to 3 banks in the treasury and a daily cap on Master of Coin consultations.',
 
   badgeCourt: "QUEEN'S COURT",
   logout: 'Leave the realm',

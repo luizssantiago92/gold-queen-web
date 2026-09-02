@@ -16,8 +16,8 @@ export function ProfileScreen() {
   return (
     <div className="scrollbar-none h-full overflow-y-auto pb-28">
       <div className="mb-5 flex flex-col items-center px-5 pt-8 text-center">
-        <div className="mb-3 flex size-24 items-center justify-center rounded-full border-2 border-gold/30 bg-black/40 shadow-gold-glow backdrop-blur-sm">
-          <RoyalCrown size={52} />
+        <div className="mb-3 size-24 overflow-hidden rounded-full border-2 border-gold/30 shadow-gold-glow">
+          <RoyalCrown />
         </div>
         <h1 className="text-lg font-bold leading-snug text-parchment">{user?.display_name}</h1>
         <p className="mt-1 text-xs text-muted">{user?.email}</p>

@@ -1,5 +1,6 @@
 import { LogOut } from 'lucide-react'
 
+import { DemoInfoBanner } from '@/components/home/DemoInfoBanner'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { useI18n } from '@/i18n/context'
@@ -12,15 +13,11 @@ export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
   return (
     <header className="shrink-0 px-5 pt-6 pb-4">
       <div className="mb-4 flex items-center gap-3">
-        <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/35 bg-black/40 shadow-gold-glow backdrop-blur-sm">
-          <RoyalCrown size={28} />
+        <div className="size-12 shrink-0 overflow-hidden rounded-full border border-gold/35 shadow-gold-glow">
+          <RoyalCrown />
         </div>
 
-        <div className="min-w-0 flex-1" />
-
-        <span className="shrink-0 rounded-full bg-gold px-3 py-1.5 text-[10px] font-bold tracking-wide text-void">
-          {t('badgeCourt')}
-        </span>
+        <DemoInfoBanner />
 
         <button
           type="button"
@@ -33,7 +30,7 @@ export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
       </div>
 
       <h1 className="font-sans text-[26px] font-bold leading-tight tracking-tight text-parchment">
-        {t(greetingKey())},{' '}
+        {t(greetingKey())}{' '}
         <span className="text-gold-gradient">{t('greetingDemoVisitor')}</span>
       </h1>
       {referenceMonth && (

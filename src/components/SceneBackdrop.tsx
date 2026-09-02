@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { cn } from '@/components/ui/cn'
+import { SLIDE_INTERVAL_MS } from '@/lib/slideshow'
 
 export const SCENES = {
   login: '/scenes/scene-dawn-lake.jpg',
@@ -17,7 +18,7 @@ export const HOME_SLIDESHOW = [
   '/scenes/scene-treasury.jpg',
 ] as const
 
-const SLIDE_MS = 2500
+const SLIDE_MS = SLIDE_INTERVAL_MS
 
 export type SceneId = keyof typeof SCENES
 

@@ -43,12 +43,12 @@ export function LoginScreen() {
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-7 py-10">
       <div className="mb-6 text-center">
-        <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full border border-gold/35 bg-black/40 shadow-gold-glow backdrop-blur-sm">
-          <RoyalCrown size={44} />
+        <div className="mx-auto mb-4 size-20 overflow-hidden rounded-full border border-gold/35 shadow-gold-glow">
+          <RoyalCrown />
         </div>
         <h1 className="font-royal text-3xl font-bold text-gold-gradient">{t('loginTitle')}</h1>
         <p className="mt-3 text-lg font-semibold text-parchment">
-          {t(greetingKey())},{' '}
+          {t(greetingKey())}{' '}
           <span className="text-gold-gradient">{t('greetingDemoVisitor')}</span>
         </p>
         <p className="mt-2 text-sm text-muted">{t('loginSubtitle')}</p>

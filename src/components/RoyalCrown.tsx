@@ -2,19 +2,24 @@ import { cn } from '@/components/ui/cn'
 
 interface Props {
   className?: string
+  /** Pixel size when not filling a parent container. */
   size?: number
 }
 
 /** Renaissance portrait used as the app mark across headers and modals. */
-export function RoyalCrown({ className, size = 24 }: Props) {
+export function RoyalCrown({ className, size }: Props) {
+  const fillParent = size === undefined
+
   return (
     <img
       src="/queen-logo.jpg"
       alt=""
-      width={size}
-      height={size}
-      className={cn('shrink-0 rounded-full object-cover ring-1 ring-gold/30', className)}
-      style={{ width: size, height: size }}
+      className={cn(
+        'shrink-0 rounded-full object-cover object-[center_12%] ring-1 ring-gold/30',
+        fillParent && 'size-full',
+        className,
+      )}
+      style={fillParent ? undefined : { width: size, height: size }}
     />
   )
 }

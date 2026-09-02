@@ -8,7 +8,18 @@ export const pt: Messages = {
   greetingMorning: 'Bom dia',
   greetingAfternoon: 'Boa tarde',
   greetingEvening: 'Boa noite',
-  greetingDemoVisitor: 'visitante desta demo',
+  greetingDemoVisitor: 'visitante, esse app é apenas um demo',
+
+  demoBannerProduct:
+    'Rainha Dourada agrega suas contas via Open Finance e mostra saldo, gastos e categorias do mes em um painel unico.',
+  demoBannerOpenFinance:
+    'A proposta do produto: conectar bancos reais, classificar movimentacoes e receber orientacao patrimonial com IA.',
+  demoBannerLimits:
+    'Esta demonstracao usa dados do Pluggy Sandbox, com limites propositais — incluindo apenas 1 banco conectado.',
+  demoBannerQueen:
+    'Pergunte a Rainha sobre seu tesouro: respostas com guardrails, sem inventar limites ou dados do app.',
+  demoBannerPlan:
+    'No plano gratuito: ate 3 bancos no tesouro e consultas diarias limitadas ao Mestre da Moeda.',
 
   badgeCourt: 'CORTE REAL',
   logout: 'Sair do reino',
