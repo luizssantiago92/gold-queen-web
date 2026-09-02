@@ -2,6 +2,7 @@ import { Landmark } from 'lucide-react'
 
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
+import { useI18n } from '@/i18n/context'
 import { formatMoney } from '@/lib/format'
 import { bankColor } from '@/lib/palette'
 import type { OverviewResponse } from '@/types/api'
@@ -12,9 +13,11 @@ interface Props {
 }
 
 export function BalanceCard({ overview, loading }: Props) {
+  const { t } = useI18n()
+
   if (loading) {
     return (
-      <Card title="Saldo em contas" variant="glass" showChevron>
+      <Card title={t('balanceTitle')} variant="glass" showChevron>
         <Skeleton className="h-10 w-48" />
         <Skeleton className="mt-4 h-2 w-full rounded-full" />
         <Skeleton className="mt-4 h-14 w-full" />
@@ -27,13 +30,13 @@ export function BalanceCard({ overview, loading }: Props) {
   const banks = overview.banks
 
   return (
-    <Card title="Saldo em contas" variant="glass" showChevron>
+    <Card title={t('balanceTitle')} variant="glass" showChevron>
       <p className="text-[32px] font-bold leading-none tracking-tight text-parchment">
         {formatMoney(overview.total_balance)}
       </p>
 
       {banks.length === 0 ? (
-        <EmptyState message="Nenhum banco no tesouro real ainda." />
+        <EmptyState message={t('noBanksYet')} />
       ) : (
         <>
           <div className="mt-4 flex h-1.5 w-full overflow-hidden rounded-full bg-white/8">
@@ -66,7 +69,7 @@ export function BalanceCard({ overview, loading }: Props) {
                   <p className="truncate text-sm font-medium text-parchment">
                     {bank.institution_name}
                   </p>
-                  <p className="text-[11px] text-muted">Atualizado agora</p>
+                  <p className="text-[11px] text-muted">{t('updatedNow')}</p>
                 </div>
 
                 <div className="shrink-0 text-right">

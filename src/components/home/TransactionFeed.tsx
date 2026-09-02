@@ -2,7 +2,9 @@ import { CreditCard, ShieldCheck } from 'lucide-react'
 
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
-import { formatDay, formatMoney, toNumber } from '@/lib/format'
+import { useI18n } from '@/i18n/context'
+import { formatDay } from '@/lib/localeFormat'
+import { formatMoney, toNumber } from '@/lib/format'
 import { bankColor, categoryLabel } from '@/lib/palette'
 import type { TransactionPage } from '@/types/api'
 
@@ -12,9 +14,11 @@ interface Props {
 }
 
 export function TransactionFeed({ page, loading }: Props) {
+  const { locale, t } = useI18n()
+
   if (loading) {
     return (
-      <Card title="Movimentacoes recentes" showChevron>
+      <Card title={t('transactionsTitle')} showChevron>
         <div className="space-y-3">
           {[0, 1, 2, 3].map((row) => (
             <Skeleton key={row} className="h-14 w-full rounded-2xl" />
@@ -28,12 +32,16 @@ export function TransactionFeed({ page, loading }: Props) {
 
   return (
     <Card
-      title="Movimentacoes recentes"
+      title={t('transactionsTitle')}
       showChevron
-      action={<span className="text-[11px] text-muted">{page.total} no total</span>}
+      action={
+        <span className="text-[11px] text-muted">
+          {t('transactionsTotal', { count: page.total })}
+        </span>
+      }
     >
       {page.items.length === 0 ? (
-        <EmptyState message="O pergaminho de movimentacoes esta vazio." />
+        <EmptyState message={t('transactionsEmpty')} />
       ) : (
         <ul className="space-y-1">
           {page.items.map((transaction) => {
@@ -61,13 +69,14 @@ export function TransactionFeed({ page, loading }: Props) {
                     {transaction.description}
                   </p>
                   <p className="flex items-center gap-1 truncate text-[11px] text-muted">
-                    {formatDay(transaction.transaction_date)} ·{' '}
-                    {categoryLabel(transaction.category)} · {transaction.institution_name}
+                    {formatDay(transaction.transaction_date, locale)} ·{' '}
+                    {categoryLabel(transaction.category, locale)} ·{' '}
+                    {transaction.institution_name}
                     {transaction.is_guarded && (
                       <ShieldCheck
                         size={11}
                         className="shrink-0 text-gold"
-                        aria-label="Categoria validada pelos guardrails"
+                        aria-label="Guarded"
                       />
                     )}
                   </p>

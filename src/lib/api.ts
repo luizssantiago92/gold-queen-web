@@ -1,4 +1,12 @@
+import { en } from '@/i18n/en'
+import { pt } from '@/i18n/pt'
+
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
+
+function coldStartMessage(): string {
+  const stored = localStorage.getItem('gold-queen.locale')
+  return stored === 'en' ? en.coldStart : pt.coldStart
+}
 
 const TOKEN_KEY = 'gold-queen.token'
 
@@ -93,7 +101,7 @@ export function errorMessage(error: unknown, fallback: string): string {
     // always the instance waking up, so the copy points at retrying rather than
     // implying the app is broken.
     if (error.code === 'ECONNABORTED' || !error.response) {
-      return 'Os guardas do castelo ainda despertam. Aguardai um instante e tentai novamente.'
+      return coldStartMessage()
     }
   }
   return fallback

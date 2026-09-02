@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 
 import { App } from '@/App'
 import { AuthProvider } from '@/auth/AuthProvider'
+import { I18nProvider } from '@/i18n/context'
 
 import './index.css'
 
@@ -12,8 +13,6 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 60_000,
       refetchOnWindowFocus: false,
-      // A 401 is already handled by the axios interceptor; retrying only
-      // delays the redirect to the login screen.
       retry: (failureCount, error) =>
         failureCount < 2 && !String(error).includes('401'),
     },
@@ -22,10 +21,12 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </QueryClientProvider>
+    <I18nProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </QueryClientProvider>
+    </I18nProvider>
   </StrictMode>,
 )

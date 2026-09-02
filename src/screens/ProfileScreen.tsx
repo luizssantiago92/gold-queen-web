@@ -1,61 +1,73 @@
-import { ChevronRight, CreditCard, Crown, Landmark, LogOut, Sparkles, Star } from 'lucide-react'
+import { ChevronRight, CreditCard, Globe, Landmark, LogOut, Sparkles, Star } from 'lucide-react'
 
+import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
+import { useI18n } from '@/i18n/context'
 import { useConnections } from '@/lib/queries'
 
 export function ProfileScreen() {
   const { user, logout } = useAuth()
+  const { locale, setLocale, t } = useI18n()
   const connections = useConnections()
   const bankCount = connections.data?.length ?? 0
 
   return (
     <div className="scrollbar-none h-full overflow-y-auto pb-28">
       <div className="mb-5 flex flex-col items-center px-5 pt-8 text-center">
-        <div className="relative mb-3">
-          <div className="flex size-24 items-center justify-center rounded-full border-2 border-gold/30 bg-gradient-to-br from-mystic/70 to-void shadow-gold-glow">
-            <Crown className="text-gold" size={36} />
-          </div>
+        <div className="mb-3 flex size-24 items-center justify-center rounded-full border-2 border-gold/30 bg-black/40 shadow-gold-glow backdrop-blur-sm">
+          <RoyalCrown size={52} />
         </div>
-        <h1 className="text-lg font-bold leading-snug text-parchment">
-          {user?.display_name}
-        </h1>
+        <h1 className="text-lg font-bold leading-snug text-parchment">{user?.display_name}</h1>
         <p className="mt-1 text-xs text-muted">{user?.email}</p>
       </div>
 
       <div className="space-y-3 px-4">
-        <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-gold/20 bg-gradient-to-r from-mystic/30 to-surface-raised p-4">
-          <div className="relative z-10 max-w-[65%]">
-            <p className="text-xs font-bold tracking-wider text-gold">TESOURO REAL</p>
-            <p className="mt-1 text-[11px] leading-relaxed text-muted">
-              Conecte ate 3 bancos no plano gratuito e consulte a Rainha sobre o seu ouro.
-            </p>
+        <Card title={t('profileLanguage')} variant="flat">
+          <div className="flex gap-2">
+            <LangButton
+              active={locale === 'pt'}
+              label={t('profileLanguagePt')}
+              onClick={() => setLocale('pt')}
+            />
+            <LangButton
+              active={locale === 'en'}
+              label={t('profileLanguageEn')}
+              onClick={() => setLocale('en')}
+            />
           </div>
-          <Crown
-            size={64}
-            className="absolute -right-2 -bottom-2 text-gold/15"
-            aria-hidden
-          />
+        </Card>
+
+        <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-gold/20 bg-black/50 p-4 backdrop-blur-sm">
+          <div className="relative z-10 max-w-[65%]">
+            <p className="text-xs font-bold tracking-wider text-gold">{t('profileBannerTitle')}</p>
+            <p className="mt-1 text-[11px] leading-relaxed text-muted">{t('profileBannerBody')}</p>
+          </div>
+          <Globe size={56} className="absolute -right-1 -bottom-1 text-gold/15" aria-hidden />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <Card variant="flat" className="!p-4">
             <Sparkles size={16} className="text-gold/70" />
-            <p className="mt-3 text-base font-bold text-parchment">Gratis</p>
-            <p className="text-[11px] text-muted">Plano</p>
+            <p className="mt-3 text-base font-bold text-parchment">{t('profilePlan')}</p>
+            <p className="text-[11px] text-muted">{t('profilePlanLabel')}</p>
           </Card>
 
           <Card variant="flat" className="!p-4">
             <Landmark size={16} className="text-gold/70" />
             <p className="mt-3 text-base font-bold text-parchment">
-              {connections.isLoading ? '—' : `${bankCount} ${bankCount === 1 ? 'Banco' : 'Bancos'}`}
+              {connections.isLoading
+                ? '—'
+                : bankCount === 1
+                  ? t('profileBanks', { count: bankCount })
+                  : t('profileBanksPlural', { count: bankCount })}
             </p>
-            <p className="text-[11px] text-muted">Conexoes</p>
+            <p className="text-[11px] text-muted">{t('profileConnections')}</p>
           </Card>
         </div>
 
-        <Card title="Bancos do reino" showChevron>
+        <Card title={t('profileBanksTitle')} showChevron>
           {connections.isLoading ? (
             <Skeleton className="h-14 w-full rounded-2xl" />
           ) : connections.data && connections.data.length > 0 ? (
@@ -78,35 +90,32 @@ export function ProfileScreen() {
               ))}
             </ul>
           ) : (
-            <EmptyState message="Nenhum banco conectado ao tesouro." />
+            <EmptyState message={t('noBanksConnected')} />
           )}
         </Card>
 
-        <Card title="Galeria de Cartoes">
+        <Card title={t('profileCardsTitle')}>
           <div className="grid grid-cols-2 gap-3">
-            <RoadmapCard
-              label="Standard"
-              tone="from-surface-raised to-surface border-white/8"
-            />
-            <RoadmapCard label="Platinum" tone="from-gold-aged/30 to-surface border-gold/30" />
+            <RoadmapCard label={t('profileStandard')} tone="from-surface-raised to-surface border-white/8" />
+            <RoadmapCard label={t('profilePlatinum')} tone="from-gold-aged/30 to-surface border-gold/30" />
           </div>
           <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted">
             <Sparkles size={12} className="text-gold/60" />
-            Artes medievais e cartoes Full Art chegam na proxima estacao.
+            {t('profileCardsSoon')}
           </p>
         </Card>
 
-        <Card title="Investimentos">
-          <EmptyState message="A Rainha ainda forja os conselhos de investimento. Em breve." />
+        <Card title={t('profileInvestTitle')}>
+          <EmptyState message={t('profileInvestSoon')} />
         </Card>
 
         <button
           type="button"
-          className="flex w-full items-center justify-between rounded-[var(--radius-card)] bg-surface-raised/80 px-4 py-3.5 text-sm text-parchment transition hover:bg-surface-raised"
+          className="flex w-full items-center justify-between rounded-[var(--radius-card)] bg-black/50 px-4 py-3.5 text-sm text-parchment backdrop-blur-sm transition hover:bg-white/5"
         >
           <span className="flex items-center gap-2">
             <Star size={16} className="text-gold" />
-            Avalie o Reino
+            {t('profileRate')}
           </span>
           <ChevronRight size={16} className="text-muted" />
         </button>
@@ -117,14 +126,39 @@ export function ProfileScreen() {
           className="flex w-full items-center justify-center gap-2 rounded-2xl border border-blood/25 bg-blood/10 py-3.5 text-sm font-medium text-debit transition hover:bg-blood/15"
         >
           <LogOut size={15} />
-          Deixar o reino
+          {t('profileLeave')}
         </button>
       </div>
     </div>
   )
 }
 
+function LangButton({
+  active,
+  label,
+  onClick,
+}: {
+  active: boolean
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex-1 rounded-xl py-2.5 text-sm font-semibold transition ${
+        active
+          ? 'bg-gold text-void shadow-gold-glow'
+          : 'bg-white/5 text-muted hover:bg-white/10 hover:text-parchment'
+      }`}
+    >
+      {label}
+    </button>
+  )
+}
+
 function RoadmapCard({ label, tone }: { label: string; tone: string }) {
+  const { t } = useI18n()
   return (
     <div
       className={`flex aspect-[1.6] flex-col justify-between rounded-2xl border bg-gradient-to-br p-3 ${tone}`}
@@ -132,7 +166,7 @@ function RoadmapCard({ label, tone }: { label: string; tone: string }) {
       <CreditCard size={16} className="text-gold/70" />
       <div>
         <p className="text-xs font-semibold text-parchment/90">{label}</p>
-        <p className="text-[10px] text-muted">Em breve</p>
+        <p className="text-[10px] text-muted">{t('profileSoon')}</p>
       </div>
     </div>
   )

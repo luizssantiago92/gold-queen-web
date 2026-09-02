@@ -1,7 +1,9 @@
-import { Crown, Loader2, ScrollText, ShieldCheck, Swords } from 'lucide-react'
+import { Loader2, ScrollText, ShieldCheck, Swords } from 'lucide-react'
 import type { ReactNode } from 'react'
 
+import { RoyalCrown } from '@/components/RoyalCrown'
 import { Modal } from '@/components/ui/Modal'
+import { useI18n } from '@/i18n/context'
 import { errorMessage } from '@/lib/api'
 import { useQueenTips } from '@/lib/queries'
 
@@ -11,25 +13,26 @@ interface Props {
 }
 
 export function QueenTipsModal({ open, onClose }: Props) {
+  const { t } = useI18n()
   const { data, isLoading, error } = useQueenTips(open)
 
   return (
     <Modal
       open={open}
-      title="Dicas da Rainha"
-      subtitle="Diagnostico real do seu tesouro"
+      title={t('tipsTitle')}
+      subtitle={t('tipsSubtitle')}
       onClose={onClose}
     >
       {isLoading && (
-        <div className="flex items-center justify-center gap-2 py-10 text-sm text-parchment/50">
-          <Loader2 className="animate-spin text-gold" size={18} />A Rainha consulta os
-          pergaminhos...
+        <div className="flex items-center justify-center gap-2 py-10 text-sm text-muted">
+          <Loader2 className="animate-spin text-gold" size={18} />
+          {t('tipsLoading')}
         </div>
       )}
 
       {error && (
-        <p role="alert" className="py-6 text-center text-sm text-red-300">
-          {errorMessage(error, 'Os conselheiros reais estao indisponiveis no momento.')}
+        <p role="alert" className="py-6 text-center text-sm text-debit">
+          {errorMessage(error, t('tipsError'))}
         </p>
       )}
 
@@ -37,25 +40,25 @@ export function QueenTipsModal({ open, onClose }: Props) {
         <div className="space-y-3 pb-2">
           <Scroll
             icon={<Swords size={15} />}
-            title="Corte de Gastos Critico"
+            title={t('tipsCritical')}
             body={data.critical_expense}
           />
           <Scroll
             icon={<ScrollText size={15} />}
-            title="Gestao do Tesouro"
+            title={t('tipsManagement')}
             body={data.management_status}
           />
           <Scroll
-            icon={<Crown size={15} />}
-            title="Direcionamento Inteligente"
+            icon={<RoyalCrown size={15} />}
+            title={t('tipsGuidance')}
             body={data.smart_guidance}
           />
 
           {data.is_guarded && (
-            <p className="flex items-center justify-center gap-1.5 pt-1 text-[11px] text-parchment/40">
+            <p className="flex items-center justify-center gap-1.5 pt-1 text-[11px] text-muted">
               <ShieldCheck size={13} className="text-gold/70" />
-              Resposta validada pelos guardrails
-              {data.from_cache && ' · recuperada do pergaminho do dia'}
+              {t('tipsGuarded')}
+              {data.from_cache && t('tipsCached')}
             </p>
           )}
         </div>
@@ -66,7 +69,7 @@ export function QueenTipsModal({ open, onClose }: Props) {
 
 function Scroll({ icon, title, body }: { icon: ReactNode; title: string; body: string }) {
   return (
-    <article className="rounded-2xl border border-gold-aged/30 bg-gradient-to-br from-surface-raised to-surface p-4">
+    <article className="rounded-2xl border border-gold-aged/30 bg-black/40 p-4 backdrop-blur-sm">
       <h3 className="mb-1.5 flex items-center gap-2 font-royal text-sm font-semibold text-gold">
         {icon}
         {title}

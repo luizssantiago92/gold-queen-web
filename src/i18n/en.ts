@@ -1,0 +1,108 @@
+export const en = {
+  appName: 'Gold Queen',
+  appTagline: 'Royal treasury dashboard',
+  pageTitle: 'Gold Queen — Royal Treasury',
+
+  greetingMorning: 'Good morning',
+  greetingAfternoon: 'Good afternoon',
+  greetingEvening: 'Good evening',
+  greetingDemoVisitor: 'demo visitor',
+
+  badgeCourt: "QUEEN'S COURT",
+  logout: 'Leave the realm',
+  logoutAria: 'Sign out',
+
+  learnWealth: 'Learn to manage your wealth',
+  askQueen: 'Ask Gold Queen',
+  askQueenPlaceholder: 'Ask Gold Queen',
+
+  home: 'Home',
+  profile: 'Profile',
+
+  balanceTitle: 'Account balance',
+  updatedNow: 'Updated just now',
+  noBanksYet: 'No banks linked to the royal treasury yet.',
+
+  monthIncome: 'Monthly income',
+  monthExpenses: 'Monthly spending',
+  monthExpensesTitle: 'Monthly spending',
+  categoriesTitle: 'Spending by category',
+  categoriesSubtitle: 'this month',
+  category: 'category',
+  categories: 'categories',
+  noExpensesMonth: 'No spending recorded this month.',
+  treasuryUntouched: 'The treasury remains untouched this month.',
+
+  transactionsTitle: 'Recent transactions',
+  transactionsTotal: '{{count}} total',
+  transactionsEmpty: 'The transaction scroll is empty.',
+
+  connectBank: 'Connect a bank to the treasury',
+  syncing: 'Collecting the real statement...',
+  connectLimit: 'The free plan allows only 3 banks in the treasury.',
+  connectError: 'Could not open the Open Finance portal.',
+  syncError: 'The bank responded, but synchronization failed.',
+  syncSuccess: '{{bank}} joined the realm with {{count}} transactions.',
+  portalInterrupted: 'The Open Finance portal was interrupted. Try again.',
+
+  tipsTitle: 'Wealth guidance',
+  tipsSubtitle: 'A real diagnosis of your treasury',
+  tipsLoading: 'The Queen is reading the scrolls...',
+  tipsError: 'The royal advisors are unavailable right now.',
+  tipsCritical: 'Critical spending cut',
+  tipsManagement: 'Treasury management',
+  tipsGuidance: 'Smart direction',
+  tipsGuarded: 'Response validated by guardrails',
+  tipsCached: ' · recovered from today\'s scroll',
+
+  chatTitle: 'Ask Gold Queen',
+  chatSubtitle: 'Sovereign and Master of Coin',
+  chatRemaining: '{{count}} questions left today',
+  chatGreeting:
+    'Speak, noble one. The Master of Coin hears your questions about the realm\'s gold.',
+  chatThinking: 'The Queen ponders...',
+  chatPlaceholder: 'Ask about your gold...',
+  chatBlocked: 'The Queen has retired',
+  chatError: 'The court is silent. Try again in a moment.',
+  chatSend: 'Send question',
+
+  loginTitle: 'Gold Queen',
+  loginSubtitle: 'The Master of Coin awaits to guard your treasury.',
+  loginEmail: 'Royal seal (email)',
+  loginPassword: 'Secret word',
+  loginSubmit: 'Enter the Realm',
+  loginPending: 'Opening the gates...',
+  loginError: 'The realm guards did not recognize these credentials.',
+  loginSlow:
+    'The free server hibernates when idle and can take up to a minute to wake. Hold on — the Queen has been summoned.',
+  loginDemoNote: 'Demo account prefilled — Pluggy Sandbox data.',
+
+  profilePlan: 'Free',
+  profilePlanLabel: 'Plan',
+  profileBanks: '{{count}} Bank',
+  profileBanksPlural: '{{count}} Banks',
+  profileConnections: 'Connections',
+  profileBannerTitle: 'ROYAL TREASURY',
+  profileBannerBody:
+    'Connect up to 3 banks on the free plan and ask the Queen about your gold.',
+  profileBanksTitle: 'Realm banks',
+  profileCardsTitle: 'Card gallery',
+  profileCardsSoon: 'Medieval art and Full Art cards arrive in the next season.',
+  profileInvestTitle: 'Investments',
+  profileInvestSoon: 'The Queen is still forging investment counsel. Coming soon.',
+  profileRate: 'Rate the realm',
+  profileLeave: 'Leave the realm',
+  profileLanguage: 'Language',
+  profileLanguageEn: 'English',
+  profileLanguagePt: 'Portuguese',
+  profileStandard: 'Standard',
+  profilePlatinum: 'Platinum',
+  profileSoon: 'Coming soon',
+  noBanksConnected: 'No banks connected to the treasury.',
+
+  coldStart:
+    'The castle guards are still waking. Wait a moment and try again.',
+} as const satisfies Record<string, string>
+
+export type MessageKey = keyof typeof en
+export type Messages = Record<MessageKey, string>

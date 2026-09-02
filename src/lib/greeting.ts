@@ -1,7 +1,7 @@
-/** Time-of-day salutation for the home hero, Pierre-style. */
-export function greetingByTime(): string {
+/** Time-of-day salutation key for i18n. */
+export function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEvening' {
   const hour = new Date().getHours()
-  if (hour < 12) return 'Bom dia'
-  if (hour < 18) return 'Boa tarde'
-  return 'Boa noite'
+  if (hour < 12) return 'greetingMorning'
+  if (hour < 18) return 'greetingAfternoon'
+  return 'greetingEvening'
 }

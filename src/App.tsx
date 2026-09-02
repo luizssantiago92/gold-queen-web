@@ -6,6 +6,7 @@ import { BottomNav } from '@/components/BottomNav'
 import type { Tab } from '@/components/BottomNav'
 import { ChatModal } from '@/components/ChatModal'
 import { MobileShell } from '@/components/MobileShell'
+import type { SceneId } from '@/components/SceneBackdrop'
 import { QueenTipsModal } from '@/components/QueenTipsModal'
 import { HomeScreen } from '@/screens/HomeScreen'
 import { LoginScreen } from '@/screens/LoginScreen'
@@ -16,10 +17,15 @@ export function App() {
   const [tab, setTab] = useState<Tab>('home')
   const [tipsOpen, setTipsOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  let scene: SceneId = 'home'
+  if (status === 'anonymous') scene = 'login'
+  else if (tab === 'profile') scene = 'profile'
 
   if (status === 'loading') {
     return (
-      <MobileShell>
+      <MobileShell scene="home">
         <div className="flex h-full items-center justify-center">
           <Loader2 className="animate-spin text-gold" size={26} />
         </div>
@@ -29,16 +35,19 @@ export function App() {
 
   if (status === 'anonymous') {
     return (
-      <MobileShell>
+      <MobileShell scene="login">
         <LoginScreen />
       </MobileShell>
     )
   }
 
   return (
-    <MobileShell>
+    <MobileShell scene={scene} scrollProgress={scrollProgress}>
       {tab === 'home' ? (
-        <HomeScreen onOpenTips={() => setTipsOpen(true)} />
+        <HomeScreen
+          onOpenTips={() => setTipsOpen(true)}
+          onScrollProgress={setScrollProgress}
+        />
       ) : (
         <ProfileScreen />
       )}

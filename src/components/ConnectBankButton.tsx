@@ -2,15 +2,12 @@ import { Landmark, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { PluggyConnect } from 'react-pluggy-connect'
 
+import { useI18n } from '@/i18n/context'
 import { errorMessage, statusOf } from '@/lib/api'
 import { useConnectToken, useSyncConnection } from '@/lib/queries'
 
-/**
- * Full Open Finance handshake: the backend mints a short-lived connect token,
- * the Pluggy widget takes over, and the returned item id is synced back.
- * `includeSandbox` exposes the mock institutions used by the demo.
- */
 export function ConnectBankButton() {
+  const { t } = useI18n()
   const connectToken = useConnectToken()
   const sync = useSyncConnection()
   const [token, setToken] = useState<string | null>(null)
@@ -26,8 +23,8 @@ export function ConnectBankButton() {
     } catch (cause) {
       setError(
         statusOf(cause) === 403
-          ? errorMessage(cause, 'O plano livre permite apenas 3 bancos no tesouro.')
-          : errorMessage(cause, 'Nao foi possivel abrir o portal do Open Finance.'),
+          ? errorMessage(cause, t('connectLimit'))
+          : errorMessage(cause, t('connectError')),
       )
     }
   }
@@ -37,7 +34,7 @@ export function ConnectBankButton() {
     try {
       await sync.mutateAsync(itemId)
     } catch (cause) {
-      setError(errorMessage(cause, 'O banco respondeu, mas a sincronizacao falhou.'))
+      setError(errorMessage(cause, t('syncError')))
     }
   }
 
@@ -50,19 +47,21 @@ export function ConnectBankButton() {
         className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold disabled:opacity-60"
       >
         {busy ? <Loader2 className="animate-spin" size={15} /> : <Landmark size={15} />}
-        {sync.isPending ? 'Recolhendo o extrato real...' : 'Conectar um banco ao tesouro'}
+        {sync.isPending ? t('syncing') : t('connectBank')}
       </button>
 
       {error && (
-        <p role="alert" className="mt-2 text-center text-xs text-red-300">
+        <p role="alert" className="mt-2 text-center text-xs text-debit">
           {error}
         </p>
       )}
 
       {sync.isSuccess && !error && (
         <p className="mt-2 text-center text-xs text-emerald-coin">
-          {sync.data.connection.institution_name} juntou-se ao reino com{' '}
-          {sync.data.transactions_synced} movimentacoes.
+          {t('syncSuccess', {
+            bank: sync.data.connection.institution_name,
+            count: sync.data.transactions_synced,
+          })}
         </p>
       )}
 
@@ -73,7 +72,7 @@ export function ConnectBankButton() {
           onSuccess={(itemData) => void onWidgetSuccess(itemData.item.id)}
           onError={() => {
             setToken(null)
-            setError('O portal do Open Finance foi interrompido. Tente novamente.')
+            setError(t('portalInterrupted'))
           }}
           onClose={() => setToken(null)}
         />

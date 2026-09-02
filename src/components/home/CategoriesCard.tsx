@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
+import { useI18n } from '@/i18n/context'
 import { formatMoney } from '@/lib/format'
 import { categoryColor, categoryLabel } from '@/lib/palette'
 import type { CategoriesResponse } from '@/types/api'
@@ -10,9 +11,11 @@ interface Props {
 }
 
 export function CategoriesCard({ categories, loading }: Props) {
+  const { locale, t } = useI18n()
+
   if (loading) {
     return (
-      <Card title="Gastos por categoria" subtitle="este mes" showChevron>
+      <Card title={t('categoriesTitle')} subtitle={t('categoriesSubtitle')} showChevron>
         <Skeleton className="h-2 w-full rounded-full" />
         <Skeleton className="mt-4 h-20 w-full" />
       </Card>
@@ -25,17 +28,18 @@ export function CategoriesCard({ categories, loading }: Props) {
 
   return (
     <Card
-      title="Gastos por categoria"
-      subtitle="este mes"
+      title={t('categoriesTitle')}
+      subtitle={t('categoriesSubtitle')}
       showChevron
       action={
         <span className="text-[11px] text-muted">
-          {items.length} {items.length === 1 ? 'categoria' : 'categorias'}
+          {items.length}{' '}
+          {items.length === 1 ? t('category') : t('categories')}
         </span>
       }
     >
       {items.length === 0 ? (
-        <EmptyState message="Sem gastos registrados neste mes." />
+        <EmptyState message={t('noExpensesMonth')} />
       ) : (
         <>
           <p className="mb-3 text-2xl font-bold tracking-tight text-parchment">
@@ -50,7 +54,7 @@ export function CategoriesCard({ categories, loading }: Props) {
                   width: `${item.share_percentage}%`,
                   backgroundColor: categoryColor(item.category, index),
                 }}
-                title={`${categoryLabel(item.category)}: ${item.share_percentage}%`}
+                title={`${categoryLabel(item.category, locale)}: ${item.share_percentage}%`}
               />
             ))}
           </div>
@@ -63,7 +67,7 @@ export function CategoriesCard({ categories, loading }: Props) {
                   style={{ backgroundColor: categoryColor(item.category, index) }}
                 />
                 <span className="min-w-0 flex-1 truncate text-parchment/85">
-                  {categoryLabel(item.category)}
+                  {categoryLabel(item.category, locale)}
                 </span>
                 <span className="shrink-0 text-xs text-muted">
                   {item.share_percentage.toFixed(0)}%

@@ -3,7 +3,9 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'rec
 
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
-import { formatDay, formatMoney, toNumber } from '@/lib/format'
+import { useI18n } from '@/i18n/context'
+import { formatDay } from '@/lib/localeFormat'
+import { formatMoney, toNumber } from '@/lib/format'
 import type { MonthlySeriesResponse } from '@/types/api'
 
 interface Props {
@@ -12,9 +14,11 @@ interface Props {
 }
 
 export function MonthChartCard({ series, loading }: Props) {
+  const { locale, t } = useI18n()
+
   if (loading) {
     return (
-      <Card title="Gastos do mes" showChevron>
+      <Card title={t('monthExpensesTitle')} showChevron>
         <Skeleton className="h-36 w-full rounded-2xl" />
       </Card>
     )
@@ -23,7 +27,7 @@ export function MonthChartCard({ series, loading }: Props) {
   if (!series) return null
 
   const data = series.points.map((point) => ({
-    day: formatDay(point.date),
+    day: formatDay(point.date, locale),
     value: toNumber(point.cumulative_expenses),
   }))
 
@@ -31,7 +35,7 @@ export function MonthChartCard({ series, loading }: Props) {
 
   return (
     <Card
-      title="Gastos do mes"
+      title={t('monthExpensesTitle')}
       showChevron
       action={
         <span className="flex items-center gap-1 text-sm font-bold text-gold">
@@ -41,7 +45,7 @@ export function MonthChartCard({ series, loading }: Props) {
       }
     >
       {spentNothing ? (
-        <EmptyState message="O tesouro permanece intocado neste mes." />
+        <EmptyState message={t('treasuryUntouched')} />
       ) : (
         <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
@@ -69,7 +73,7 @@ export function MonthChartCard({ series, loading }: Props) {
                   fontSize: 12,
                 }}
                 labelStyle={{ color: '#f5f0e680' }}
-                formatter={(value) => [formatMoney(Number(value)), 'Acumulado']}
+                formatter={(value) => [formatMoney(Number(value)), '']}
               />
               <Area
                 type="monotone"

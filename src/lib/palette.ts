@@ -1,3 +1,6 @@
+import { categoryLabel as labelForLocale } from '@/lib/localeFormat'
+import type { Locale } from '@/i18n/types'
+
 /** Brand-ish hues so each bank keeps the same colour across bar and legend. */
 const BANK_COLORS: Record<string, string> = {
   'pluggy bank': '#6B21A8',
@@ -38,21 +41,6 @@ export function categoryColor(category: string, index: number): string {
   return CATEGORY_COLORS[category] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
-/** The API keeps a closed English vocabulary; the UI speaks Portuguese. */
-const CATEGORY_LABELS: Record<string, string> = {
-  Food: 'Banquetes',
-  Transport: 'Montarias',
-  Housing: 'Castelo',
-  Health: 'Boticario',
-  Education: 'Escrituras',
-  Entertainment: 'Festins',
-  Shopping: 'Mercadorias',
-  Bills: 'Tributos',
-  Income: 'Rendas',
-  Transfer: 'Transferencias',
-  Other: 'Outros',
-}
-
-export function categoryLabel(category: string): string {
-  return CATEGORY_LABELS[category] ?? category
+export function categoryLabel(category: string, locale: Locale): string {
+  return labelForLocale(category, locale)
 }
