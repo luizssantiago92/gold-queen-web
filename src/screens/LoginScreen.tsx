@@ -40,20 +40,20 @@ export function LoginScreen() {
   }
 
   return (
-    <div className="flex h-full flex-col justify-center overflow-y-auto px-7 py-10">
+    <div className="hero-backdrop flex h-full flex-col justify-center overflow-y-auto px-7 py-10">
       <div className="mb-8 text-center">
-        <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full border border-gold/30 bg-surface shadow-gold-glow">
+        <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full border border-gold/30 bg-white/5 shadow-gold-glow backdrop-blur-sm">
           <Crown className="text-gold" size={30} />
         </div>
         <h1 className="font-royal text-3xl font-bold text-gold-gradient">Gold Queen</h1>
-        <p className="mt-2 text-sm text-parchment/55">
+        <p className="mt-2 text-sm text-muted">
           A Mestre da Moeda aguarda para zelar pelo seu tesouro.
         </p>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-4">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium tracking-wide text-parchment/60">
+          <span className="mb-1.5 block text-xs font-medium tracking-wide text-muted">
             Selo real (e-mail)
           </span>
           <input
@@ -62,12 +62,12 @@ export function LoginScreen() {
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="w-full rounded-xl border border-gold/15 bg-surface px-4 py-3 text-sm text-parchment outline-none transition focus:border-gold/60 focus:shadow-gold-glow"
+            className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-parchment outline-none backdrop-blur-sm transition focus:border-gold/50 focus:ring-1 focus:ring-gold/30"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium tracking-wide text-parchment/60">
+          <span className="mb-1.5 block text-xs font-medium tracking-wide text-muted">
             Palavra secreta
           </span>
           <input
@@ -76,12 +76,12 @@ export function LoginScreen() {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="w-full rounded-xl border border-gold/15 bg-surface px-4 py-3 text-sm text-parchment outline-none transition focus:border-gold/60 focus:shadow-gold-glow"
+            className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-parchment outline-none backdrop-blur-sm transition focus:border-gold/50 focus:ring-1 focus:ring-gold/30"
           />
         </label>
 
         {error && (
-          <p role="alert" className="rounded-xl bg-blood/15 px-3 py-2 text-xs text-red-300">
+          <p role="alert" className="rounded-2xl bg-blood/15 px-3 py-2.5 text-xs text-debit">
             {error}
           </p>
         )}
@@ -89,21 +89,21 @@ export function LoginScreen() {
         <button
           type="submit"
           disabled={pending}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-aged via-gold to-gold-aged py-3 font-royal text-sm font-bold text-void transition hover:brightness-110 disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold py-3.5 text-sm font-bold text-void shadow-gold-glow transition hover:brightness-105 disabled:opacity-60"
         >
           {pending ? <Loader2 className="animate-spin" size={16} /> : <Crown size={16} />}
           {pending ? 'Abrindo os portoes...' : 'Entrar no Reino'}
         </button>
 
         {slow && (
-          <p className="text-center text-[11px] leading-relaxed text-parchment/45">
+          <p className="text-center text-[11px] leading-relaxed text-muted">
             O servidor gratuito hiberna quando ocioso e pode levar ate um minuto
             para despertar. Aguardai — a Rainha ja foi chamada.
           </p>
         )}
       </form>
 
-      <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-[11px] text-parchment/40">
+      <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-[11px] text-muted">
         <ShieldCheck size={13} className="text-gold/60" />
         Conta de demonstracao ja preenchida — dados do Pluggy Sandbox.
       </p>

@@ -1,5 +1,6 @@
 /** Brand-ish hues so each bank keeps the same colour across bar and legend. */
 const BANK_COLORS: Record<string, string> = {
+  'pluggy bank': '#6B21A8',
   nubank: '#8A05BE',
   'banco itau': '#EC7000',
   itau: '#EC7000',

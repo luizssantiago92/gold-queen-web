@@ -47,7 +47,7 @@ export function ConnectBankButton() {
         type="button"
         onClick={openWidget}
         disabled={busy}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-gold/30 bg-surface/60 py-3 text-sm font-medium text-parchment/75 transition hover:border-gold/60 hover:text-gold disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold disabled:opacity-60"
       >
         {busy ? <Loader2 className="animate-spin" size={15} /> : <Landmark size={15} />}
         {sync.isPending ? 'Recolhendo o extrato real...' : 'Conectar um banco ao tesouro'}

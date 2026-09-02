@@ -2,6 +2,7 @@ import { ScrollText } from 'lucide-react'
 
 import { ConnectBankButton } from '@/components/ConnectBankButton'
 import { BalanceCard } from '@/components/home/BalanceCard'
+import { CashFlowRow } from '@/components/home/CashFlowRow'
 import { CategoriesCard } from '@/components/home/CategoriesCard'
 import { HomeHeader } from '@/components/home/HomeHeader'
 import { MonthChartCard } from '@/components/home/MonthChartCard'
@@ -23,17 +24,17 @@ export function HomeScreen({ onOpenTips }: { onOpenTips: () => void }) {
         }
       />
 
-      {/* Bottom padding clears the floating nav bar. */}
-      <div className="scrollbar-none flex-1 space-y-3 overflow-y-auto px-5 pb-28">
+      <div className="scrollbar-none flex-1 space-y-3 overflow-y-auto px-4 pb-28">
         <button
           type="button"
           onClick={onOpenTips}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-gold-aged via-gold to-gold-aged py-3 font-royal text-sm font-bold text-void shadow-gold-glow transition hover:brightness-110"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold py-3.5 text-sm font-bold text-void shadow-gold-glow transition hover:brightness-105"
         >
           <ScrollText size={16} />
           Dicas da Rainha
         </button>
 
+        <CashFlowRow overview={overview.data} loading={overview.isLoading} />
         <BalanceCard overview={overview.data} loading={overview.isLoading} />
         <MonthChartCard series={series.data} loading={series.isLoading} />
         <CategoriesCard categories={categories.data} loading={categories.isLoading} />

@@ -14,8 +14,8 @@ interface Props {
 export function MonthChartCard({ series, loading }: Props) {
   if (loading) {
     return (
-      <Card title="Gastos do mes">
-        <Skeleton className="h-32 w-full" />
+      <Card title="Gastos do mes" showChevron>
+        <Skeleton className="h-36 w-full rounded-2xl" />
       </Card>
     )
   }
@@ -32,9 +32,10 @@ export function MonthChartCard({ series, loading }: Props) {
   return (
     <Card
       title="Gastos do mes"
+      showChevron
       action={
-        <span className="flex items-center gap-1 text-xs font-semibold text-gold">
-          <TrendingUp size={13} />
+        <span className="flex items-center gap-1 text-sm font-bold text-gold">
+          <TrendingUp size={14} />
           {formatMoney(series.total_expenses)}
         </span>
       }
@@ -42,47 +43,42 @@ export function MonthChartCard({ series, loading }: Props) {
       {spentNothing ? (
         <EmptyState message="O tesouro permanece intocado neste mes." />
       ) : (
-        // A fixed height keeps Recharts from collapsing inside the 412px shell.
-        <div className="h-36 w-full">
+        <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 6, right: 4, bottom: 0, left: -18 }}>
+            <AreaChart data={data} margin={{ top: 8, right: 4, bottom: 0, left: -20 }}>
               <defs>
                 <linearGradient id="goldFade" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#FFD700" stopOpacity={0.55} />
+                  <stop offset="0%" stopColor="#FFD700" stopOpacity={0.65} />
                   <stop offset="100%" stopColor="#FFD700" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis
                 dataKey="day"
-                tick={{ fill: '#e8dcc060', fontSize: 10 }}
+                tick={{ fill: '#f5f0e650', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
-                minTickGap={24}
+                minTickGap={28}
               />
-              <YAxis
-                tick={{ fill: '#e8dcc060', fontSize: 10 }}
-                axisLine={false}
-                tickLine={false}
-                width={48}
-                tickFormatter={(value: number) => `${Math.round(value / 100) / 10}k`}
-              />
+              <YAxis hide />
               <Tooltip
-                cursor={{ stroke: '#FFD70040' }}
+                cursor={{ stroke: '#FFD70030' }}
                 contentStyle={{
-                  background: '#161618',
-                  border: '1px solid #8B691455',
-                  borderRadius: 12,
+                  background: '#111113',
+                  border: '1px solid rgb(255 255 255 / 0.08)',
+                  borderRadius: 14,
                   fontSize: 12,
                 }}
-                labelStyle={{ color: '#e8dcc099' }}
+                labelStyle={{ color: '#f5f0e680' }}
                 formatter={(value) => [formatMoney(Number(value)), 'Acumulado']}
               />
               <Area
                 type="monotone"
                 dataKey="value"
                 stroke="#FFD700"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 fill="url(#goldFade)"
+                dot={false}
+                activeDot={{ r: 4, fill: '#FFD700', stroke: '#000', strokeWidth: 2 }}
               />
             </AreaChart>
           </ResponsiveContainer>

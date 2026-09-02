@@ -1,4 +1,4 @@
-import { Crown, Home, User } from 'lucide-react'
+import { Home, ScanLine, User } from 'lucide-react'
 
 import { cn } from '@/components/ui/cn'
 
@@ -12,11 +12,11 @@ interface Props {
 
 export function BottomNav({ active, onNavigate, onAskQueen }: Props) {
   return (
-    <nav className="pointer-events-none absolute inset-x-0 bottom-0 z-40 px-5 pb-5">
-      <div className="pointer-events-auto flex items-center justify-between rounded-full border border-gold/15 bg-surface/90 px-6 py-2.5 shadow-card backdrop-blur-md">
+    <nav className="pointer-events-none absolute inset-x-0 bottom-0 z-40 px-4 pb-4">
+      <div className="pointer-events-auto flex items-center gap-2 rounded-[28px] border border-white/8 bg-surface/95 px-3 py-2.5 shadow-float backdrop-blur-xl">
         <TabButton
           label="Inicio"
-          icon={<Home size={20} />}
+          icon={<Home size={22} strokeWidth={active === 'home' ? 2.5 : 2} />}
           active={active === 'home'}
           onClick={() => onNavigate('home')}
         />
@@ -24,15 +24,15 @@ export function BottomNav({ active, onNavigate, onAskQueen }: Props) {
         <button
           type="button"
           onClick={onAskQueen}
-          className="-my-4 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-gold-aged via-gold to-gold-aged px-5 py-3 font-royal text-xs font-bold text-void shadow-gold-glow transition hover:brightness-110"
+          className="flex min-w-0 flex-1 items-center gap-2 rounded-2xl bg-white/6 px-4 py-2.5 text-left transition hover:bg-white/10"
         >
-          <Crown size={16} />
-          Consulte a Queen
+          <ScanLine size={16} className="shrink-0 text-muted" />
+          <span className="truncate text-sm text-muted">Pergunte a Gold Queen</span>
         </button>
 
         <TabButton
           label="Perfil"
-          icon={<User size={20} />}
+          icon={<User size={22} strokeWidth={active === 'profile' ? 2.5 : 2} />}
           active={active === 'profile'}
           onClick={() => onNavigate('profile')}
         />
@@ -59,8 +59,10 @@ function TabButton({
       aria-label={label}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'rounded-full p-2 transition',
-        active ? 'text-gold' : 'text-parchment/40 hover:text-parchment/70',
+        'flex size-11 shrink-0 items-center justify-center rounded-full transition',
+        active
+          ? 'bg-gold/15 text-gold ring-1 ring-gold/40'
+          : 'text-muted hover:bg-white/5 hover:text-parchment/70',
       )}
     >
       {icon}

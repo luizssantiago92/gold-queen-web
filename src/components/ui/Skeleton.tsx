@@ -10,7 +10,5 @@ export function Skeleton({ className }: { className?: string }) {
 }
 
 export function EmptyState({ message }: { message: string }) {
-  return (
-    <p className="py-6 text-center text-sm text-parchment/45">{message}</p>
-  )
+  return <p className="py-6 text-center text-sm text-muted">{message}</p>
 }
