@@ -1,5 +1,7 @@
 # Product Requirement Document (PRD) — Front-end Web (Mobile Shell)
 
+> **Historical document.** For current architecture, demo behaviour, and deployment, use [README.md](README.md) and [docs/](docs/README.md). Notable deltas: Open Finance Connect is disabled in the demo UI; default locale is `pt`; Pluggy widget dependencies were removed from the bundle.
+
 ## 1. Identificação do Repositório
 
 - **Nome do Repositório:** `gold-queen-web`

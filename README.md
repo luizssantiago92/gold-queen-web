@@ -1,36 +1,47 @@
 # Gold Queen Web
 
-Mobile-first dashboard for the **Gold Queen** royal treasury: Open Finance bank
-aggregation, AI-categorized spending, and a medieval sovereign who advises on
-your gold. Dark fantasy interface rendered inside a simulated phone on desktop
-and full-bleed on real devices.
+**Gold Queen** (Rainha Dourada) is a mobile-first personal treasury dashboard with a dark medieval fantasy interface. It connects to [gold-queen-api](https://github.com/luizssantiago92/gold-queen-api) for Open Finance aggregation, AI-categorized spending, Queen's Tips, and a conversational financial advisor.
 
-Backend counterpart: [gold-queen-api](https://github.com/luizssantiago92/gold-queen-api).
+| Live | URL |
+| --- | --- |
+| Web app | https://gold-queen-web.vercel.app |
+| API | https://gold-queen-api.onrender.com |
+
+## Product positioning
+
+Gold Queen is built for users who want **clarity over their money** without leaving a single, beautiful screen:
+
+- **Unified treasury** — consolidated balance, monthly income vs expenses, per-bank share.
+- **Spending intelligence** — category breakdown and cumulative month chart with portfolio-friendly labels (subscriptions, bills, credit card, etc.).
+- **Trust signals** — golden shield on AI-validated categories (`is_guarded`).
+- **The Queen** — structured wealth tips and a chat advisor grounded in real account data.
+- **Portfolio demo** — intentional limits (one sandbox bank, informational connect button) keep the recruiter experience controlled while production code paths remain in the API.
+
+Default language is **Portuguese (Brazil)**; English is available in Profile.
 
 ## Stack
 
 | Concern | Choice |
 | --- | --- |
-| Framework | React 19 + Vite |
+| Framework | React 19 + Vite 8 |
 | Language | TypeScript (strict) |
-| Styling | Tailwind CSS v4 (CSS-first `@theme`, no config file) |
-| Server state | TanStack Query + Axios |
+| Styling | Tailwind CSS v4 (`@theme` in CSS, no config file) |
+| Server state | TanStack Query 5 + Axios |
 | Charts | Recharts |
 | Icons | Lucide React |
-| Open Finance | `react-pluggy-connect` (sandbox) |
+| i18n | Custom context (`pt` / `en`) |
 
 ## Quick start
 
 ```bash
 npm install
-cp .env.example .env      # point VITE_API_BASE_URL at the running API
+cp .env.example .env      # VITE_API_BASE_URL=http://127.0.0.1:8000
 npm run dev
 ```
 
-The app expects `gold-queen-api` on `http://127.0.0.1:8000`. Start it first, or
-the login screen will report that the kingdom's gates are closed.
+Start [gold-queen-api](https://github.com/luizssantiago92/gold-queen-api) first on port 8000.
 
-Demo credentials are prefilled on the login screen:
+**Demo login** (prefilled on the login screen):
 
 - `queen@goldqueen.dev` / `QueenDemo123!`
 - `squire@goldqueen.dev` / `SquireDemo123!`
@@ -39,78 +50,71 @@ Demo credentials are prefilled on the login screen:
 
 | Command | Purpose |
 | --- | --- |
-| `npm run dev` | Vite dev server |
-| `npm run build` | Typecheck and produce `dist/` |
+| `npm run dev` | Vite dev server (port 5173) |
+| `npm run build` | Typecheck + production bundle → `dist/` |
 | `npm run typecheck` | `tsc -b` only |
 | `npm run lint` | oxlint |
-| `npm run preview` | Serve the production build |
+| `npm run preview` | Serve `dist/` locally |
+
+CI (`.github/workflows/ci.yml`): lint + build on Node 22.
 
 ## Configuration
-
-Only one variable, because every secret stays server-side:
 
 | Variable | Description |
 | --- | --- |
 | `VITE_API_BASE_URL` | Base URL of gold-queen-api |
 
-Anything prefixed with `VITE_` is inlined into the bundle and therefore public.
-`PLUGGY_CLIENT_SECRET` and `GEMINI_API_KEY` belong to the backend `.env` only.
+Only `VITE_*` variables are embedded in the bundle. Pluggy and Gemini keys stay on the backend.
 
 ## Architecture
 
 ```
 src/
-  auth/          AuthProvider + context (JWT in localStorage, 401 -> logout)
+  auth/           JWT session (localStorage, 401 → logout)
   components/
-    home/        Balance, month chart, categories and transaction feed cards
-    ui/          Card, Modal, Skeleton primitives
-  lib/           axios client, TanStack Query hooks, formatters, palette
-  screens/       Login, Home, Profile
-  types/         Response models mirroring the API's OpenAPI schema
+    home/         Dashboard cards, demo banner, transaction feed
+    ui/           Card, Modal, Skeleton
+  i18n/           Portuguese (default) and English catalogs
+  lib/            API client, queries, formatters, palette
+  screens/        Login, Home, Profile
+  types/          Response models mirroring OpenAPI
 ```
 
-### Design tokens
+See [docs/architecture.md](docs/architecture.md) for navigation, data flow, and UI shell details.
 
-Tailwind v4 removed `tailwind.config.js`; the palette lives in the `@theme`
-block of `src/index.css` and every entry becomes a utility (`bg-surface`,
-`text-gold`, `border-gold-aged`).
+### Design tokens (`src/index.css`)
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `void` | `#0D0D0E` | Page background |
-| `surface` | `#161618` | Cards |
+| `void` | `#000000` | Page background |
+| `surface` | `#111113` | Cards |
 | `gold` | `#FFD700` | Primary accent |
-| `gold-aged` | `#8B6914` | Borders and gradients |
-| `mystic` | `#6B21A8` | Secondary accent |
+| `parchment` | `#F5F0E6` | Body text |
 
 ### Mobile shell
 
-`MobileShell` frames the app as a phone on desktop (`412px` wide, `48px`
-radius, `8px` bezel) and drops the frame below the `sm` breakpoint. Heights use
-`dvh` so mobile browser chrome never clips the floating bottom bar.
+`MobileShell` frames the app as a phone on desktop (412px) and goes full-bleed on real devices. `SceneBackdrop` rotates five medieval wallpapers every 5 seconds on the home screen.
 
 ### Data flow
 
-Every screen reads from TanStack Query hooks in `src/lib/queries.ts`. A
-successful bank sync invalidates all dashboard keys at once, so the balance,
-chart, categories, feed and Queen's Tips refresh together.
+TanStack Query hooks in `src/lib/queries.ts` fetch dashboard data. Monetary values arrive as **strings** (API `Decimal`); widen to float only at render time via `toNumber()`.
 
-Monetary values arrive as strings because the API serialises `Decimal`; they
-are only widened to floats at the render boundary via `toNumber`.
+### Demo mode
 
-### Guardrail badge
+`ConnectBankButton` opens an informational modal — it does **not** launch Pluggy Connect. Bank data must already exist on the API (see API [demo-operations](https://github.com/luizssantiago92/gold-queen-api/blob/main/docs/demo-operations.md)).
 
-Transactions carry `is_guarded` from the API, set when the AI category passed
-Pydantic validation against a closed vocabulary. The feed renders a golden
-`ShieldCheck` next to those, making the guardrail auditable in the UI.
+## Documentation
 
-### Rate limit
+| Document | Contents |
+| --- | --- |
+| [docs/README.md](docs/README.md) | Documentation index |
+| [docs/architecture.md](docs/architecture.md) | UI structure, state, API integration |
+| [docs/deployment.md](docs/deployment.md) | Vercel deploy and environment |
 
-The chat allows a fixed number of questions per day. On `429` the API already
-answers in the Queen's voice, so the frontend renders `detail` verbatim instead
-of hardcoding the copy — the persona stays owned by the backend.
+API contracts: [gold-queen-api/docs/frontend-integration.md](https://github.com/luizsantiago92/gold-queen-api/blob/main/docs/frontend-integration.md)
 
-## Roadmap
+## Roadmap (UI placeholders)
 
-The Profile screen ships the card gallery and investments panel as static
-placeholders; the API has no endpoints for them yet.
+Profile screen ships static placeholders for card gallery and investments — no API endpoints yet.
+
+> **Note:** Root `PRD.md` is a historical brief in Portuguese. This README and `docs/` are the authoritative technical reference.

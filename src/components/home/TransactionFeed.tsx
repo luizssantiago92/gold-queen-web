@@ -96,7 +96,7 @@ export function TransactionFeed({ page, loading }: Props) {
                         isCredit ? 'text-emerald-coin' : 'text-debit'
                       }`}
                     >
-                      {formatMoney(amount)}
+                      {formatMoney(amount, locale)}
                     </span>
                   </button>
                 </li>

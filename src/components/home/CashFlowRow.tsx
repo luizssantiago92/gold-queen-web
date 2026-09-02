@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function CashFlowRow({ overview, loading }: Props) {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
 
   if (loading) {
     return (
@@ -39,7 +39,7 @@ export function CashFlowRow({ overview, loading }: Props) {
           {t('monthIncome')}
         </p>
         <p className="mt-1.5 text-lg font-bold tracking-tight text-parchment">
-          {formatMoney(overview.month_income)}
+          {formatMoney(overview.month_income, locale)}
         </p>
       </Card>
 
@@ -49,7 +49,7 @@ export function CashFlowRow({ overview, loading }: Props) {
           {t('monthExpenses')}
         </p>
         <p className="mt-1.5 text-lg font-bold tracking-tight text-parchment">
-          {formatMoney(overview.month_expenses)}
+          {formatMoney(overview.month_expenses, locale)}
         </p>
       </Card>
     </div>

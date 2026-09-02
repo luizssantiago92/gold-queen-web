@@ -43,7 +43,7 @@ export function CategoriesCard({ categories, loading }: Props) {
       ) : (
         <>
           <p className="mb-3 text-2xl font-bold tracking-tight text-parchment">
-            {formatMoney(categories.total_expenses)}
+            {formatMoney(categories.total_expenses, locale)}
           </p>
 
           <div className="flex h-2 w-full overflow-hidden rounded-full bg-white/8">
@@ -73,7 +73,7 @@ export function CategoriesCard({ categories, loading }: Props) {
                   {item.share_percentage.toFixed(0)}%
                 </span>
                 <span className="shrink-0 font-semibold text-parchment">
-                  {formatMoney(item.total)}
+                  {formatMoney(item.total, locale)}
                 </span>
               </li>
             ))}

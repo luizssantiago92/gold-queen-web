@@ -35,7 +35,7 @@ export function TransactionDetailModal({ transactionId, onClose }: Props) {
                 toNumber(detail.data.amount) >= 0 ? 'text-emerald-coin' : 'text-debit'
               }`}
             >
-              {formatMoney(toNumber(detail.data.amount))}
+              {formatMoney(toNumber(detail.data.amount), locale)}
             </dd>
           </div>
 

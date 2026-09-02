@@ -1,13 +1,5 @@
 import type { Locale } from '@/i18n/types'
 
-/** Time-of-day salutation key for i18n. */
-export function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEvening' {
-  const hour = new Date().getHours()
-  if (hour < 12) return 'greetingMorning'
-  if (hour < 18) return 'greetingAfternoon'
-  return 'greetingEvening'
-}
-
 export function formatReferenceMonth(value: string, locale: Locale): string {
   const [year, month] = value.split('-').map(Number)
   const tag = locale === 'pt' ? 'pt-BR' : 'en-US'

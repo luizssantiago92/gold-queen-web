@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function BalanceCard({ overview, loading }: Props) {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
 
   if (loading) {
     return (
@@ -32,7 +32,7 @@ export function BalanceCard({ overview, loading }: Props) {
   return (
     <Card title={t('balanceTitle')} variant="glass" showChevron>
       <p className="text-[32px] font-bold leading-none tracking-tight text-parchment">
-        {formatMoney(overview.total_balance)}
+        {formatMoney(overview.total_balance, locale)}
       </p>
 
       {banks.length === 0 ? (
@@ -74,7 +74,7 @@ export function BalanceCard({ overview, loading }: Props) {
 
                 <div className="shrink-0 text-right">
                   <p className="text-sm font-semibold text-parchment">
-                    {formatMoney(bank.balance)}
+                    {formatMoney(bank.balance, locale)}
                   </p>
                   <p className="text-[11px] text-muted">
                     {bank.share_percentage.toFixed(0)}%

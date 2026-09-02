@@ -1,15 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { AI_TIMEOUT_MS, api } from './api'
 import type {
   BankConnection,
   CategoriesResponse,
   ChatResponse,
-  ConnectTokenResponse,
   MonthlySeriesResponse,
   OverviewResponse,
   QueenTipsResponse,
-  SyncResponse,
   TransactionPage,
   TransactionDetail,
 } from '@/types/api'
@@ -89,39 +87,6 @@ export function useQueenTips(enabled: boolean) {
     enabled,
     staleTime: Infinity,
     retry: false,
-  })
-}
-
-export function useConnectToken() {
-  return useMutation({
-    mutationFn: async () =>
-      (await api.post<ConnectTokenResponse>('/v1/connections/connect')).data,
-  })
-}
-
-/** Everything on the dashboard derives from synced data, so invalidate it all. */
-export function useSyncConnection() {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: async (itemId: string) =>
-      (
-        await api.post<SyncResponse>(
-          '/v1/connections/sync',
-          { item_id: itemId },
-          { timeout: AI_TIMEOUT_MS },
-        )
-      ).data,
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: queryKeys.overview }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.categories }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.monthlySeries }),
-        queryClient.invalidateQueries({ queryKey: ['transactions'] }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.connections }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.queenTips }),
-      ])
-    },
   })
 }
 

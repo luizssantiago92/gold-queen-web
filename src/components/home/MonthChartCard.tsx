@@ -40,7 +40,7 @@ export function MonthChartCard({ series, loading }: Props) {
       action={
         <span className="flex items-center gap-1 text-sm font-bold text-gold">
           <TrendingUp size={14} />
-          {formatMoney(series.total_expenses)}
+          {formatMoney(series.total_expenses, locale)}
         </span>
       }
     >
@@ -73,7 +73,7 @@ export function MonthChartCard({ series, loading }: Props) {
                   fontSize: 12,
                 }}
                 labelStyle={{ color: '#f5f0e680' }}
-                formatter={(value) => [formatMoney(Number(value)), '']}
+                formatter={(value) => [formatMoney(Number(value), locale), '']}
               />
               <Area
                 type="monotone"
