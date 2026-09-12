@@ -1,13 +1,9 @@
-import { LogOut } from 'lucide-react'
-
 import { DemoInfoBanner } from '@/components/home/DemoInfoBanner'
 import { RoyalCrown } from '@/components/RoyalCrown'
-import { useAuth } from '@/auth/context'
 import { useI18n } from '@/i18n/context'
 import { greetingKey } from '@/lib/greeting'
 
 export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
-  const { logout } = useAuth()
   const { t } = useI18n()
 
   return (
@@ -18,20 +14,15 @@ export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
         </div>
 
         <DemoInfoBanner />
-
-        <button
-          type="button"
-          onClick={logout}
-          aria-label={t('logoutAria')}
-          className="shrink-0 rounded-full bg-black/40 p-2 text-muted backdrop-blur-sm transition hover:bg-white/10 hover:text-parchment"
-        >
-          <LogOut size={16} />
-        </button>
       </div>
 
-      <h1 className="font-sans text-[26px] font-bold leading-tight tracking-tight text-parchment">
-        {t(greetingKey())}{' '}
-        <span className="text-gold-gradient">{t('greetingDemoVisitor')}</span>
+      <h1 className="flex flex-wrap items-center gap-2 font-sans text-[26px] font-bold leading-tight tracking-tight text-parchment">
+        <span>{t(greetingKey())}</span>
+        <span
+          className="rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gold"
+        >
+          {t('demoBadge')}
+        </span>
       </h1>
       {referenceMonth && (
         <p className="mt-1 text-sm text-muted">{referenceMonth}</p>

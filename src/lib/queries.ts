@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
+import { useI18n } from '@/i18n/context'
+import type { Locale } from '@/i18n/types'
+
 import { AI_TIMEOUT_MS, api } from './api'
 import type {
   BankConnection,
@@ -19,7 +22,7 @@ export const queryKeys = {
   transactions: (page: number) => ['transactions', page] as const,
   transactionDetail: (id: number) => ['transaction', id] as const,
   connections: ['connections'] as const,
-  queenTips: ['queen-tips'] as const,
+  queenTips: (locale: Locale) => ['queen-tips', locale] as const,
 }
 
 export function useOverview() {
@@ -76,11 +79,14 @@ export function useConnections() {
  * is then kept fresh for the session — the backend caches it daily anyway.
  */
 export function useQueenTips(enabled: boolean) {
+  const { locale } = useI18n()
+
   return useQuery({
-    queryKey: queryKeys.queenTips,
+    queryKey: queryKeys.queenTips(locale),
     queryFn: async () =>
       (
         await api.get<QueenTipsResponse>('/v1/advisor/queen-tips', {
+          params: { locale },
           timeout: AI_TIMEOUT_MS,
         })
       ).data,
@@ -91,12 +97,14 @@ export function useQueenTips(enabled: boolean) {
 }
 
 export function useAskQueen() {
+  const { locale } = useI18n()
+
   return useMutation({
     mutationFn: async (question: string) =>
       (
         await api.post<ChatResponse>(
           '/v1/chat/query',
-          { question },
+          { question, locale },
           { timeout: AI_TIMEOUT_MS },
         )
       ).data,

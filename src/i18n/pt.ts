@@ -8,7 +8,12 @@ export const pt: Messages = {
   greetingMorning: 'Bom dia',
   greetingAfternoon: 'Boa tarde',
   greetingEvening: 'Boa noite',
-  greetingDemoVisitor: 'visitante, esse app é apenas um demo',
+  demoBadge: 'Demo',
+
+  closeModal: 'Fechar',
+  transactionGuardedBadge: 'Protegido pela Rainha',
+  appLoading: 'Abrindo o tesouro real...',
+  demoBannerDismiss: 'Fechar banner',
 
   demoBannerProduct:
     'Rainha Dourada agrega suas contas via Open Finance e mostra saldo, gastos e categorias do mes em um painel unico.',
@@ -27,7 +32,7 @@ export const pt: Messages = {
 
   learnWealth: 'Aprenda a gerir seu patrimonio',
   askQueen: 'Pergunte a Rainha',
-  askQueenPlaceholder: 'Pergunte a Rainha',
+  navAdvisor: 'Consultora',
 
   home: 'Inicio',
   profile: 'Perfil',
@@ -98,9 +103,9 @@ export const pt: Messages = {
 
   loginTitle: 'Rainha Dourada',
   loginSubtitle: 'A Mestre da Moeda aguarda para zelar pelo seu tesouro.',
-  loginEmail: 'Selo real (e-mail)',
-  loginPassword: 'Palavra secreta',
-  loginSubmit: 'Entrar no Reino',
+  loginEmail: 'E-mail',
+  loginPassword: 'Senha',
+  loginSubmit: 'Entrar',
   loginPending: 'Abrindo os portoes...',
   loginError: 'Os guardas do reino nao reconheceram estas credenciais.',
   loginSlow:

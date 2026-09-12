@@ -15,7 +15,7 @@ export function CategoriesCard({ categories, loading }: Props) {
 
   if (loading) {
     return (
-      <Card title={t('categoriesTitle')} subtitle={t('categoriesSubtitle')} showChevron>
+      <Card title={t('categoriesTitle')} subtitle={t('categoriesSubtitle')}>
         <Skeleton className="h-2 w-full rounded-full" />
         <Skeleton className="mt-4 h-20 w-full" />
       </Card>
@@ -30,7 +30,6 @@ export function CategoriesCard({ categories, loading }: Props) {
     <Card
       title={t('categoriesTitle')}
       subtitle={t('categoriesSubtitle')}
-      showChevron
       action={
         <span className="text-[11px] text-muted">
           {items.length}{' '}

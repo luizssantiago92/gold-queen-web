@@ -22,6 +22,8 @@ export function HomeScreen({ onOpenTips }: Props) {
   const categories = useCategories()
   const transactions = useTransactions(1, 20)
 
+  const noBanks = overview.data?.banks.length === 0
+
   return (
     <div className="flex h-full flex-col">
       <HomeHeader
@@ -42,13 +44,15 @@ export function HomeScreen({ onOpenTips }: Props) {
           {t('learnWealth')}
         </button>
 
+        {noBanks && <ConnectBankButton />}
+
         <CashFlowRow overview={overview.data} loading={overview.isLoading} />
         <BalanceCard overview={overview.data} loading={overview.isLoading} />
         <MonthChartCard series={series.data} loading={series.isLoading} />
         <CategoriesCard categories={categories.data} loading={categories.isLoading} />
         <TransactionFeed page={transactions.data} loading={transactions.isLoading} />
 
-        <ConnectBankButton />
+        {!noBanks && <ConnectBankButton />}
       </div>
     </div>
   )

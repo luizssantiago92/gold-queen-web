@@ -17,7 +17,7 @@ export function BalanceCard({ overview, loading }: Props) {
 
   if (loading) {
     return (
-      <Card title={t('balanceTitle')} variant="glass" showChevron>
+      <Card title={t('balanceTitle')} variant="glass">
         <Skeleton className="h-10 w-48" />
         <Skeleton className="mt-4 h-2 w-full rounded-full" />
         <Skeleton className="mt-4 h-14 w-full" />
@@ -30,7 +30,7 @@ export function BalanceCard({ overview, loading }: Props) {
   const banks = overview.banks
 
   return (
-    <Card title={t('balanceTitle')} variant="glass" showChevron>
+    <Card title={t('balanceTitle')} variant="glass">
       <p className="text-[32px] font-bold leading-none tracking-tight text-parchment">
         {formatMoney(overview.total_balance, locale)}
       </p>
