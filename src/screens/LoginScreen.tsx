@@ -2,6 +2,7 @@ import { Loader2, ShieldCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { useI18n } from '@/i18n/context'
@@ -42,14 +43,22 @@ export function LoginScreen() {
 
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-7 py-10">
+      <div className="absolute top-6 right-6 left-6">
+        <LanguageToggle />
+      </div>
+
       <div className="mb-6 text-center">
         <div className="mx-auto mb-4 size-20 overflow-hidden rounded-full border border-gold/35 shadow-gold-glow">
           <RoyalCrown />
         </div>
         <h1 className="font-royal text-3xl font-bold text-gold-gradient">{t('loginTitle')}</h1>
-        <p className="mt-3 text-lg font-semibold text-parchment">
-          {t(greetingKey())}{' '}
-          <span className="text-gold-gradient">{t('greetingDemoVisitor')}</span>
+        <p className="mt-3 flex items-center justify-center gap-2 text-lg font-semibold text-parchment">
+          <span>{t(greetingKey())}</span>
+          <span
+            className="rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold"
+          >
+            {t('demoBadge')}
+          </span>
         </p>
         <p className="mt-2 text-sm text-muted">{t('loginSubtitle')}</p>
       </div>

@@ -8,12 +8,14 @@ import { ChatModal } from '@/components/ChatModal'
 import { MobileShell } from '@/components/MobileShell'
 import type { SceneId } from '@/components/SceneBackdrop'
 import { QueenTipsModal } from '@/components/QueenTipsModal'
+import { useI18n } from '@/i18n/context'
 import { HomeScreen } from '@/screens/HomeScreen'
 import { LoginScreen } from '@/screens/LoginScreen'
 import { ProfileScreen } from '@/screens/ProfileScreen'
 
 export function App() {
   const { status } = useAuth()
+  const { t } = useI18n()
   const [tab, setTab] = useState<Tab>('home')
   const [tipsOpen, setTipsOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
@@ -25,8 +27,13 @@ export function App() {
   if (status === 'loading') {
     return (
       <MobileShell scene="home">
-        <div className="flex h-full items-center justify-center">
-          <Loader2 className="animate-spin text-gold" size={26} />
+        <div
+          className="flex h-full flex-col items-center justify-center gap-3"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          <Loader2 className="animate-spin text-gold" size={26} aria-hidden />
+          <p className="text-sm text-muted">{t('appLoading')}</p>
         </div>
       </MobileShell>
     )

@@ -6,7 +6,12 @@ export const en = {
   greetingMorning: 'Good morning',
   greetingAfternoon: 'Good afternoon',
   greetingEvening: 'Good evening',
-  greetingDemoVisitor: 'visitor, this app is only a demo',
+  demoBadge: 'Demo',
+
+  closeModal: 'Close',
+  transactionGuardedBadge: 'Guarded by the Queen',
+  appLoading: 'Opening the royal treasury...',
+  demoBannerDismiss: 'Dismiss banner',
 
   demoBannerProduct:
     'Gold Queen aggregates your accounts via Open Finance and shows balance, spending, and monthly categories in one dashboard.',
@@ -25,7 +30,7 @@ export const en = {
 
   learnWealth: 'Learn to manage your wealth',
   askQueen: 'Ask the Queen',
-  askQueenPlaceholder: 'Ask the Queen',
+  navAdvisor: 'Advisor',
 
   home: 'Home',
   profile: 'Profile',
@@ -96,9 +101,9 @@ export const en = {
 
   loginTitle: 'Gold Queen',
   loginSubtitle: 'The Master of Coin awaits to guard your treasury.',
-  loginEmail: 'Royal seal (email)',
-  loginPassword: 'Secret word',
-  loginSubmit: 'Enter the Realm',
+  loginEmail: 'Email',
+  loginPassword: 'Password',
+  loginSubmit: 'Sign in',
   loginPending: 'Opening the gates...',
   loginError: 'The realm guards did not recognize these credentials.',
   loginSlow:

@@ -21,7 +21,7 @@ export function TransactionFeed({ page, loading }: Props) {
 
   if (loading) {
     return (
-      <Card title={t('transactionsTitle')} showChevron>
+      <Card title={t('transactionsTitle')}>
         <div className="space-y-3">
           {[0, 1, 2, 3].map((row) => (
             <Skeleton key={row} className="h-14 w-full rounded-2xl" />
@@ -37,7 +37,6 @@ export function TransactionFeed({ page, loading }: Props) {
     <>
       <Card
         title={t('transactionsTitle')}
-        showChevron
         action={
           <span className="text-[11px] text-muted">
             {t('transactionsTotal', { count: page.total })}
@@ -85,7 +84,7 @@ export function TransactionFeed({ page, loading }: Props) {
                           <ShieldCheck
                             size={11}
                             className="shrink-0 text-gold"
-                            aria-label="Guarded"
+                            aria-label={t('transactionGuardedBadge')}
                           />
                         )}
                       </p>

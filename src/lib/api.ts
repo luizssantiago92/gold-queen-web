@@ -1,11 +1,11 @@
-import { en } from '@/i18n/en'
-import { pt } from '@/i18n/pt'
-
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 
+import { en } from '@/i18n/en'
+import { acceptLanguageHeader, readLocale } from '@/i18n/locale'
+import { pt } from '@/i18n/pt'
+
 function coldStartMessage(): string {
-  const stored = localStorage.getItem('gold-queen.locale')
-  return stored === 'en' ? en.coldStart : pt.coldStart
+  return readLocale() === 'en' ? en.coldStart : pt.coldStart
 }
 
 const TOKEN_KEY = 'gold-queen.token'
@@ -38,6 +38,9 @@ export function clearToken(): void {
 }
 
 api.interceptors.request.use((config) => {
+  const locale = readLocale()
+  config.headers['Accept-Language'] = acceptLanguageHeader(locale)
+
   const token = readToken()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`

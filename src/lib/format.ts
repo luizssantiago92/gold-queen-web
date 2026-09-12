@@ -6,7 +6,7 @@ export function toNumber(value: string): number {
   return Number.isFinite(parsed) ? parsed : 0
 }
 
-export function formatMoney(value: string | number, locale: Locale = 'pt'): string {
+export function formatMoney(value: string | number, locale: Locale = 'en'): string {
   const tag = locale === 'pt' ? 'pt-BR' : 'en-US'
   const formatter = new Intl.NumberFormat(tag, {
     style: 'currency',

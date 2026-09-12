@@ -1,4 +1,4 @@
-import { Home, ScanLine, User } from 'lucide-react'
+import { Home, Sparkles, User } from 'lucide-react'
 
 import { cn } from '@/components/ui/cn'
 import { useI18n } from '@/i18n/context'
@@ -27,10 +27,10 @@ export function BottomNav({ active, onNavigate, onAskQueen }: Props) {
         <button
           type="button"
           onClick={onAskQueen}
-          className="flex min-w-0 flex-1 items-center gap-2 rounded-2xl bg-white/6 px-4 py-2.5 text-left transition hover:bg-white/10"
+          className="flex min-w-0 flex-1 items-center justify-center gap-2 rounded-2xl bg-gold/15 px-4 py-2.5 text-sm font-semibold text-gold ring-1 ring-gold/30 transition hover:bg-gold/25"
         >
-          <ScanLine size={16} className="shrink-0 text-muted" />
-          <span className="truncate text-sm text-muted">{t('askQueenPlaceholder')}</span>
+          <Sparkles size={16} className="shrink-0" />
+          <span className="truncate">{t('navAdvisor')}</span>
         </button>
 
         <TabButton

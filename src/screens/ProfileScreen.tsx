@@ -1,5 +1,6 @@
-import { ChevronRight, CreditCard, Globe, Landmark, LogOut, Sparkles, Star } from 'lucide-react'
+import { CreditCard, Globe, Landmark, LogOut, Sparkles } from 'lucide-react'
 
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { Card } from '@/components/ui/Card'
@@ -9,7 +10,7 @@ import { useConnections } from '@/lib/queries'
 
 export function ProfileScreen() {
   const { user, logout } = useAuth()
-  const { locale, setLocale, t } = useI18n()
+  const { t } = useI18n()
   const connections = useConnections()
   const bankCount = connections.data?.length ?? 0
 
@@ -25,18 +26,7 @@ export function ProfileScreen() {
 
       <div className="space-y-3 px-4">
         <Card title={t('profileLanguage')} variant="flat">
-          <div className="flex gap-2">
-            <LangButton
-              active={locale === 'pt'}
-              label={t('profileLanguagePt')}
-              onClick={() => setLocale('pt')}
-            />
-            <LangButton
-              active={locale === 'en'}
-              label={t('profileLanguageEn')}
-              onClick={() => setLocale('en')}
-            />
-          </div>
+          <LanguageToggle />
         </Card>
 
         <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-gold/20 bg-black/50 p-4 backdrop-blur-sm">
@@ -67,7 +57,7 @@ export function ProfileScreen() {
           </Card>
         </div>
 
-        <Card title={t('profileBanksTitle')} showChevron>
+        <Card title={t('profileBanksTitle')}>
           {connections.isLoading ? (
             <Skeleton className="h-14 w-full rounded-2xl" />
           ) : connections.data && connections.data.length > 0 ? (
@@ -111,17 +101,6 @@ export function ProfileScreen() {
 
         <button
           type="button"
-          className="flex w-full items-center justify-between rounded-[var(--radius-card)] bg-black/50 px-4 py-3.5 text-sm text-parchment backdrop-blur-sm transition hover:bg-white/5"
-        >
-          <span className="flex items-center gap-2">
-            <Star size={16} className="text-gold" />
-            {t('profileRate')}
-          </span>
-          <ChevronRight size={16} className="text-muted" />
-        </button>
-
-        <button
-          type="button"
           onClick={logout}
           className="flex w-full items-center justify-center gap-2 rounded-2xl border border-blood/25 bg-blood/10 py-3.5 text-sm font-medium text-debit transition hover:bg-blood/15"
         >
@@ -130,30 +109,6 @@ export function ProfileScreen() {
         </button>
       </div>
     </div>
-  )
-}
-
-function LangButton({
-  active,
-  label,
-  onClick,
-}: {
-  active: boolean
-  label: string
-  onClick: () => void
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex-1 rounded-xl py-2.5 text-sm font-semibold transition ${
-        active
-          ? 'bg-gold text-void shadow-gold-glow'
-          : 'bg-white/5 text-muted hover:bg-white/10 hover:text-parchment'
-      }`}
-    >
-      {label}
-    </button>
   )
 }
 

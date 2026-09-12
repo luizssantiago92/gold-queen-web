@@ -18,7 +18,7 @@ export function MonthChartCard({ series, loading }: Props) {
 
   if (loading) {
     return (
-      <Card title={t('monthExpensesTitle')} showChevron>
+      <Card title={t('monthExpensesTitle')}>
         <Skeleton className="h-36 w-full rounded-2xl" />
       </Card>
     )
@@ -36,7 +36,6 @@ export function MonthChartCard({ series, loading }: Props) {
   return (
     <Card
       title={t('monthExpensesTitle')}
-      showChevron
       action={
         <span className="flex items-center gap-1 text-sm font-bold text-gold">
           <TrendingUp size={14} />

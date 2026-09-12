@@ -2,6 +2,8 @@ import { X } from 'lucide-react'
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 
+import { useI18n } from '@/i18n/context'
+
 interface ModalProps {
   open: boolean
   title: string
@@ -16,6 +18,8 @@ interface ModalProps {
  * whole page.
  */
 export function Modal({ open, title, subtitle, onClose, children }: ModalProps) {
+  const { t } = useI18n()
+
   useEffect(() => {
     if (!open) return
 
@@ -32,7 +36,7 @@ export function Modal({ open, title, subtitle, onClose, children }: ModalProps) 
     <div className="absolute inset-0 z-50 flex flex-col justify-end">
       <button
         type="button"
-        aria-label="Fechar"
+        aria-label={t('closeModal')}
         onClick={onClose}
         className="absolute inset-0 cursor-default bg-black/70 backdrop-blur-sm"
       />
@@ -51,7 +55,7 @@ export function Modal({ open, title, subtitle, onClose, children }: ModalProps) 
           <button
             type="button"
             onClick={onClose}
-            aria-label="Fechar"
+            aria-label={t('closeModal')}
             className="rounded-full p-1.5 text-parchment/60 transition hover:bg-parchment/10 hover:text-gold"
           >
             <X size={18} />
