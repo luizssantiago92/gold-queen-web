@@ -14,8 +14,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions align w
 - Reusable `LanguageToggle` on Login and Profile
 - `Accept-Language` header on all API requests
 - Explicit `locale` on Queen's Tips and chat endpoints
-- Project documentation under `docs/guide/` (spec-guardrails-style index)
+- Project documentation under `docs/guide/`
 - `CONTRIBUTING.md` with README update policy for significant PRs
+- README hero screenshot (`docs/assets/dashboard.png`) and demo GIF (`docs/assets/demo.gif`)
+- Vercel deploy badge alongside CI in the README header
+- `scripts/capture-readme-assets.mjs` to regenerate README media
 
 ### Changed
 
@@ -34,4 +37,4 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions align w
 
 - Migrated architecture and deployment content into `docs/guide/`
 - Added Overview, Quick start, Internationalization, Development guides
-- README restructured with workshop-style onboarding: hero nav, numbered setup, checklist, commands table, project map
+- README onboarding layout: hero preview, nav anchors, numbered setup, checklist, commands table, project map

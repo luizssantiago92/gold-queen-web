@@ -15,6 +15,13 @@
 
 <p align="center">
   <a href="https://github.com/luizssantiago92/gold-queen-web/actions/workflows/ci.yml"><img src="https://github.com/luizssantiago92/gold-queen-web/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://gold-queen-web.vercel.app"><img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Deployed on Vercel" /></a>
+</p>
+
+<p align="center">
+  <a href="https://gold-queen-web.vercel.app">
+    <img src="docs/assets/dashboard.png" alt="Gold Queen dashboard — balance, spending chart, and categories" width="300" />
+  </a>
 </p>
 
 <p align="center">
@@ -45,6 +52,10 @@ You get a single phone-shaped screen with consolidated balance, monthly spending
 > **The challenge this UI solves:** make complex financial data feel approachable in a portfolio demo — with intentional limits (sandbox bank, informational connect flow) while keeping production API paths ready for real Open Finance.
 
 The app does **not** embed Pluggy or Gemini keys. Secrets stay on the backend; only `VITE_API_BASE_URL` is public in the bundle.
+
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="Gold Queen — sign in to the royal treasury dashboard" width="300" />
+</p>
 
 ### What you can do here
 
@@ -218,6 +229,8 @@ CI workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml) — lint + bui
 | [`src/auth/`](src/auth/) | JWT session provider and context |
 | [`src/types/api.ts`](src/types/api.ts) | Response types aligned with the API |
 | [`docs/guide/`](docs/guide/) | Full documentation index |
+| [`docs/assets/`](docs/assets/) | README screenshot and demo GIF |
+| [`scripts/capture-readme-assets.mjs`](scripts/capture-readme-assets.mjs) | Regenerate README media |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | PR checklist and README update policy |
 | [`docs/CHANGELOG.md`](docs/CHANGELOG.md) | Notable releases |
 
