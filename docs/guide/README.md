@@ -3,7 +3,7 @@
 Plain-language guides for **Gold Queen Web**.  
 **New here?** Read **[Overview](Overview.md)** first, then [Quick start](Quick-start.md).
 
-The repository [README](../../README.md) is the product entry point: live URLs → three pillars (treasury, AI Queen, i18n) → stack → demo limits — with links back here for technical depth.
+The repository [README](../../README.md) is the product entry point: hero preview, live badges, onboarding steps, checklist, and project map — with links back here for technical depth.
 
 ---
 

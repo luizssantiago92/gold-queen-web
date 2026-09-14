@@ -96,6 +96,19 @@ Failure on lint or build blocks merge when branch protection requires CI.
 
 ---
 
+## README assets
+
+Screenshots and the demo GIF in the README live under `docs/assets/`. Regenerate after major UI changes:
+
+```bash
+# Requires: devDependency playwright (or npx playwright) + ffmpeg
+node scripts/capture-readme-assets.mjs
+```
+
+By default the script captures from https://gold-queen-web.vercel.app. Override with `APP_URL=http://localhost:5173`.
+
+---
+
 ## Related docs
 
 - [Architecture](Architecture.md)
