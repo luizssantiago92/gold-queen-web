@@ -12,7 +12,7 @@ Technical documentation lives in **`docs/guide/`** — structured like the [spec
 
 ## Product entry point
 
-The repository [README](../README.md) summarizes live URLs, pillars, stack, and links into this guide.
+The repository [README](../README.md) summarizes the product, onboarding steps, checklist, commands, and links into this guide.
 
 ## Changelog
 

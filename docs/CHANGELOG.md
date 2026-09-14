@@ -34,3 +34,4 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions align w
 
 - Migrated architecture and deployment content into `docs/guide/`
 - Added Overview, Quick start, Internationalization, Development guides
+- README restructured with workshop-style onboarding: hero nav, numbered setup, checklist, commands table, project map
