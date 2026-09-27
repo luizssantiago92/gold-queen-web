@@ -32,6 +32,22 @@ Preview deployments should use the same value unless you maintain a staging API.
 
 ---
 
+## Security headers
+
+`vercel.json` attaches these response headers to every path. Vercel still adds HSTS on HTTPS.
+
+| Header | Value |
+| --- | --- |
+| `Content-Security-Policy` | `default-src 'self'`; scripts from `'self'` only; styles from `'self'` and Google Fonts; `style-src-attr 'unsafe-inline'` for React `style` props; fonts from `fonts.gstatic.com`; images from `'self'` (scenes and the queen mark); `connect-src` includes `https://gold-queen-api.onrender.com`; `frame-ancestors 'none'` |
+| `X-Content-Type-Options` | `nosniff` |
+| `X-Frame-Options` | `DENY` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Permissions-Policy` | camera, microphone, geolocation, and payment disabled |
+
+Inline styles stay allowed because bank colors, the home slideshow, and charts set element `style` attributes. Scripts do not: there is no `'unsafe-inline'` or `'unsafe-eval'` in `script-src`. That is the control for the JWT in `localStorage`.
+
+---
+
 ## CORS
 
 The API must allow the Vercel origin. Production defaults in the API:
@@ -50,6 +66,10 @@ GitHub Actions (`.github/workflows/ci.yml`) on `main` and PRs:
 - `npm ci`
 - `npm run lint`
 - `npm run build`
+- `npm test`
+- `npm audit --audit-level=high`
+
+Actions are pinned to a full commit SHA. The workflow token is read-only (`permissions: contents: read`) and checkout does not persist credentials. Dependabot opens weekly updates for npm and GitHub Actions.
 
 Vercel typically deploys preview URLs per PR when the GitHub integration is connected.
 
