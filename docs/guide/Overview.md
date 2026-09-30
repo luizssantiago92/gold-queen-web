@@ -52,6 +52,7 @@ All three respect the active **locale** (`en` | `pt`).
 | Concern | Behavior |
 | --- | --- |
 | Token storage | JWT in `localStorage` (`gold-queen.token`) |
+| XSS mitigation | Production Content-Security-Policy (`script-src 'self'`). The token is still readable by any script the page runs; the CSP is what keeps untrusted scripts off the page. See [Deployment](Deployment.md). |
 | Login | `POST /v1/auth/login` via `AuthProvider` |
 | Session restore | Token read on boot; `/v1/auth/me` validates |
 | Logout | Clears token; button on **Profile** only |
