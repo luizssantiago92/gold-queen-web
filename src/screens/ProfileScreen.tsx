@@ -1,4 +1,5 @@
 import { CreditCard, Globe, Landmark, LogOut, Sparkles } from 'lucide-react'
+import { useState } from 'react'
 
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
@@ -6,13 +7,40 @@ import { useAuth } from '@/auth/context'
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
 import { useI18n } from '@/i18n/context'
-import { useConnections } from '@/lib/queries'
+import { errorMessage } from '@/lib/api'
+import { useConnections, useDeleteConnection, useSyncConnection } from '@/lib/queries'
+import type { BankConnection } from '@/types/api'
 
 export function ProfileScreen() {
   const { user, logout } = useAuth()
   const { t } = useI18n()
   const connections = useConnections()
+  const sync = useSyncConnection()
+  const remove = useDeleteConnection()
+  const [actionError, setActionError] = useState<string | null>(null)
   const bankCount = connections.data?.length ?? 0
+  const actionPending = sync.isPending || remove.isPending
+
+  async function onSync(connection: BankConnection) {
+    setActionError(null)
+    try {
+      await sync.mutateAsync({
+        itemId: connection.pluggy_item_id,
+        institutionName: connection.institution_name,
+      })
+    } catch (cause) {
+      setActionError(errorMessage(cause, t('syncError')))
+    }
+  }
+
+  async function onRemove(connection: BankConnection) {
+    setActionError(null)
+    try {
+      await remove.mutateAsync(connection.id)
+    } catch (cause) {
+      setActionError(errorMessage(cause, t('removeError')))
+    }
+  }
 
   return (
     <div className="scrollbar-none h-full overflow-y-auto pb-28">
@@ -73,6 +101,24 @@ export function ProfileScreen() {
                   <span className="min-w-0 flex-1 truncate text-sm text-parchment">
                     {connection.institution_name}
                   </span>
+                  <button
+                    type="button"
+                    disabled={actionPending}
+                    onClick={() => void onSync(connection)}
+                    aria-label={`${t('syncConnection')} ${connection.institution_name}`}
+                    className="shrink-0 text-[10px] font-semibold text-gold disabled:opacity-60"
+                  >
+                    {t('syncConnection')}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={actionPending}
+                    onClick={() => void onRemove(connection)}
+                    aria-label={`${t('removeConnection')} ${connection.institution_name}`}
+                    className="shrink-0 text-[10px] font-semibold text-debit disabled:opacity-60"
+                  >
+                    {t('removeConnection')}
+                  </button>
                   <span className="shrink-0 rounded-full bg-emerald-coin/15 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-coin">
                     {connection.status}
                   </span>
@@ -81,6 +127,11 @@ export function ProfileScreen() {
             </ul>
           ) : (
             <EmptyState message={t('noBanksConnected')} />
+          )}
+          {actionError && (
+            <p role="alert" className="mt-3 rounded-2xl bg-blood/15 px-3 py-2.5 text-xs text-debit">
+              {actionError}
+            </p>
           )}
         </Card>
 

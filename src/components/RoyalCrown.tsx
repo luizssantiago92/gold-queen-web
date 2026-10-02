@@ -12,7 +12,8 @@ export function RoyalCrown({ className, size }: Props) {
 
   return (
     <img
-      src="/queen-logo.jpg"
+      src="/queen-logo.webp"
+      decoding="async"
       alt=""
       className={cn(
         'shrink-0 rounded-full object-cover object-[center_12%] ring-1 ring-gold/30',

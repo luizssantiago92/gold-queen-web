@@ -4,6 +4,13 @@ import { en } from '@/i18n/en'
 import { acceptLanguageHeader, readLocale } from '@/i18n/locale'
 import { pt } from '@/i18n/pt'
 
+import { DEMO_READ_ONLY_MESSAGE, SIGNUP_CLOSED_MESSAGE } from './demoAccount'
+
+const FRIENDLY_CODE_MESSAGES: Record<string, string> = {
+  registration_disabled: SIGNUP_CLOSED_MESSAGE,
+  demo_read_only: DEMO_READ_ONLY_MESSAGE,
+}
+
 function coldStartMessage(): string {
   return readLocale() === 'en' ? en.coldStart : pt.coldStart
 }
@@ -93,10 +100,15 @@ api.interceptors.response.use(
   },
 )
 
-/** The API always answers errors as `{ "detail": "..." }`. */
+/** The API answers errors as `{ "detail": string, "code"?: string }`. */
 export function errorMessage(error: unknown, fallback: string): string {
   if (error instanceof AxiosError) {
-    const detail = (error.response?.data as { detail?: unknown } | undefined)?.detail
+    const data = error.response?.data as { detail?: unknown; code?: unknown } | undefined
+    const code = typeof data?.code === 'string' ? data.code : undefined
+    if (code && FRIENDLY_CODE_MESSAGES[code]) {
+      return FRIENDLY_CODE_MESSAGES[code]
+    }
+    const detail = data?.detail
     if (typeof detail === 'string' && detail.length > 0) {
       return detail
     }

@@ -18,15 +18,6 @@ The repository [README](../README.md) summarizes the product, onboarding steps, 
 
 [CHANGELOG.md](CHANGELOG.md)
 
-## Legacy paths
-
-Older flat docs were moved into `docs/guide/`:
-
-| Former path | New location |
-| --- | --- |
-| `docs/architecture.md` | [guide/Architecture.md](guide/Architecture.md) |
-| `docs/deployment.md` | [guide/Deployment.md](guide/Deployment.md) |
-
 ## Related
 
 - **Backend:** https://github.com/luizssantiago92/gold-queen-api
