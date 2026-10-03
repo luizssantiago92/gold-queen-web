@@ -17,8 +17,11 @@ function coldStartMessage(): string {
 
 const TOKEN_KEY = 'gold-queen.token'
 
+/** Same origin the rest of the client uses, including the boot-time health probe. */
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000'
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000',
+  baseURL: API_BASE_URL,
   // The demo backend runs on a free tier that spins down after a few idle
   // minutes and takes upwards of 50s to boot, so a shorter timeout would abort
   // the first request of every session.

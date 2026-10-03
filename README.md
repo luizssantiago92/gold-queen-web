@@ -134,7 +134,7 @@ Restart `npm run dev` after changing `.env`.
 | --- | --- |
 | `queen@goldqueen.dev` | `QueenDemo123!` |
 
-The API free tier on Render may **cold-start** (~60s) after idle time. The login screen explains this; retry once if the first request times out.
+The API free tier on Render may **cold-start** (~60s) after idle time. The login screen explains this; retry once if the first request times out. On load, `GET /health` runs first and a wake screen appears only if that call takes longer than about 1.5s, retrying with backoff for up to 90s.
 
 **Go deeper:** [Quick start](docs/guide/Quick-start.md)
 
@@ -222,7 +222,7 @@ CI workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml) — lint + bui
 | --- | --- |
 | [`src/screens/`](src/screens/) | Login, Home, and Profile screens |
 | [`src/components/home/`](src/components/home/) | Dashboard cards, demo banner, transaction feed |
-| [`src/components/`](src/components/) | Modals, bottom nav, `LanguageToggle`, mobile shell |
+| [`src/components/`](src/components/) | Modals, bottom nav, `LanguageToggle`, mobile shell, API wake gate |
 | [`src/i18n/`](src/i18n/) | Locale detection, EN/PT catalogs, `readLocale()` |
 | [`src/lib/api.ts`](src/lib/api.ts) | Axios client, JWT, `Accept-Language`, retries |
 | [`src/lib/queries.ts`](src/lib/queries.ts) | TanStack Query hooks for dashboard and AI |

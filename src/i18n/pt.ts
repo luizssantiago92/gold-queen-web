@@ -110,6 +110,11 @@ export const pt: Messages = {
   loginError: 'Os guardas do reino nao reconheceram estas credenciais.',
   loginSlow:
     'O servidor gratuito hiberna quando ocioso e pode levar ate um minuto para despertar. Aguardai — a Rainha ja foi chamada.',
+  wakeTitle: 'A corte está acordando',
+  wakeBody: 'O servidor gratuito estava dormindo e pode levar cerca de um minuto.',
+  wakeFailed: 'Não conseguimos acordar o servidor agora.',
+  wakeRetry: 'Tentar de novo',
+  wakeProgress: 'Progresso ao acordar o servidor',
   loginDemoNote: 'Conta de demonstracao ja preenchida — dados do Pluggy Sandbox.',
   signupToggle: 'Criar uma conta',
   signupName: 'Nome',

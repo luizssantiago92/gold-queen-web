@@ -91,6 +91,10 @@ Cards do **not** show chevrons unless they navigate somewhere (none do today).
 | Retry | Network errors on GET and login only (max 2, 4s delay) |
 | 401 | Clears token, emits `gold-queen:unauthorized` |
 
+### Cold-start wake (`ApiWakeGate`)
+
+On boot, `wakeApi` calls `GET /health` on the same `API_BASE_URL` (not the shared Axios client, so the JWT retry interceptor does not spend the wake budget). A reply in under 1.5s leaves the UI untouched. After that, a status screen with a progress bar covers login, home, and profile — every current screen needs the API — and keeps probing until 90s. Each attempt waits up to 60s; fast failures back off from 1s to 8s. The failure state offers a manual retry. Motion on the spinner and bar is limited to `motion-safe:` so `prefers-reduced-motion` keeps them still.
+
 ---
 
 ## Query hooks (`lib/queries.ts`)
