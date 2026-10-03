@@ -3,7 +3,7 @@
 Plain-language guides for **Gold Queen Web**.  
 **New here?** Read **[Overview](Overview.md)** first, then [Quick start](Quick-start.md).
 
-The repository [README](../../README.md) is the product entry point: hero preview, live badges, onboarding steps, checklist, and project map — with links back here for technical depth.
+The repository [README](../../README.md) is the product entry point: live links, the demo account, and a short map of the repo. These pages are the longer guide.
 
 ---
 
@@ -24,7 +24,7 @@ The repository [README](../../README.md) is the product entry point: hero previe
 | File | Topic |
 | --- | --- |
 | [Development.md](Development.md) | Scripts, CI, PR checklist, doc policy |
-| [../CHANGELOG.md](../CHANGELOG.md) | Notable releases |
+| [../../CHANGELOG.md](../../CHANGELOG.md) | Notable releases |
 
 ---
 

@@ -69,7 +69,7 @@ GitHub Actions (`.github/workflows/ci.yml`) on `main` and PRs:
 - `npm test`
 - `npm audit --audit-level=high`
 
-Actions are pinned to a full commit SHA. The workflow token is read-only (`permissions: contents: read`) and checkout does not persist credentials. Dependabot opens weekly updates for npm and GitHub Actions.
+Actions are pinned to a full commit SHA. The CI token is read-only (`permissions: contents: read`) and checkout does not persist credentials. [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) analyzes JavaScript/TypeScript and GitHub Actions. Dependabot opens one weekly pull request per ecosystem for grouped minor and patch updates (npm and GitHub Actions). Node 22 comes from [`.nvmrc`](../../.nvmrc).
 
 Vercel typically deploys preview URLs per PR when the GitHub integration is connected.
 
@@ -78,7 +78,7 @@ Vercel typically deploys preview URLs per PR when the GitHub integration is conn
 ## Post-deploy checklist
 
 1. Open https://gold-queen-web.vercel.app and log in with demo credentials.
-2. If the API was hibernating, wait up to ~60s on first load.
+2. If the API was asleep, the wake screen can stay up for about a minute.
 3. Confirm dashboard shows balance and transactions (requires API demo seed).
 4. Switch language in Profile — verify copy and number formatting.
 5. Open Queen's Tips and Advisor chat in both locales.

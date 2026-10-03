@@ -4,10 +4,12 @@ Get from zero to a logged-in dashboard in about ten minutes.
 
 ## 1. Clone and install
 
+Node 22 (see `.nvmrc` and `package.json` `engines`).
+
 ```bash
 git clone https://github.com/luizssantiago92/gold-queen-web.git
 cd gold-queen-web
-npm install
+npm ci
 cp .env.example .env
 ```
 
@@ -23,7 +25,7 @@ To skip a local API, point at production:
 VITE_API_BASE_URL=https://gold-queen-api.onrender.com
 ```
 
-> **CORS:** the production API allows `localhost:5173` and `localhost:3000` for dev. Vite preview on port **4173** is not in the allowlist — use `npm run dev` when testing against Render.
+> **CORS:** the production API allows `http://localhost:5173`. It rejects `http://127.0.0.1:5173`. Vite preview on port **4173** is not in the allowlist — use `npm run dev` when testing against Render.
 
 ## 2. Start the API (local path)
 
@@ -48,7 +50,7 @@ Demo credentials are prefilled:
 | Email | `queen@goldqueen.dev` |
 | Password | `QueenDemo123!` |
 
-Click **Sign in**. If the API was hibernating, the first request may take up to **60 seconds**.
+Click **Sign in**. If the API was asleep, the wake screen can stay up for about a minute before the login form is usable. The form itself also waits through a slow first login.
 
 ## 5. Explore the dashboard
 
@@ -78,6 +80,7 @@ Responses should match the selected locale.
 ## Everyday commands
 
 ```bash
+npm test              # vitest
 npm run lint          # oxlint
 npm run typecheck     # tsc only
 npm run build         # production bundle

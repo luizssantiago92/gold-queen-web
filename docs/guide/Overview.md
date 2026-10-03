@@ -71,7 +71,7 @@ TanStack Query caches dashboard responses:
 | Queen's Tips | Once per session when modal opens (`staleTime: Infinity`) |
 | Chat | Per message (`useMutation`) |
 
-Render free tier may **cold-start** (~60s). The login screen and API error copy explain this.
+The Render free tier may cold-start. On boot, `ApiWakeGate` calls `GET /health`. A fast reply leaves the UI alone. After about 1.5s a wake screen covers the shell and keeps probing until 90s. See [Architecture](Architecture.md).
 
 ---
 
@@ -93,7 +93,7 @@ Production Open Finance flows remain in the API for future UI work.
 - Correct balances if the API seed is missing or stale
 - Chat answers outside the guardrailed scope (backend enforces; UI shows errors)
 - Offline use (SPA requires network for all data)
-- SEO (client-rendered SPA, no SSR)
+- A server-rendered page per screen. The document head does include Open Graph and Twitter cards for https://gold-queen-web.vercel.app.
 
 ---
 

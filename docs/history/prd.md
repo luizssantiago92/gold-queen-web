@@ -1,6 +1,6 @@
 # Product Requirement Document (PRD) — Front-end Web (Mobile Shell)
 
-> **Historical document.** For current architecture, demo behaviour, and deployment, use [README.md](README.md) and [docs/](docs/README.md). Notable deltas: Open Finance Connect is disabled in the demo UI; default locale is `pt`; Pluggy widget dependencies were removed from the bundle.
+> **Historical document.** Current behavior is in the [README](../../README.md) and the [guide](../README.md). Deltas since this brief: the demo does not open Pluggy Connect; the default locale is English, with Portuguese when the browser language is Portuguese; the home badge says Demo; the bottom nav says Advisor; Pluggy widget packages are not in the bundle.
 
 ## 1. Identificação do Repositório
 
@@ -89,4 +89,4 @@ Todos os dados vêm de [`gold-queen-api`](https://github.com/luizssantiago92/gol
 
 ## 8. Setup
 
-Veja o [README](README.md).
+Veja o [README](../../README.md).

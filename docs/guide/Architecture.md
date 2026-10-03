@@ -28,8 +28,9 @@ No React Router. Navigation is local state (`home` | `profile`) inside `App.tsx`
 ```text
 I18nProvider (readLocale → en default, pt if browser/storage says so)
   └── QueryClientProvider (staleTime 60s, no retry on 401)
-        └── AuthProvider (JWT)
-              └── App
+        └── ApiWakeGate (GET /health before the shell needs the API)
+              └── AuthProvider (JWT)
+                    └── App
 ```
 
 ---
@@ -49,7 +50,7 @@ Global modals (controlled by `App.tsx`):
 | `QueenTipsModal` | "Learn to manage your wealth" button | `GET /v1/advisor/queen-tips?locale=` |
 | `ChatModal` | Bottom nav **Advisor** | `POST /v1/chat/query` `{ question, locale }` |
 | `TransactionDetailModal` | Tap row in feed | `GET /v1/dashboard/transactions/:id` |
-| Connect bank info | `ConnectBankButton` | None (informational) |
+| Connect bank info | `ConnectBankButton` | `POST /v1/connections/connect`, then an explanation modal. The public demo rejects the call as read-only and does not open Pluggy. |
 
 ---
 
