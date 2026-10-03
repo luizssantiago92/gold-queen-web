@@ -16,7 +16,11 @@ The repository [README](../README.md) summarizes the product, onboarding steps, 
 
 ## Changelog
 
-[CHANGELOG.md](CHANGELOG.md)
+[../CHANGELOG.md](../CHANGELOG.md)
+
+## Archive
+
+[history/prd.md](history/prd.md) is the original product brief. It is not the current reference.
 
 ## Related
 
