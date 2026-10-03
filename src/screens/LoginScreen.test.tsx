@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import { useAuth } from '@/auth/context'
 import { readToken } from '@/lib/api'
+import { SIGNUP_CLOSED_MESSAGE } from '@/lib/demoAccount'
 import { installApiMock } from '@/test/mockApi'
 import { AppProviders } from '@/test/providers'
 import type { User } from '@/types/api'
@@ -72,5 +73,37 @@ describe('LoginScreen', () => {
 
     expect(await screen.findByText('signed-in:queen@goldqueen.dev')).toBeInTheDocument()
     expect(readToken()).toBe('demo-token')
+  })
+
+  it('tells a closed demo that sign-up is unavailable and how to use the demo account', async () => {
+    const user = userEvent.setup()
+    restore = installApiMock((config) => {
+      if (config.url === '/v1/auth/register') {
+        return {
+          status: 403,
+          data: { detail: 'Registration is disabled.', code: 'registration_disabled' },
+        }
+      }
+      return { status: 500, data: { detail: 'unexpected' } }
+    })
+
+    render(
+      <AppProviders>
+        <LoginScreen />
+      </AppProviders>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Create an account' }))
+    await user.type(screen.getByLabelText('Name'), 'Visitor')
+    await user.type(screen.getByLabelText('Email'), 'visitor@example.com')
+    await user.type(screen.getByLabelText('Password'), 'long-enough-password')
+    await user.click(screen.getByRole('button', { name: 'Create account' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(SIGNUP_CLOSED_MESSAGE)
+    expect(readToken()).toBeNull()
+
+    await user.click(screen.getByRole('button', { name: 'Sign in with the demo account' }))
+    expect(screen.getByLabelText('Email')).toHaveValue('queen@goldqueen.dev')
+    expect(screen.getByLabelText('Password')).toHaveValue('QueenDemo123!')
   })
 })

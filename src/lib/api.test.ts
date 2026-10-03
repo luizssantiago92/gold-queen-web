@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import { en } from '@/i18n/en'
 import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
+import { DEMO_READ_ONLY_MESSAGE, SIGNUP_CLOSED_MESSAGE } from '@/lib/demoAccount'
 import {
   UNAUTHORIZED_EVENT,
   api,
@@ -127,5 +128,46 @@ describe('errorMessage', () => {
 
   it('uses the fallback for unknown errors', () => {
     expect(errorMessage(new Error('nope'), 'fallback')).toBe('fallback')
+  })
+
+  it('explains a closed sign-up in pt-BR and points at the demo account', () => {
+    const error = new AxiosError('forbidden')
+    error.response = {
+      status: 403,
+      data: { detail: 'Registration is disabled.', code: 'registration_disabled' },
+      statusText: 'Forbidden',
+      headers: {},
+      config: { headers: {} } as AxiosError['config'],
+    }
+
+    expect(errorMessage(error, 'fallback')).toBe(SIGNUP_CLOSED_MESSAGE)
+    expect(SIGNUP_CLOSED_MESSAGE).toContain('queen@goldqueen.dev')
+    expect(SIGNUP_CLOSED_MESSAGE).toContain('QueenDemo123!')
+  })
+
+  it('explains a read-only demo account in pt-BR', () => {
+    const error = new AxiosError('forbidden')
+    error.response = {
+      status: 403,
+      data: { detail: 'The public demo account is read-only.', code: 'demo_read_only' },
+      statusText: 'Forbidden',
+      headers: {},
+      config: { headers: {} } as AxiosError['config'],
+    }
+
+    expect(errorMessage(error, 'fallback')).toBe(DEMO_READ_ONLY_MESSAGE)
+  })
+
+  it('keeps the API detail for other coded errors', () => {
+    const error = new AxiosError('forbidden')
+    error.response = {
+      status: 403,
+      data: { detail: 'Connection limit reached', code: 'connection_limit_reached' },
+      statusText: 'Forbidden',
+      headers: {},
+      config: { headers: {} } as AxiosError['config'],
+    }
+
+    expect(errorMessage(error, 'fallback')).toBe('Connection limit reached')
   })
 })

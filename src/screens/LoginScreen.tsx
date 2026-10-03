@@ -6,17 +6,17 @@ import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { useI18n } from '@/i18n/context'
-import { errorMessage } from '@/lib/api'
+import { api, errorMessage } from '@/lib/api'
+import { DEMO_EMAIL, DEMO_PASSWORD } from '@/lib/demoAccount'
 import { greetingKey } from '@/lib/greeting'
-
-const DEMO_EMAIL = 'queen@goldqueen.dev'
-const DEMO_PASSWORD = 'QueenDemo123!'
 
 export function LoginScreen() {
   const { login } = useAuth()
   const { t } = useI18n()
+  const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [email, setEmail] = useState(DEMO_EMAIL)
   const [password, setPassword] = useState(DEMO_PASSWORD)
+  const [displayName, setDisplayName] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
   const [slow, setSlow] = useState(false)
@@ -27,15 +27,30 @@ export function LoginScreen() {
     return () => clearTimeout(timer)
   }, [pending])
 
+  function showLogin() {
+    setMode('login')
+    setEmail(DEMO_EMAIL)
+    setPassword(DEMO_PASSWORD)
+    setError(null)
+    setSlow(false)
+  }
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     setError(null)
     setSlow(false)
     setPending(true)
     try {
+      if (mode === 'signup') {
+        await api.post('/v1/auth/register', {
+          email,
+          password,
+          display_name: displayName,
+        })
+      }
       await login(email, password)
     } catch (cause) {
-      setError(errorMessage(cause, t('loginError')))
+      setError(errorMessage(cause, mode === 'signup' ? t('signupError') : t('loginError')))
     } finally {
       setPending(false)
     }
@@ -64,6 +79,24 @@ export function LoginScreen() {
       </div>
 
       <form onSubmit={onSubmit} className="space-y-4">
+        {mode === 'signup' && (
+          <label className="block">
+            <span className="mb-1.5 block text-xs font-medium tracking-wide text-muted">
+              {t('signupName')}
+            </span>
+            <input
+              type="text"
+              required
+              minLength={2}
+              maxLength={80}
+              autoComplete="name"
+              value={displayName}
+              onChange={(event) => setDisplayName(event.target.value)}
+              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-parchment outline-none backdrop-blur-sm transition focus:border-gold/50 focus:ring-1 focus:ring-gold/30"
+            />
+          </label>
+        )}
+
         <label className="block">
           <span className="mb-1.5 block text-xs font-medium tracking-wide text-muted">
             {t('loginEmail')}
@@ -85,7 +118,8 @@ export function LoginScreen() {
           <input
             type="password"
             required
-            autoComplete="current-password"
+            autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+            minLength={mode === 'signup' ? 8 : undefined}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-parchment outline-none backdrop-blur-sm transition focus:border-gold/50 focus:ring-1 focus:ring-gold/30"
@@ -104,10 +138,36 @@ export function LoginScreen() {
           className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold py-3.5 text-sm font-bold text-void shadow-gold-glow transition hover:brightness-105 disabled:opacity-60"
         >
           {pending ? <Loader2 className="animate-spin" size={16} /> : null}
-          {pending ? t('loginPending') : t('loginSubmit')}
+          {pending
+            ? t(mode === 'signup' ? 'signupPending' : 'loginPending')
+            : t(mode === 'signup' ? 'signupSubmit' : 'loginSubmit')}
         </button>
 
-        {slow && (
+        {mode === 'login' ? (
+          <button
+            type="button"
+            onClick={() => {
+              setMode('signup')
+              setEmail('')
+              setPassword('')
+              setError(null)
+              setSlow(false)
+            }}
+            className="w-full text-center text-xs font-medium text-gold/80 transition hover:text-gold"
+          >
+            {t('signupToggle')}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={showLogin}
+            className="w-full text-center text-xs font-medium text-gold/80 transition hover:text-gold"
+          >
+            {t('signupBack')}
+          </button>
+        )}
+
+        {slow && mode === 'login' && (
           <p className="text-center text-[11px] leading-relaxed text-muted">{t('loginSlow')}</p>
         )}
       </form>

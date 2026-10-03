@@ -1,4 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 
 import { useI18n } from '@/i18n/context'
 import type { Locale } from '@/i18n/types'
@@ -8,9 +9,11 @@ import type {
   BankConnection,
   CategoriesResponse,
   ChatResponse,
+  ConnectTokenResponse,
   MonthlySeriesResponse,
   OverviewResponse,
   QueenTipsResponse,
+  SyncResponse,
   TransactionPage,
   TransactionDetail,
 } from '@/types/api'
@@ -71,6 +74,51 @@ export function useConnections() {
   return useQuery({
     queryKey: queryKeys.connections,
     queryFn: async () => (await api.get<BankConnection[]>('/v1/connections')).data,
+  })
+}
+
+async function refreshTreasury(queryClient: QueryClient) {
+  await Promise.all([
+    queryClient.invalidateQueries({ queryKey: queryKeys.overview }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.categories }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.monthlySeries }),
+    queryClient.invalidateQueries({ queryKey: ['transactions'] }),
+    queryClient.invalidateQueries({ queryKey: ['transaction'] }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.connections }),
+    queryClient.invalidateQueries({ queryKey: ['queen-tips'] }),
+  ])
+}
+
+export function useConnectToken() {
+  return useMutation({
+    mutationFn: async () =>
+      (await api.post<ConnectTokenResponse>('/v1/connections/connect')).data,
+  })
+}
+
+export function useSyncConnection() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (input: { itemId: string; institutionName?: string }) =>
+      (
+        await api.post<SyncResponse>('/v1/connections/sync', {
+          item_id: input.itemId,
+          institution_name: input.institutionName,
+        })
+      ).data,
+    onSuccess: () => refreshTreasury(queryClient),
+  })
+}
+
+export function useDeleteConnection() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (connectionId: number) => {
+      await api.delete(`/v1/connections/${connectionId}`)
+    },
+    onSuccess: () => refreshTreasury(queryClient),
   })
 }
 

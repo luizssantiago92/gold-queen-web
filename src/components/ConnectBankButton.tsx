@@ -3,21 +3,35 @@ import { useState } from 'react'
 
 import { Modal } from '@/components/ui/Modal'
 import { useI18n } from '@/i18n/context'
-import { useConnections } from '@/lib/queries'
+import { errorMessage } from '@/lib/api'
+import { useConnections, useConnectToken } from '@/lib/queries'
 
 export function ConnectBankButton() {
   const { t } = useI18n()
   const connections = useConnections()
+  const connectToken = useConnectToken()
   const [open, setOpen] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const connectedBank = connections.data?.[0]?.institution_name
+
+  async function onConnect() {
+    setError(null)
+    setOpen(true)
+    try {
+      await connectToken.mutateAsync()
+    } catch (cause) {
+      setError(errorMessage(cause, t('connectError')))
+    }
+  }
 
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold"
+        onClick={() => void onConnect()}
+        disabled={connectToken.isPending}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold disabled:opacity-60"
       >
         <Landmark size={15} />
         {t('connectBank')}
@@ -30,6 +44,11 @@ export function ConnectBankButton() {
         onClose={() => setOpen(false)}
       >
         <div className="space-y-4 text-sm text-parchment/80">
+          {error && (
+            <p role="alert" className="rounded-2xl bg-blood/15 px-3 py-2.5 text-xs text-debit">
+              {error}
+            </p>
+          )}
           <p className="flex items-start gap-2">
             <Info size={16} className="mt-0.5 shrink-0 text-gold" />
             {t('demoConnectBody')}

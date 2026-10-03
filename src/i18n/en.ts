@@ -109,6 +109,15 @@ export const en = {
   loginSlow:
     'The free server hibernates when idle and can take up to a minute to wake. Hold on — the Queen has been summoned.',
   loginDemoNote: 'Demo account prefilled — Pluggy Sandbox data.',
+  signupToggle: 'Create an account',
+  signupName: 'Name',
+  signupSubmit: 'Create account',
+  signupPending: 'Opening the ledger...',
+  signupBack: 'Sign in with the demo account',
+  signupError: 'Could not create the account.',
+  syncConnection: 'Sync',
+  removeConnection: 'Remove',
+  removeError: 'Could not unlink this bank.',
 
   profilePlan: 'Free',
   profilePlanLabel: 'Plan',

@@ -3,11 +3,17 @@ import { resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-function headerMap(): Record<string, string> {
+function headerRules(): { source: string; headers: { key: string; value: string }[] }[] {
   const config = JSON.parse(readFileSync(resolve(process.cwd(), 'vercel.json'), 'utf8')) as {
-    headers: { headers: { key: string; value: string }[] }[]
+    headers: { source: string; headers: { key: string; value: string }[] }[]
   }
-  return Object.fromEntries(config.headers[0].headers.map((header) => [header.key, header.value]))
+  return config.headers
+}
+
+function headerMap(source = '/(.*)'): Record<string, string> {
+  const rule = headerRules().find((entry) => entry.source === source)
+  if (!rule) throw new Error(`missing header rule for ${source}`)
+  return Object.fromEntries(rule.headers.map((header) => [header.key, header.value]))
 }
 
 describe('production security headers', () => {
@@ -35,5 +41,15 @@ describe('production security headers', () => {
     expect(csp).toContain('https://fonts.gstatic.com')
     expect(csp).toContain("img-src 'self'")
     expect(csp).toContain("style-src-attr 'unsafe-inline'")
+  })
+
+  it('caches content-hashed build assets for a year without dropping the security policy', () => {
+    const assets = headerMap('/assets/(.*)')
+    expect(assets['Cache-Control']).toBe('public, max-age=31536000, immutable')
+
+    const security = headerMap('/(.*)')
+    expect(security['Content-Security-Policy']).toContain("script-src 'self'")
+    expect(security['X-Frame-Options']).toBe('DENY')
+    expect(security['Cache-Control']).toBeUndefined()
   })
 })

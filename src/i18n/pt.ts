@@ -111,6 +111,15 @@ export const pt: Messages = {
   loginSlow:
     'O servidor gratuito hiberna quando ocioso e pode levar ate um minuto para despertar. Aguardai — a Rainha ja foi chamada.',
   loginDemoNote: 'Conta de demonstracao ja preenchida — dados do Pluggy Sandbox.',
+  signupToggle: 'Criar uma conta',
+  signupName: 'Nome',
+  signupSubmit: 'Criar conta',
+  signupPending: 'Abrindo o livro...',
+  signupBack: 'Entrar com a conta demo',
+  signupError: 'Não foi possível criar a conta.',
+  syncConnection: 'Sincronizar',
+  removeConnection: 'Remover',
+  removeError: 'Não foi possível desligar este banco.',
 
   profilePlan: 'Gratis',
   profilePlanLabel: 'Plano',
