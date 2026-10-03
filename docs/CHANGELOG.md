@@ -10,6 +10,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions align w
 
 ### Added
 
+- Boot-time `GET /health` wake screen for the Render free-tier cold start (reveal after 1.5s, backoff until 90s)
+- Open Graph and Twitter `summary_large_image` tags, with a 1200×630 `public/og-image.webp`
 - English-first i18n with `readLocale()` (`en` default, browser `pt` detection)
 - Reusable `LanguageToggle` on Login and Profile
 - `Accept-Language` header on all API requests

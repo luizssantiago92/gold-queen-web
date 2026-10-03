@@ -108,6 +108,11 @@ export const en = {
   loginError: 'The realm guards did not recognize these credentials.',
   loginSlow:
     'The free server hibernates when idle and can take up to a minute to wake. Hold on — the Queen has been summoned.',
+  wakeTitle: 'The court is waking',
+  wakeBody: 'The free server was asleep and can take about a minute.',
+  wakeFailed: 'We could not wake the server just now.',
+  wakeRetry: 'Try again',
+  wakeProgress: 'Server wake progress',
   loginDemoNote: 'Demo account prefilled — Pluggy Sandbox data.',
   signupToggle: 'Create an account',
   signupName: 'Name',
