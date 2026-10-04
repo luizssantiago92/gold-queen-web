@@ -8,6 +8,7 @@ Thank you for improving the frontend. This repo favors **small, focused PRs** wi
 2. Run locally:
    ```bash
    npm ci
+   npm test
    npm run lint
    npm run build
    ```
@@ -22,8 +23,8 @@ Thank you for improving the frontend. This repo favors **small, focused PRs** wi
 | New screen, navigation, or major UX flow | `README.md` + [docs/guide/Architecture.md](docs/guide/Architecture.md) |
 | i18n / locale behavior | `README.md` + [docs/guide/Internationalization.md](docs/guide/Internationalization.md) |
 | API client, hooks, env vars | `README.md` + [docs/guide/Architecture.md](docs/guide/Architecture.md) and/or [Deployment.md](docs/guide/Deployment.md) |
-| Deploy / Vercel / CI | [docs/guide/Deployment.md](docs/guide/Deployment.md) + [docs/CHANGELOG.md](docs/CHANGELOG.md) |
-| User-visible release | [docs/CHANGELOG.md](docs/CHANGELOG.md) |
+| Deploy / Vercel / CI | [docs/guide/Deployment.md](docs/guide/Deployment.md) + [CHANGELOG.md](CHANGELOG.md) |
+| User-visible release | [CHANGELOG.md](CHANGELOG.md) |
 
 **Significant** means: a reviewer cannot understand the new behavior from the diff alone, or the README would be misleading after merge.
 
