@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Portuguese (pt-BR) UI copy: proper diacritics, crase before Rainha, and agreement (`Mestra da Moeda`, `limites propositais`)
+
 ## [1.0.0] - 2026-10-03
 
 ### Added
