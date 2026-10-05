@@ -8,7 +8,7 @@ Thank you for improving the frontend. This repo favors **small, focused PRs** wi
 2. Run locally:
    ```bash
    npm ci
-   npm test
+   npm run test:coverage
    npm run lint
    npm run build
    ```

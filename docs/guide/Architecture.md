@@ -162,4 +162,6 @@ See [Internationalization.md](Internationalization.md) for locale detection, cat
 
 Vite produces a static SPA in `dist/`. No SSR. Environment variables are inlined at **build time** — set `VITE_API_BASE_URL` in Vercel for production.
 
+The entry chunk does not include chat, Queen's Tips, transaction detail, or Recharts. The three modals load when they open. The monthly chart loads with the home dashboard, in its own chunk, so Recharts stays out of the first script. `index.html` only references the entry script. The API base URL lives in that entry, because the Axios client is imported up front.
+
 Back to [guide index](README.md)

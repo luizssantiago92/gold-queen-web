@@ -2,7 +2,7 @@ import { X } from 'lucide-react'
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 
 interface ModalProps {
   open: boolean

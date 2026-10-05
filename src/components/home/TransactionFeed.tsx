@@ -1,14 +1,20 @@
 import { CreditCard, ShieldCheck } from 'lucide-react'
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 
-import { TransactionDetailModal } from '@/components/TransactionDetailModal'
+import { ModalChunkFallback } from '@/components/SuspenseFallback'
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { formatDay } from '@/lib/localeFormat'
 import { formatMoney, toNumber } from '@/lib/format'
 import { bankColor, categoryLabel } from '@/lib/palette'
 import type { Transaction, TransactionPage } from '@/types/api'
+
+const TransactionDetailModal = lazy(() =>
+  import('@/components/TransactionDetailModal').then((module) => ({
+    default: module.TransactionDetailModal,
+  })),
+)
 
 interface Props {
   page?: TransactionPage
@@ -105,10 +111,14 @@ export function TransactionFeed({ page, loading }: Props) {
         )}
       </Card>
 
-      <TransactionDetailModal
-        transactionId={selected?.id ?? null}
-        onClose={() => setSelected(null)}
-      />
+      {selected && (
+        <Suspense fallback={<ModalChunkFallback />}>
+          <TransactionDetailModal
+            transactionId={selected.id}
+            onClose={() => setSelected(null)}
+          />
+        </Suspense>
+      )}
     </>
   )
 }

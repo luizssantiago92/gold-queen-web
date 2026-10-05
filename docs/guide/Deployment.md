@@ -102,7 +102,9 @@ After deploy, confirm the production JS references the correct host:
 
 ```bash
 curl -s https://gold-queen-web.vercel.app | grep -o 'src="[^"]*\.js"'
-# then grep the bundle for gold-queen-api.onrender.com
+# then grep that entry script for gold-queen-api.onrender.com
 ```
+
+`index.html` lists the entry script only. Chat, Queen's Tips, transaction detail, and the spending chart are extra chunks fetched when those views open.
 
 Back to [guide index](README.md)

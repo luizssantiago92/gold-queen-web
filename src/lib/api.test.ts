@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios'
+import { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { en } from '@/i18n/en'
@@ -113,7 +113,7 @@ describe('errorMessage', () => {
       data: { detail: 'Invalid credentials' },
       statusText: 'Bad Request',
       headers: {},
-      config: { headers: {} } as AxiosError['config'],
+      config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
     expect(errorMessage(error, 'fallback')).toBe('Invalid credentials')
@@ -137,7 +137,7 @@ describe('errorMessage', () => {
       data: { detail: 'Registration is disabled.', code: 'registration_disabled' },
       statusText: 'Forbidden',
       headers: {},
-      config: { headers: {} } as AxiosError['config'],
+      config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
     expect(errorMessage(error, 'fallback')).toBe(SIGNUP_CLOSED_MESSAGE)
@@ -152,7 +152,7 @@ describe('errorMessage', () => {
       data: { detail: 'The public demo account is read-only.', code: 'demo_read_only' },
       statusText: 'Forbidden',
       headers: {},
-      config: { headers: {} } as AxiosError['config'],
+      config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
     expect(errorMessage(error, 'fallback')).toBe(DEMO_READ_ONLY_MESSAGE)
@@ -165,7 +165,7 @@ describe('errorMessage', () => {
       data: { detail: 'Connection limit reached', code: 'connection_limit_reached' },
       statusText: 'Forbidden',
       headers: {},
-      config: { headers: {} } as AxiosError['config'],
+      config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
     expect(errorMessage(error, 'fallback')).toBe('Connection limit reached')

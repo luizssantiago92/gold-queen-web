@@ -3,7 +3,7 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'rec
 
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { formatDay } from '@/lib/localeFormat'
 import { formatMoney, toNumber } from '@/lib/format'
 import type { MonthlySeriesResponse } from '@/types/api'

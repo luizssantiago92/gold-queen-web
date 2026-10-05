@@ -1,20 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { en, type MessageKey, type Messages } from './en'
 import { LOCALE_STORAGE_KEY, readLocale } from './locale'
 import { pt } from './pt'
 import type { Locale } from './types'
+import { I18nContext } from './useI18n'
 
 const catalogs: Record<Locale, Messages> = { en, pt }
-
-interface I18nContextValue {
-  locale: Locale
-  setLocale: (locale: Locale) => void
-  t: (key: MessageKey, vars?: Record<string, string | number>) => string
-  messages: Messages
-}
-
-const I18nContext = createContext<I18nContextValue | null>(null)
 
 function interpolate(template: string, vars?: Record<string, string | number>): string {
   if (!vars) return template
@@ -48,10 +40,4 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   )
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
-}
-
-export function useI18n() {
-  const ctx = useContext(I18nContext)
-  if (!ctx) throw new Error('useI18n must be used within I18nProvider')
-  return ctx
 }

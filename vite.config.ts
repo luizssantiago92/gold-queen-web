@@ -13,5 +13,19 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/test/**'],
+      thresholds: {
+        // Kept a few points under the measured suite so a small edit does not
+        // fail CI, while still catching a real drop.
+        statements: 80,
+        branches: 73,
+        functions: 77,
+        lines: 84,
+      },
+    },
   },
 })

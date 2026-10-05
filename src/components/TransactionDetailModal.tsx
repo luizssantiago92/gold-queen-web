@@ -2,7 +2,7 @@ import { ShieldCheck } from 'lucide-react'
 
 import { Modal } from '@/components/ui/Modal'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { formatDay } from '@/lib/localeFormat'
 import { formatMoney, toNumber } from '@/lib/format'
 import { categoryLabel } from '@/lib/palette'

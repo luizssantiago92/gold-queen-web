@@ -1,6 +1,6 @@
 import { DemoInfoBanner } from '@/components/home/DemoInfoBanner'
 import { RoyalCrown } from '@/components/RoyalCrown'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { greetingKey } from '@/lib/greeting'
 
 export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {

@@ -1,7 +1,7 @@
 import { Home, Sparkles, User } from 'lucide-react'
 
 import { cn } from '@/components/ui/cn'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 
 export type Tab = 'home' | 'profile'
 

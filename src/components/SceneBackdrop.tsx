@@ -3,24 +3,7 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/components/ui/cn'
 import { SLIDE_INTERVAL_MS } from '@/lib/slideshow'
 
-export const SCENES = {
-  login: '/scenes/scene-dawn-lake.webp',
-  home: '/scenes/scene-castle-sunset.webp',
-  profile: '/scenes/scene-treasury.webp',
-} as const
-
-/** Home wallpaper rotates through these every few seconds. */
-export const HOME_SLIDESHOW = [
-  '/scenes/scene-castle-sunset.webp',
-  '/scenes/scene-council.webp',
-  '/scenes/scene-throne.webp',
-  '/scenes/scene-vault.webp',
-  '/scenes/scene-treasury.webp',
-] as const
-
-const SLIDE_MS = SLIDE_INTERVAL_MS
-
-export type SceneId = keyof typeof SCENES
+import { HOME_SLIDESHOW, SCENES, type SceneId } from './scenes'
 
 interface Props {
   scene: SceneId
@@ -38,7 +21,7 @@ export function SceneBackdrop({ scene, className }: Props) {
 
     const timer = window.setInterval(() => {
       setSlideIndex((current) => (current + 1) % HOME_SLIDESHOW.length)
-    }, SLIDE_MS)
+    }, SLIDE_INTERVAL_MS)
 
     return () => window.clearInterval(timer)
   }, [scene])

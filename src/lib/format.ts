@@ -14,9 +14,3 @@ export function formatMoney(value: string | number, locale: Locale = 'en'): stri
   })
   return formatter.format(typeof value === 'string' ? toNumber(value) : value)
 }
-
-/** Parsed as local time: `new Date('2026-08-01')` would shift a day backwards. */
-export function parseApiDate(value: string): Date {
-  const [year, month, day] = value.split('-').map(Number)
-  return new Date(year, (month ?? 1) - 1, day ?? 1)
-}

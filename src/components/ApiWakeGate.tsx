@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 
 import { MobileShell } from '@/components/MobileShell'
 import { RoyalCrown } from '@/components/RoyalCrown'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import {
   probeHealth,
   WAKE_BUDGET_MS,

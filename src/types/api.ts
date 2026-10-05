@@ -42,7 +42,7 @@ export interface SyncResponse {
   guarded: boolean
 }
 
-export interface BankBalance {
+interface BankBalance {
   connection_id: number
   institution_name: string
   balance: string
@@ -58,7 +58,7 @@ export interface OverviewResponse {
   reference_month: string
 }
 
-export interface CategoryBreakdown {
+interface CategoryBreakdown {
   category: string
   total: string
   share_percentage: number
@@ -71,7 +71,7 @@ export interface CategoriesResponse {
   categories: CategoryBreakdown[]
 }
 
-export interface MonthlySeriesPoint {
+interface MonthlySeriesPoint {
   date: string
   cumulative_expenses: string
 }

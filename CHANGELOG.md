@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Code-split chat, Queen's Tips, transaction detail, and the monthly spending chart so the first JavaScript chunk stays under Vite's 500 kB warning.
+- Type-check Vitest files in `npm run build` via `tsconfig.test.json`.
+- CI runs `npm run test:coverage` (`@vitest/coverage-v8`) and enforces modest thresholds.
+- Drop unused `parseApiDate` and `TranslationKey`, and stop exporting helpers that nothing outside their module imports.
+
 ### Fixed
 
 - Portuguese (pt-BR) UI copy: proper diacritics, crase before Rainha, and agreement (`Mestra da Moeda`, `limites propositais`)
+- oxlint warnings: component files no longer export hooks or scene constants, and chat no longer resets its greeting inside an effect.
 
 ## [1.0.0] - 2026-10-03
 

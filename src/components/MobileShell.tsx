@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
-import { SceneBackdrop, type SceneId } from '@/components/SceneBackdrop'
+import { SceneBackdrop } from '@/components/SceneBackdrop'
+import type { SceneId } from '@/components/scenes'
 
 /**
  * On desktop the app is framed as a phone to read as a product test-drive; on
