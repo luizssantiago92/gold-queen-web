@@ -81,8 +81,9 @@ Responses should match the selected locale.
 
 ```bash
 npm test              # vitest
+npm run test:coverage # vitest + v8 thresholds (CI)
 npm run lint          # oxlint
-npm run typecheck     # tsc only
+npm run typecheck     # tsc only, including test files
 npm run build         # production bundle
 npm run preview       # serve dist/ (remember CORS note above)
 ```

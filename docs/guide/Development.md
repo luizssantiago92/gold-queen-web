@@ -32,9 +32,10 @@ Never commit `.env`. Only `VITE_*` keys belong here — they are public in the b
 | Command | When to use |
 | --- | --- |
 | `npm run dev` | Local development (port 5173) |
-| `npm test` | Vitest, same as CI |
-| `npm run build` | Pre-PR verification; same as CI |
-| `npm run typecheck` | Fast TS check without Vite |
+| `npm test` | Vitest |
+| `npm run test:coverage` | Vitest with v8 coverage thresholds; this is what CI runs |
+| `npm run build` | Typecheck (including tests) and production bundle; same as CI |
+| `npm run typecheck` | Fast TS check without Vite. Includes `tsconfig.test.json` |
 | `npm run lint` | oxlint |
 | `npm run preview` | Smoke-test `dist/` locally |
 
@@ -54,7 +55,7 @@ Never commit `.env`. Only `VITE_*` keys belong here — they are public in the b
 
 ## Pull request checklist
 
-1. `npm test && npm run lint && npm run build` pass
+1. `npm run test:coverage && npm run lint && npm run build` pass
 2. Manual smoke: login → dashboard → locale toggle → tips → chat
 3. **Documentation** (required for significant changes):
    - Update [README.md](../../README.md) if product behavior, stack, or quick start changed
@@ -82,7 +83,7 @@ Workflow: `.github/workflows/ci.yml`
 
 Triggers: push to `main`, pull requests to `main`. CodeQL is a separate workflow, [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml).
 
-A failure on test, lint, or build fails the workflow.
+A failure on coverage, lint, or build fails the workflow. Coverage output stays out of git (`coverage/` is ignored).
 
 ---
 

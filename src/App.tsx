@@ -1,17 +1,23 @@
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 
 import { useAuth } from '@/auth/context'
 import { BottomNav } from '@/components/BottomNav'
 import type { Tab } from '@/components/BottomNav'
-import { ChatModal } from '@/components/ChatModal'
 import { MobileShell } from '@/components/MobileShell'
-import type { SceneId } from '@/components/SceneBackdrop'
-import { QueenTipsModal } from '@/components/QueenTipsModal'
-import { useI18n } from '@/i18n/context'
+import type { SceneId } from '@/components/scenes'
+import { ModalChunkFallback } from '@/components/SuspenseFallback'
+import { useI18n } from '@/i18n/useI18n'
 import { HomeScreen } from '@/screens/HomeScreen'
 import { LoginScreen } from '@/screens/LoginScreen'
 import { ProfileScreen } from '@/screens/ProfileScreen'
+
+const ChatModal = lazy(() =>
+  import('@/components/ChatModal').then((module) => ({ default: module.ChatModal })),
+)
+const QueenTipsModal = lazy(() =>
+  import('@/components/QueenTipsModal').then((module) => ({ default: module.QueenTipsModal })),
+)
 
 export function App() {
   const { status } = useAuth()
@@ -57,8 +63,16 @@ export function App() {
 
       <BottomNav active={tab} onNavigate={setTab} onAskQueen={() => setChatOpen(true)} />
 
-      <QueenTipsModal open={tipsOpen} onClose={() => setTipsOpen(false)} />
-      <ChatModal open={chatOpen} onClose={() => setChatOpen(false)} />
+      {tipsOpen && (
+        <Suspense fallback={<ModalChunkFallback />}>
+          <QueenTipsModal open onClose={() => setTipsOpen(false)} />
+        </Suspense>
+      )}
+      {chatOpen && (
+        <Suspense fallback={<ModalChunkFallback />}>
+          <ChatModal open onClose={() => setChatOpen(false)} />
+        </Suspense>
+      )}
     </MobileShell>
   )
 }

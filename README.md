@@ -35,8 +35,9 @@ Connect, sync, and unlink return `403` with code `demo_read_only`. Registration 
 
 - **Cold start.** On boot the app calls `GET /health` on the API. A reply in under 1.5s leaves the UI alone. After that, a status screen with a progress bar covers the shell until the probe succeeds or 90s pass. The app behind the screen is `inert`. The spinner and bar use `motion-safe:`, so `prefers-reduced-motion` keeps them still. The failure state offers a retry.
 - **Accessibility.** Modals use `role="dialog"` and `aria-modal`, close on Escape, and name the close control. The wake screen is a live region with a labeled progress bar. User-facing copy is in English and Portuguese catalogs (`src/i18n/`). English is the default; Portuguese is chosen when the browser language is Portuguese or the visitor toggles it.
-- **Tests.** Vitest and Testing Library cover auth, the API client, the wake gate, security headers, and the main screens. CI runs the suite. There is no coverage service and no coverage badge.
-- **CI.** GitHub Actions runs oxlint, the TypeScript build, Vitest, and `npm audit --audit-level=high` on Node 22. Third-party actions are pinned to commit SHAs. CodeQL analyzes JavaScript/TypeScript and GitHub Actions. Dependabot opens a weekly pull request of grouped minor and patch updates for npm, and another for GitHub Actions. The CI token is `contents: read`. CodeQL also requests `actions: read` and `security-events: write`.
+- **Tests.** Vitest and Testing Library cover auth, the API client, the wake gate, security headers, and the main screens, including home, chat, Queen's Tips, and the transaction feed. CI runs `npm run test:coverage` and fails if v8 coverage drops under the thresholds in `vite.config.ts`. There is no external coverage service and no coverage badge.
+- **Bundle.** Chat, Queen's Tips, transaction detail, and the monthly spending chart load as separate chunks. The first script stays under Vite's 500 kB warning.
+- **CI.** GitHub Actions runs oxlint, the TypeScript build (app, Node config, and tests), coverage, and `npm audit --audit-level=high` on Node 22. Third-party actions are pinned to commit SHAs. CodeQL analyzes JavaScript/TypeScript and GitHub Actions. Dependabot opens a weekly pull request of grouped minor and patch updates for npm, and another for GitHub Actions. The CI token is `contents: read`. CodeQL also requests `actions: read` and `security-events: write`.
 - **Headers.** [`vercel.json`](vercel.json) sends a Content-Security-Policy with `script-src 'self'` (no inline scripts), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, a referrer policy, and a permissions policy that disables camera, microphone, geolocation, and payment. The JWT lives in `localStorage`. The script policy is what keeps other scripts off the page.
 
 Secrets such as Pluggy and Gemini keys stay on the API. The only public setting in this bundle is `VITE_API_BASE_URL`.
@@ -75,6 +76,7 @@ To skip a local API, set `VITE_API_BASE_URL=https://gold-queen-api.onrender.com`
 
 ```bash
 npm test
+npm run test:coverage
 npm run lint
 npm run build
 ```

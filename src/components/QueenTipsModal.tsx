@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { Modal } from '@/components/ui/Modal'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { errorMessage } from '@/lib/api'
 import { useQueenTips } from '@/lib/queries'
 

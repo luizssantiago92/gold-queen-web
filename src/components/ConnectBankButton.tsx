@@ -2,7 +2,7 @@ import { CheckCircle2, Info, Landmark } from 'lucide-react'
 import { useState } from 'react'
 
 import { Modal } from '@/components/ui/Modal'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { errorMessage } from '@/lib/api'
 import { useConnections, useConnectToken } from '@/lib/queries'
 

@@ -1,7 +1,8 @@
 import { fireEvent, render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { HOME_SLIDESHOW, SceneBackdrop } from './SceneBackdrop'
+import { SceneBackdrop } from './SceneBackdrop'
+import { HOME_SLIDESHOW } from './scenes'
 
 function imageSources(container: HTMLElement): string[] {
   return [...container.querySelectorAll('img')].map((image) => image.getAttribute('src') ?? '')

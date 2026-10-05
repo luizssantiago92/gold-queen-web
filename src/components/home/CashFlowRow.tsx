@@ -2,7 +2,7 @@ import { TrendingDown, TrendingUp } from 'lucide-react'
 
 import { Card } from '@/components/ui/Card'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { formatMoney } from '@/lib/format'
 import type { OverviewResponse } from '@/types/api'
 

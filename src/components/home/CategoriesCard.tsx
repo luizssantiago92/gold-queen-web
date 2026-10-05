@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { formatMoney } from '@/lib/format'
 import { categoryColor, categoryLabel } from '@/lib/palette'
 import type { CategoriesResponse } from '@/types/api'

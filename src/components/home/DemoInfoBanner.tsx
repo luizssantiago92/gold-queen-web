@@ -2,7 +2,7 @@ import { X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { cn } from '@/components/ui/cn'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import type { MessageKey } from '@/i18n/en'
 import { SLIDE_INTERVAL_MS } from '@/lib/slideshow'
 

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
 
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import type { Locale } from '@/i18n/types'
 
 import { AI_TIMEOUT_MS, api } from './api'
@@ -18,7 +18,7 @@ import type {
   TransactionDetail,
 } from '@/types/api'
 
-export const queryKeys = {
+const queryKeys = {
   overview: ['overview'] as const,
   categories: ['categories'] as const,
   monthlySeries: ['monthly-series'] as const,

@@ -4,7 +4,7 @@ import type { FormEvent } from 'react'
 
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { Modal } from '@/components/ui/Modal'
-import { useI18n } from '@/i18n/context'
+import { useI18n } from '@/i18n/useI18n'
 import { errorMessage, statusOf } from '@/lib/api'
 import { useAskQueen } from '@/lib/queries'
 
@@ -20,19 +20,23 @@ interface Props {
 }
 
 export function ChatModal({ open, onClose }: Props) {
+  const { locale } = useI18n()
+  if (!open) return null
+  // Remount when the locale changes so the greeting is translated without
+  // resetting conversation state from an effect.
+  return <ChatSession key={locale} onClose={onClose} />
+}
+
+function ChatSession({ onClose }: { onClose: () => void }) {
   const { t } = useI18n()
   const ask = useAskQueen()
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>(() => [
+    { id: 0, author: 'queen', text: t('chatGreeting') },
+  ])
   const [question, setQuestion] = useState('')
   const [remaining, setRemaining] = useState<number | null>(null)
   const [blocked, setBlocked] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (open) {
-      setMessages([{ id: 0, author: 'queen', text: t('chatGreeting') }])
-    }
-  }, [open, t])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -74,7 +78,7 @@ export function ChatModal({ open, onClose }: Props) {
 
   return (
     <Modal
-      open={open}
+      open
       title={t('chatTitle')}
       subtitle={
         remaining === null
