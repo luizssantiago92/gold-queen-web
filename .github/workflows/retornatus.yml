@@ -1,0 +1,160 @@
+# Retornatus PR gates
+#
+# Mirrors gold-queen-api. The composite action is pinned to the v1 tag
+# commit (v1 and v1.9.1 are a4b3e88c779afe3933b27b1e3610952d6e41bcb1).
+# Input version installs that same PyPI release.
+#
+# The action runs gate suppressions, verify, and gate scope with --json,
+# writes the markdown to the job summary, and posts or updates one sticky
+# comment marked <!-- retornatus-verdict -->.
+#
+# Permissions on the job: contents read, pull-requests write.
+# Fork pull requests receive a read-only token. The action skips the comment
+# and still writes the job summary. fail-on: not_satisfied still fails the
+# job when the verdict is not SATISFIED.
+#
+# RETORNATUS_OMISSION (environment, not an action input):
+#   fail (default) — a code diff with no touched Change fails the job
+#   warn — print a warning and continue
+#
+# Retornatus 1.9.1 has no [governance.omission.bot_exemption] and this action
+# does not pass --pr-author. That exemption exists only on unreleased main.
+# The step below is the gold-queen-api workaround, adapted to npm manifests
+# (package.json, package-lock.json) and Actions pin bumps. After the next
+# Retornatus release, pin the new action and replace this step with the
+# native exemption, passing --pr-author from the pull request event.
+#
+# 1.9.1 treats src, tests, scripts, templates, pyproject.toml, and uv.lock as
+# code. package.json and workflow files do not trip omission by themselves.
+# A job-level if that skips this job for dependabot[bot] would mark the
+# required retornatus-gates check successful and would also skip the
+# suppressions gate, so this workflow does not do that. warn is set only
+# when the author is dependabot[bot] and every changed file is a dependency
+# manifest or an Actions pin bump. Human and agent pull requests keep fail.
+#
+# Checkout needs fetch-depth: 0 so the diff base is in the clone.
+# This workflow does not push, merge, deploy, or sign receipts.
+
+name: Retornatus
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+env:
+  RETORNATUS_OMISSION: fail
+
+jobs:
+  retornatus-gates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Dependabot npm bumps touch package.json. warn is the supported
+      # omission mode on 1.9.1. It stays fail unless the author is
+      # dependabot[bot] and the diff is only dependency manifests or
+      # workflow pin lines. Simplify after the next Retornatus release:
+      # use [governance.omission.bot_exemption] and --pr-author.
+      - name: Set omission mode for Dependabot manifest diffs
+        shell: bash
+        env:
+          PR_AUTHOR: ${{ github.event.pull_request.user.login || '' }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+        run: |
+          set -euo pipefail
+          mode=fail
+          if [ "${PR_AUTHOR}" = "dependabot[bot]" ] && [ -n "${BASE_SHA}" ]; then
+            if python3 - "${BASE_SHA}" <<'PY'
+          import re
+          import subprocess
+          import sys
+
+          base = sys.argv[1]
+          names = [
+              name
+              for name in subprocess.check_output(
+                  ["git", "diff", "--name-only", f"{base}...HEAD"],
+                  text=True,
+              ).splitlines()
+              if name
+          ]
+          if not names:
+              sys.exit(1)
+
+          manifest = re.compile(r"^(package\.json|package-lock\.json)$")
+          workflow = re.compile(r"^\.github/workflows/[^/]+\.ya?ml$")
+          dep_sections = {
+              "dependencies",
+              "devDependencies",
+              "optionalDependencies",
+              "peerDependencies",
+          }
+          pin = re.compile(r'^"[^"]+"\s*:\s*"[^"]+"\s*,?\s*$')
+          section_header = re.compile(r'^"([A-Za-z][A-Za-z0-9]*)"\s*:\s*\{')
+          uses_pin = re.compile(
+              r"^\s*(?:-\s*)?uses:\s+\S+@\S+(?:\s+#.*)?\s*$"
+          )
+
+          for name in names:
+              if manifest.match(name) or workflow.match(name):
+                  continue
+              sys.exit(1)
+
+          if "package.json" in names:
+              diff = subprocess.check_output(
+                  ["git", "diff", "-U9999", f"{base}...HEAD", "--", "package.json"],
+                  text=True,
+              )
+              section = ""
+              for line in diff.splitlines():
+                  if line.startswith(("diff ", "index ", "--- ", "+++ ", "@@")):
+                      continue
+                  if not line or line[0] not in " +-":
+                      continue
+                  body = line[1:].strip()
+                  header = section_header.match(body)
+                  if header:
+                      section = header.group(1)
+                      if line[0] in "+-":
+                          sys.exit(1)
+                      continue
+                  if line[0] not in "+-":
+                      continue
+                  if section not in dep_sections or not pin.match(body):
+                      sys.exit(1)
+
+          for name in names:
+              if workflow.match(name) is None:
+                  continue
+              diff = subprocess.check_output(
+                  ["git", "diff", "-U0", f"{base}...HEAD", "--", name],
+                  text=True,
+              )
+              for line in diff.splitlines():
+                  if not line or line[0] not in "+-" or line.startswith(("+++", "---")):
+                      continue
+                  if uses_pin.match(line[1:]) is None:
+                      sys.exit(1)
+          PY
+            then
+              mode=warn
+            fi
+          fi
+          echo "RETORNATUS_OMISSION=${mode}" >> "${GITHUB_ENV}"
+          echo "RETORNATUS_OMISSION=${mode}"
+
+      - uses: luizssantiago92/retornatus@a4b3e88c779afe3933b27b1e3610952d6e41bcb1 # v1
+        with:
+          version: "1.9.1"
+          comment: "true"
+          fail-on: not_satisfied

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0001/E-004",
+  "type": "review_result",
+  "subject": ".github/workflows/retornatus.yml",
+  "source": "python3 -c '\nfrom pathlib import Path\ntext = Path(\".github/workflows/retornatus.yml\").read_text(encoding=\"utf-8\")\nneedles = [\n    \"contents: read\",\n    \"pull-requests: write\",\n    \"persist-credentials: false\",\n    \"a4b3e88c779afe3933b27b1e3610952d6e41bcb1 # v1\",\n    \"version: \\\"1.9.1\\\"\",\n    \"dependabot[bot]\",\n    \"governance.omission.bot_exemption\",\n]\nmissing = [item for item in needles if item not in text]\nif missing:\n    raise SystemExit(\"missing: \" + \", \".join(missing))\nprint(\"workflow review ok\")\nfor item in needles:\n    print(\"present:\", item)\n'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-06T00:21:46.872880Z",
+  "subject_state": null,
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "\nfrom pathlib import Path\ntext = Path(\".github/workflows/retornatus.yml\").read_text(encoding=\"utf-8\")\nneedles = [\n    \"contents: read\",\n    \"pull-requests: write\",\n    \"persist-credentials: false\",\n    \"a4b3e88c779afe3933b27b1e3610952d6e41bcb1 # v1\",\n    \"version: \\\"1.9.1\\\"\",\n    \"dependabot[bot]\",\n    \"governance.omission.bot_exemption\",\n]\nmissing = [item for item in needles if item not in text]\nif missing:\n    raise SystemExit(\"missing: \" + \", \".join(missing))\nprint(\"workflow review ok\")\nfor item in needles:\n    print(\"present:\", item)\n"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-06T00:21:46.848453Z",
+  "ended_at": "2026-10-06T00:21:46.866959Z",
+  "duration_ms": 18,
+  "output_sha256": "f2a6a3485144b7c119fbd5cc6c9243062c43562cfecd2e28970d395e26d7981b",
+  "output_tail": "workflow review ok\npresent: contents: read\npresent: pull-requests: write\npresent: persist-credentials: false\npresent: a4b3e88c779afe3933b27b1e3610952d6e41bcb1 # v1\npresent: version: \"1.9.1\"\npresent: dependabot[bot]\npresent: governance.omission.bot_exemption\n",
+  "output_artifact": ".retornatus/changes/C-0001/evidence/E-004.output.txt",
+  "git_commit": "e358837b443ec693d7b7780c160b6ee282ee1e3c",
+  "worktree_dirty": true,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0001/claim-done-3",
+      "note": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0001",
+  "title": "Adopt Retornatus 1.9.1",
+  "demand": {
+    "schema_version": 1,
+    "statement": "Adopt Retornatus 1.9.1 as the governance harness for gold-queen-web, matching gold-queen-api where the stack allows.",
+    "kind": "MAINTENANCE"
+  },
+  "lane": "STANDARD",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-06T00:19:32.075091Z"
+}

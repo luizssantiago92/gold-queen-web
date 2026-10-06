@@ -1,0 +1,49 @@
+schema_version = 1
+
+[retornatus]
+version = "1.9.1"
+
+[project]
+initialized = true
+
+# 1.9.1 presets are python, python-platform, fastapi, django, rag, and worker.
+# There is no Node preset. These commands are the CI steps in
+# .github/workflows/ci.yml (lint, typecheck and Vite build, Vitest coverage).
+
+[[assurance.required_checks]]
+name = "lint"
+run = [
+    "npm",
+    "run",
+    "lint",
+]
+types = [
+    "lint_result",
+]
+
+[[assurance.required_checks]]
+name = "build"
+run = [
+    "npm",
+    "run",
+    "build",
+]
+types = [
+    "build_result",
+]
+
+[[assurance.required_checks]]
+name = "test-coverage"
+run = [
+    "npm",
+    "run",
+    "test:coverage",
+]
+types = [
+    "test_result",
+]
+
+[governance.scope]
+code_globs = [
+    "src/**",
+]

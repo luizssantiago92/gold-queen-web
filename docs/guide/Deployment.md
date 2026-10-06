@@ -71,6 +71,8 @@ GitHub Actions (`.github/workflows/ci.yml`) on `main` and PRs:
 
 Actions are pinned to a full commit SHA. The CI token is read-only (`permissions: contents: read`) and checkout does not persist credentials. [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) analyzes JavaScript/TypeScript and GitHub Actions. Dependabot opens one weekly pull request per ecosystem for grouped minor and patch updates (npm and GitHub Actions). Node 22 comes from [`.nvmrc`](../../.nvmrc).
 
+Pull requests also run [`.github/workflows/retornatus.yml`](../../.github/workflows/retornatus.yml). The `retornatus-gates` job checks the Change contract and its evidence. It does not replace the lint, build, and coverage steps above.
+
 Vercel typically deploys preview URLs per PR when the GitHub integration is connected.
 
 ---
