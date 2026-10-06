@@ -85,6 +85,8 @@ Triggers: push to `main`, pull requests to `main`. CodeQL is a separate workflow
 
 A failure on coverage, lint, or build fails the workflow. Coverage output stays out of git (`coverage/` is ignored).
 
+Pull requests also run the Retornatus `retornatus-gates` check. See [CONTRIBUTING.md](../../CONTRIBUTING.md#governance).
+
 ---
 
 ## Debugging tips

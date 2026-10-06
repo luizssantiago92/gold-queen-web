@@ -39,6 +39,10 @@ Include:
 - **Test plan** — commands run, manual steps (login, locale toggle, tips, chat)
 - **Docs** — list updated doc files, or state "docs N/A (trivial)"
 
+## Governance
+
+Retornatus keeps the finish line for a behavior change in `.retornatus/changes/`: a contract, then evidence from the same commands CI runs (`npm run lint`, `npm run build`, `npm run test:coverage`). Pull requests run the `retornatus-gates` check in [`.github/workflows/retornatus.yml`](.github/workflows/retornatus.yml). `graphify-out/` and rtk stay on your machine; do not commit them.
+
 ## Code conventions
 
 - Match existing patterns in the file you edit (naming, hooks, Tailwind classes).

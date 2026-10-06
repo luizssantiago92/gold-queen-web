@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "C-0001/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Initialize Retornatus, point required checks at the CI lint, build, and coverage commands, add the pinned retornatus-gates workflow, and record this adoption as C-0001.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "npm run test:coverage passes with the Vitest v8 coverage thresholds in vite.config.ts.",
+    "npm run build passes, running tsc -b and the Vite production build.",
+    "Workflow review of .github/workflows/retornatus.yml confirms contents read, pull-requests write, persist-credentials false, and action pin a4b3e88c779afe3933b27b1e3610952d6e41bcb1.",
+    "The Governance section is documented in \"CONTRIBUTING.md\" and names the retornatus-gates check."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0001/T-001",
+      "description": "Adopt Retornatus 1.9.1: config, workflow, host bridges, ignore rules, and docs.",
+      "lifecycle": "PENDING",
+      "depends_on": [],
+      "resources": [
+        ".github/workflows/retornatus.yml",
+        ".gitignore",
+        "CONTRIBUTING.md",
+        "README.md",
+        "CHANGELOG.md",
+        "docs/guide/Deployment.md",
+        "docs/guide/Development.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        ".cursor/**",
+        ".claude/**"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

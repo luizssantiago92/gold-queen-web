@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0001",
+  "version": 1,
+  "what": "Initialize Retornatus, point required checks at the CI lint, build, and coverage commands, add the pinned retornatus-gates workflow, and record this adoption as C-0001.",
+  "constraints": [],
+  "done_criteria": [
+    "npm run test:coverage passes with the Vitest v8 coverage thresholds in vite.config.ts.",
+    "npm run build passes, running tsc -b and the Vite production build.",
+    "Workflow review of .github/workflows/retornatus.yml confirms contents read, pull-requests write, persist-credentials false, and action pin a4b3e88c779afe3933b27b1e3610952d6e41bcb1.",
+    "The Governance section is documented in \"CONTRIBUTING.md\" and names the retornatus-gates check."
+  ],
+  "active": true,
+  "activated_at": "2026-10-06T00:19:32.085573Z"
+}

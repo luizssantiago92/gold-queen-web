@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Retornatus governance for pull requests (`retornatus-gates`), with the first Change under `.retornatus/changes/C-0001`.
+
 ### Changed
 
 - Code-split chat, Queen's Tips, transaction detail, and the monthly spending chart so the first JavaScript chunk stays under Vite's 500 kB warning.
