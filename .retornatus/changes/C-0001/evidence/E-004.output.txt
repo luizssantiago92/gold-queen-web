@@ -1,0 +1,8 @@
+workflow review ok
+present: contents: read
+present: pull-requests: write
+present: persist-credentials: false
+present: a4b3e88c779afe3933b27b1e3610952d6e41bcb1 # v1
+present: version: "1.9.1"
+present: dependabot[bot]
+present: governance.omission.bot_exemption

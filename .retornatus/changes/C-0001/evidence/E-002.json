@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0001/E-002",
+  "type": "build_result",
+  "subject": "npm run build passes, running tsc -b and the Vite production build.",
+  "source": "build",
+  "producer": "retornatus",
+  "observed_at": "2026-10-06T00:20:43.710141Z",
+  "subject_state": "commit:e358837b443ec693d7b7780c160b6ee282ee1e3c",
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-06T00:20:35.458612Z",
+  "ended_at": "2026-10-06T00:20:36.491243Z",
+  "duration_ms": 1032,
+  "output_sha256": "4c7d33ec0833a88cf1d0e996c2fd5eca654bf22c0f6075b3df463793b3eee31d",
+  "output_tail": "\n> gold-queen-web@1.0.0 build\n> tsc -b && vite build\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 2604 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                   2.56 kB │ gzip:   0.84 kB\ndist/assets/index-Dk3Q3SbO.css                   41.97 kB │ gzip:   7.17 kB\ndist/assets/QueenTipsModal-BbL7tOwa.js            2.05 kB │ gzip:   0.95 kB\ndist/assets/TransactionDetailModal-CQ_FZdKt.js    2.16 kB │ gzip:   0.65 kB\ndist/assets/ChatModal-DVAp_h5_.js                 3.04 kB │ gzip:   1.43 kB\ndist/assets/useI18n-Bgv-YIs5.js                  12.14 kB │ gzip:   4.76 kB\ndist/assets/MonthChartCard-CYqw4HxY.js          346.83 kB │ gzip: 101.24 kB\ndist/assets/index-oF1F8lOk.js                   354.49 kB │ gzip: 111.90 kB\n\n✓ built in 328ms\n",
+  "output_artifact": ".retornatus/changes/C-0001/evidence/E-002.output.txt",
+  "git_commit": "e358837b443ec693d7b7780c160b6ee282ee1e3c",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0001/claim-done-2",
+      "note": null
+    }
+  ]
+}

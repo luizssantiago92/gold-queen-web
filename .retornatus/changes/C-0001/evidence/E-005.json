@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0001/E-005",
+  "type": "repository_observation",
+  "subject": "CONTRIBUTING.md",
+  "source": "python3 -c '\nfrom pathlib import Path\ntext = Path(\"CONTRIBUTING.md\").read_text(encoding=\"utf-8\")\nrequired = [\"## Governance\", \"retornatus-gates\", \"npm run lint\", \"npm run build\", \"npm run test:coverage\", \".retornatus/changes/\"]\nmissing = [item for item in required if item not in text]\nif missing:\n    raise SystemExit(\"missing: \" + \", \".join(missing))\nprint(\"CONTRIBUTING.md Governance section names Retornatus and retornatus-gates\")\n'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-06T00:20:50.524720Z",
+  "subject_state": "commit:e358837b443ec693d7b7780c160b6ee282ee1e3c",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "\nfrom pathlib import Path\ntext = Path(\"CONTRIBUTING.md\").read_text(encoding=\"utf-8\")\nrequired = [\"## Governance\", \"retornatus-gates\", \"npm run lint\", \"npm run build\", \"npm run test:coverage\", \".retornatus/changes/\"]\nmissing = [item for item in required if item not in text]\nif missing:\n    raise SystemExit(\"missing: \" + \", \".join(missing))\nprint(\"CONTRIBUTING.md Governance section names Retornatus and retornatus-gates\")\n"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-06T00:20:50.500494Z",
+  "ended_at": "2026-10-06T00:20:50.518522Z",
+  "duration_ms": 18,
+  "output_sha256": "adb877b04b9c9c460cb701ac073f79daf4dc8f90b1072b59c4440b5b5c886188",
+  "output_tail": "CONTRIBUTING.md Governance section names Retornatus and retornatus-gates\n",
+  "output_artifact": ".retornatus/changes/C-0001/evidence/E-005.output.txt",
+  "git_commit": "e358837b443ec693d7b7780c160b6ee282ee1e3c",
+  "worktree_dirty": true,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0001/claim-done-4",
+      "note": null
+    }
+  ]
+}
