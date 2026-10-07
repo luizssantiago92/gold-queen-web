@@ -34,6 +34,7 @@
         "src/components/home/CategoriesCard.tsx",
         "src/components/home/CategoriesCard.test.tsx",
         "src/components/home/MonthChartCard.tsx",
+        "src/components/home/MonthChartCard.test.tsx",
         "src/screens/HomeScreen.tsx",
         "src/screens/HomeScreen.test.tsx",
         "src/lib/queries.ts",
