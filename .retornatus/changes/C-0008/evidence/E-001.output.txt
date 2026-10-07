@@ -1,0 +1,7 @@
+https://github.com/luizssantiago92/gold-queen-web/security/advisories/new
+script-src 'self'
+0001-vite-spa-on-vercel.md
+0002-jwt-in-local-storage.md
+0003-response-headers.md
+0004-public-demo-client.md
+0005-retornatus-governance.md

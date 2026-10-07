@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- A reporting page (`SECURITY.md`) and decision records under `docs/adr/` for the running client.
 - Retornatus governance for pull requests (`retornatus-gates`), with the first Change under `.retornatus/changes/C-0001`.
 
 ### Changed
