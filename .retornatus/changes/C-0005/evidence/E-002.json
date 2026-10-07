@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "C-0005/E-002",
+  "type": "lint_result",
+  "subject": "lint",
+  "source": "npm run lint",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T03:17:49.274516Z",
+  "subject_state": "commit:6f30a7c8b6dc541e1f8e6d35c5513d33393319cd",
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "run",
+    "lint"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T03:17:49.089064Z",
+  "ended_at": "2026-10-07T03:17:49.267570Z",
+  "duration_ms": 178,
+  "output_sha256": "519e30e7a4c554321e7689d27c23af5fb338ed81538aca017d9d99e43ef76657",
+  "output_tail": "\n> gold-queen-web@1.0.0 lint\n> oxlint\n\n",
+  "output_artifact": ".retornatus/changes/C-0005/evidence/E-002.output.txt",
+  "git_commit": "6f30a7c8b6dc541e1f8e6d35c5513d33393319cd",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": []
+}
