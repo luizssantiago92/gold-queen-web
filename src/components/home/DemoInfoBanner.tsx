@@ -48,9 +48,13 @@ export function DemoInfoBanner({ className }: Props) {
     <section aria-label={t('demoBannerSpeak')} className={cn('relative min-w-0 flex-1', className)}>
       <div className="relative rounded-2xl border border-gold/25 bg-black/55 px-3 py-2 pr-6 shadow-gold-glow backdrop-blur-sm">
         <span
+          aria-hidden="true"
+          className="absolute top-1/2 -left-[10px] -translate-y-1/2 border-y-[8px] border-r-[9px] border-y-transparent border-r-gold/40"
+        />
+        <span
           data-speech-tail=""
           aria-hidden="true"
-          className="absolute top-1/2 -left-2 size-3 -translate-y-1/2 rotate-45 border-b border-l border-gold/25 bg-black/55"
+          className="absolute top-1/2 -left-2 -translate-y-1/2 border-y-[7px] border-r-8 border-y-transparent border-r-[#16130c]"
         />
 
         <button

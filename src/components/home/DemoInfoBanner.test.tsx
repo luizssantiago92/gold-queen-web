@@ -131,6 +131,8 @@ describe('HomeHeader speech bubble', () => {
     expect(tail).not.toBeNull()
     expect(tail).toHaveAttribute('aria-hidden', 'true')
     expect(tail!.className).toMatch(/-left-/)
+    expect(tail!.className).toContain('border-r-8')
+    expect(tail!.className).not.toContain('rotate-45')
     expect(portrait!.compareDocumentPosition(region) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(region.className).toContain('min-w-0')
   })
