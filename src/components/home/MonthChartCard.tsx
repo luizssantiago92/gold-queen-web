@@ -55,8 +55,10 @@ export function MonthChartCard({ series, loading, onOpenDay }: Props) {
               data={data}
               margin={{ top: 8, right: 4, bottom: 0, left: -20 }}
               onClick={(state) => {
-                const date = state?.activePayload?.[0]?.payload?.date
-                if (typeof date === 'string') onOpenDay(date)
+                const index = state?.activeTooltipIndex
+                if (typeof index !== 'number') return
+                const date = data[index]?.date
+                if (date) onOpenDay(date)
               }}
             >
               <defs>
