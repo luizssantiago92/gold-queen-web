@@ -38,8 +38,8 @@ Connect, sync, and unlink return `403` with code `demo_read_only`. Registration 
 - **Tests.** Vitest and Testing Library cover auth, the API client, the wake gate, security headers, and the main screens, including home, chat, Queen's Tips, and the transaction feed. CI runs `npm run test:coverage` and fails if v8 coverage drops under the thresholds in `vite.config.ts`. There is no external coverage service and no coverage badge.
 - **Bundle.** Chat, Queen's Tips, transaction detail, and the monthly spending chart load as separate chunks. The first script stays under Vite's 500 kB warning.
 - **CI.** GitHub Actions runs oxlint, the TypeScript build (app, Node config, and tests), coverage, and `npm audit --audit-level=high` on Node 22. Third-party actions are pinned to commit SHAs. CodeQL analyzes JavaScript/TypeScript and GitHub Actions. Dependabot opens a weekly pull request of grouped minor and patch updates for npm, and another for GitHub Actions. The CI token is `contents: read`. CodeQL also requests `actions: read` and `security-events: write`.
-- **Retornatus.** Behavior changes have a contract and evidence under `.retornatus/changes/` (C-0001). Pull requests run the `retornatus-gates` check.
-- **Headers.** [`vercel.json`](vercel.json) sends a Content-Security-Policy with `script-src 'self'` (no inline scripts), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, a referrer policy, and a permissions policy that disables camera, microphone, geolocation, and payment. The JWT lives in `localStorage`. The script policy is what keeps other scripts off the page.
+- **Retornatus.** Behavior changes have a contract and evidence under `.retornatus/changes/` (C-0001). Pull requests run the `retornatus-gates` check. The decision records are [docs/adr/README.md](docs/adr/README.md).
+- **Headers.** [`vercel.json`](vercel.json) sends a Content-Security-Policy with `script-src 'self'` (no inline scripts), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, a referrer policy, and a permissions policy that disables camera, microphone, geolocation, and payment. The JWT lives in `localStorage`. The script policy is what keeps other scripts off the page. Report a vulnerability in private via [SECURITY.md](SECURITY.md).
 
 Secrets such as Pluggy and Gemini keys stay on the API. The only public setting in this bundle is `VITE_API_BASE_URL`.
 
@@ -101,13 +101,15 @@ src/lib/         Axios client, TanStack Query hooks, wake probe
 src/auth/        JWT session
 src/i18n/        English and Portuguese catalogs
 docs/guide/      longer guides
+docs/adr/        decision records for the running client
 docs/screenshots/ README captures
 docs/history/    original product brief
 .github/         CI, CodeQL, Dependabot, Retornatus gates
 .retornatus/    change contracts and evidence
+SECURITY.md      how to report a vulnerability in this repo
 ```
 
-Guides: [docs/guide/README.md](docs/guide/README.md). The original brief is [docs/history/prd.md](docs/history/prd.md). This README and `docs/guide/` are the current reference.
+Guides: [docs/guide/README.md](docs/guide/README.md). Decision records: [docs/adr/README.md](docs/adr/README.md). Reporting: [SECURITY.md](SECURITY.md). The original brief is [docs/history/prd.md](docs/history/prd.md). This README and `docs/guide/` are the current reference.
 
 ## License
 

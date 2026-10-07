@@ -24,6 +24,7 @@ Thank you for improving the frontend. This repo favors **small, focused PRs** wi
 | i18n / locale behavior | `README.md` + [docs/guide/Internationalization.md](docs/guide/Internationalization.md) |
 | API client, hooks, env vars | `README.md` + [docs/guide/Architecture.md](docs/guide/Architecture.md) and/or [Deployment.md](docs/guide/Deployment.md) |
 | Deploy / Vercel / CI | [docs/guide/Deployment.md](docs/guide/Deployment.md) + [CHANGELOG.md](CHANGELOG.md) |
+| Reporting page or a decision record | [SECURITY.md](SECURITY.md) and/or [docs/adr/](docs/adr/README.md) |
 | User-visible release | [CHANGELOG.md](CHANGELOG.md) |
 
 **Significant** means: a reviewer cannot understand the new behavior from the diff alone, or the README would be misleading after merge.

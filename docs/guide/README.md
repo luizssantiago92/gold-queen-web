@@ -25,6 +25,8 @@ The repository [README](../../README.md) is the product entry point: live links,
 | --- | --- |
 | [Development.md](Development.md) | Scripts, CI, PR checklist, doc policy |
 | [../../CHANGELOG.md](../../CHANGELOG.md) | Notable releases |
+| [../adr/README.md](../adr/README.md) | Decision records for the running client |
+| [../../SECURITY.md](../../SECURITY.md) | How to report a vulnerability in this repo |
 
 ---
 

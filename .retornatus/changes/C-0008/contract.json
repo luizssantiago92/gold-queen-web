@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0008",
+  "version": 1,
+  "what": "A reporting page and decision records that describe the running client.",
+  "constraints": [],
+  "done_criteria": [
+    "The vulnerability reporting page and the decision records are documented in docs/adr/README.md."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T11:19:11.803065Z"
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "C-0008/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "A reporting page and decision records that describe the running client.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "The vulnerability reporting page and the decision records are documented in docs/adr/README.md."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0008/T-001",
+      "description": "Write the reporting page, the decision-record index, five records of the running client, and links from the product entry, the guide index, the changelog, and the contributing policy.",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "SECURITY.md",
+        "docs/adr/README.md",
+        "docs/adr/0001-vite-spa-on-vercel.md",
+        "docs/adr/0002-jwt-in-local-storage.md",
+        "docs/adr/0003-response-headers.md",
+        "docs/adr/0004-public-demo-client.md",
+        "docs/adr/0005-retornatus-governance.md",
+        "README.md",
+        "docs/guide/README.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}
