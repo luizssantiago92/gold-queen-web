@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0004",
+  "version": 1,
+  "what": "Show one short line in a speech bubble with an arrow toward the RoyalCrown portrait, reveal the longer remark on tap or keyboard, keep dismiss, and drop pagination dots and auto-advance. Copy stays in English and Portuguese.",
+  "constraints": [],
+  "done_criteria": [
+    "src/components/home/DemoInfoBanner.test.tsx proves one short line stays on screen, a tap or key press reveals the longer remark, dismiss hides the bubble, and the line does not advance on a timer.",
+    "The speech bubble is documented in docs/guide/Architecture.md as one line, an arrow toward the portrait, and no auto-advance."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T01:17:44.816612Z"
+}

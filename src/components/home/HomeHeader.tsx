@@ -8,7 +8,7 @@ export function HomeHeader({ referenceMonth }: { referenceMonth?: string }) {
 
   return (
     <header className="shrink-0 px-5 pt-6 pb-4">
-      <div className="mb-4 flex items-center gap-3">
+      <div className="mb-4 flex items-center gap-2.5">
         <div className="size-12 shrink-0 overflow-hidden rounded-full border border-gold/35 shadow-gold-glow">
           <RoyalCrown />
         </div>

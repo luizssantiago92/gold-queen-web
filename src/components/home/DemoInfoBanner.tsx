@@ -1,18 +1,17 @@
 import { X } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useId, useState } from 'react'
 
 import { cn } from '@/components/ui/cn'
 import { useI18n } from '@/i18n/useI18n'
 import type { MessageKey } from '@/i18n/en'
-import { SLIDE_INTERVAL_MS } from '@/lib/slideshow'
 
-const SLIDE_KEYS = [
-  'demoBannerProduct',
-  'demoBannerOpenFinance',
-  'demoBannerLimits',
-  'demoBannerQueen',
-  'demoBannerPlan',
-] as const satisfies readonly MessageKey[]
+const LINES = [
+  { short: 'demoBannerShortProduct', rest: 'demoBannerProduct' },
+  { short: 'demoBannerShortOpenFinance', rest: 'demoBannerOpenFinance' },
+  { short: 'demoBannerShortLimits', rest: 'demoBannerLimits' },
+  { short: 'demoBannerShortQueen', rest: 'demoBannerQueen' },
+  { short: 'demoBannerShortPlan', rest: 'demoBannerPlan' },
+] as const satisfies readonly { short: MessageKey; rest: MessageKey }[]
 
 const DISMISS_KEY = 'gold-queen.demo-banner-dismissed'
 
@@ -22,69 +21,76 @@ interface Props {
 
 export function DemoInfoBanner({ className }: Props) {
   const { t } = useI18n()
+  const detailId = useId()
   const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const [dismissed, setDismissed] = useState(
-    () => localStorage.getItem(DISMISS_KEY) === '1',
-  )
+  const [expanded, setExpanded] = useState(false)
+  const [dismissed, setDismissed] = useState(() => localStorage.getItem(DISMISS_KEY) === '1')
 
   const dismiss = useCallback(() => {
     localStorage.setItem(DISMISS_KEY, '1')
     setDismissed(true)
   }, [])
 
-  useEffect(() => {
-    if (dismissed || paused) return
-
-    const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % SLIDE_KEYS.length)
-    }, SLIDE_INTERVAL_MS)
-
-    return () => window.clearInterval(timer)
-  }, [dismissed, paused])
-
   if (dismissed) return null
 
+  const line = LINES[index]
+
+  function showRest() {
+    setExpanded((open) => !open)
+  }
+
+  function nextLine() {
+    setIndex((current) => (current + 1) % LINES.length)
+    setExpanded(false)
+  }
+
   return (
-    <div
-      className={cn(
-        'relative flex min-h-12 min-w-0 flex-1 flex-col justify-between rounded-2xl border border-gold/20 bg-black/45 px-3 py-2 backdrop-blur-sm',
-        className,
-      )}
-      aria-live="polite"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
-      <button
-        type="button"
-        onClick={dismiss}
-        aria-label={t('demoBannerDismiss')}
-        className="absolute top-1.5 right-1.5 rounded-full p-0.5 text-muted transition hover:bg-white/10 hover:text-parchment"
-      >
-        <X size={12} />
-      </button>
+    <section aria-label={t('demoBannerSpeak')} className={cn('relative min-w-0 flex-1', className)}>
+      <div className="relative rounded-2xl border border-gold/25 bg-black/55 px-3 py-2 pr-6 shadow-gold-glow backdrop-blur-sm">
+        <span
+          data-speech-tail=""
+          aria-hidden="true"
+          className="absolute top-1/2 -left-2 size-3 -translate-y-1/2 rotate-45 border-b border-l border-gold/25 bg-black/55"
+        />
 
-      <p className="pr-5 text-[11px] leading-snug text-parchment/85 transition-opacity duration-700">
-        {t(SLIDE_KEYS[index])}
-      </p>
+        <button
+          type="button"
+          aria-expanded={expanded}
+          aria-controls={expanded ? detailId : undefined}
+          onClick={showRest}
+          className="block w-full rounded-md text-left text-[13px] leading-snug text-parchment focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
+        >
+          {t(line.short)}
+        </button>
 
-      <div className="mt-1.5 flex justify-end gap-1">
-        {SLIDE_KEYS.map((key, dotIndex) => (
+        {expanded && (
+          <p
+            id={detailId}
+            className="mt-1.5 text-xs leading-relaxed text-parchment/80 motion-safe:transition-opacity"
+          >
+            {t(line.rest)}
+          </p>
+        )}
+
+        {expanded && (
           <button
-            key={key}
             type="button"
-            aria-label={`${dotIndex + 1} / ${SLIDE_KEYS.length}`}
-            aria-current={dotIndex === index ? 'true' : undefined}
-            onClick={() => setIndex(dotIndex)}
-            className={cn(
-              'size-1.5 rounded-full transition-colors',
-              dotIndex === index ? 'bg-gold' : 'bg-white/25 hover:bg-white/40',
-            )}
-          />
-        ))}
+            onClick={nextLine}
+            className="mt-1.5 rounded-md text-xs font-semibold text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
+          >
+            {t('demoBannerNext')}
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={dismiss}
+          aria-label={t('demoBannerDismiss')}
+          className="absolute top-1.5 right-1.5 rounded-full p-0.5 text-muted hover:bg-white/10 hover:text-parchment focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 motion-safe:transition"
+        >
+          <X size={12} />
+        </button>
       </div>
-    </div>
+    </section>
   )
 }

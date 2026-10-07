@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The Queen banner is a speech bubble aimed at her portrait. One short line stays visible; a tap reveals the rest. Pagination dots and auto-advance are gone.
 - Sign-in stays on screen while the free server wakes. The health probe starts with the page and the notice does not cover the form. A stored session opens the dashboard with skeletons while the profile loads. A slow sign-in explains itself after 2 seconds, in English and Portuguese.
 - Code-split chat, Queen's Tips, transaction detail, and the monthly spending chart so the first JavaScript chunk stays under Vite's 500 kB warning.
 - Type-check Vitest files in `npm run build` via `tsconfig.test.json`.
