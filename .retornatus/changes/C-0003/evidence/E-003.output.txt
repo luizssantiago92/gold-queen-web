@@ -1,0 +1,19 @@
+
+> gold-queen-web@1.0.0 build
+> tsc -b && vite build
+
+vite v8.3.2 building client environment for production...
+transforming...
+✓ 2604 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   2.56 kB │ gzip:   0.84 kB
+dist/assets/index-B6JilN5j.css                   42.28 kB │ gzip:   7.22 kB
+dist/assets/QueenTipsModal-DR9k0ZbZ.js            2.05 kB │ gzip:   0.94 kB
+dist/assets/TransactionDetailModal-Blmrrhc1.js    2.16 kB │ gzip:   0.65 kB
+dist/assets/ChatModal-C3qyzXvf.js                 3.04 kB │ gzip:   1.43 kB
+dist/assets/useI18n-Bgv-YIs5.js                  12.14 kB │ gzip:   4.76 kB
+dist/assets/MonthChartCard-Cc4Kx2f9.js          346.83 kB │ gzip: 101.25 kB
+dist/assets/index-Z4p6bMgf.js                   354.04 kB │ gzip: 111.84 kB
+
+✓ built in 378ms

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "C-0003/E-003",
+  "type": "build_result",
+  "subject": "build",
+  "source": "npm run build",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T00:50:39.464258Z",
+  "subject_state": "commit:35fa05df1f95fcda4195e5d7f540df494868e6fd",
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T00:50:38.312621Z",
+  "ended_at": "2026-10-07T00:50:39.457561Z",
+  "duration_ms": 1144,
+  "output_sha256": "bb7e8e8f9a1c87d087d00ee4c22faba7d03d3c928ebb75fe6a8904705f994228",
+  "output_tail": "\n> gold-queen-web@1.0.0 build\n> tsc -b && vite build\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 2604 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                   2.56 kB │ gzip:   0.84 kB\ndist/assets/index-B6JilN5j.css                   42.28 kB │ gzip:   7.22 kB\ndist/assets/QueenTipsModal-DR9k0ZbZ.js            2.05 kB │ gzip:   0.94 kB\ndist/assets/TransactionDetailModal-Blmrrhc1.js    2.16 kB │ gzip:   0.65 kB\ndist/assets/ChatModal-C3qyzXvf.js                 3.04 kB │ gzip:   1.43 kB\ndist/assets/useI18n-Bgv-YIs5.js                  12.14 kB │ gzip:   4.76 kB\ndist/assets/MonthChartCard-Cc4Kx2f9.js          346.83 kB │ gzip: 101.25 kB\ndist/assets/index-Z4p6bMgf.js                   354.04 kB │ gzip: 111.84 kB\n\n✓ built in 378ms\n",
+  "output_artifact": ".retornatus/changes/C-0003/evidence/E-003.output.txt",
+  "git_commit": "35fa05df1f95fcda4195e5d7f540df494868e6fd",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": []
+}
