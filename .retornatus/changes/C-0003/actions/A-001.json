@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "C-0003/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Keep the sign-in form interactive while GET /health warms the API, show a non-blocking wake notice, render the dashboard shell with skeletons while GET /v1/auth/me runs in parallel with dashboard queries, and show the slow-server sentence earlier in English and Portuguese.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "src/screens/LoginScreen.test.tsx proves the sign-in form stays enabled while the wake probe is still quiet, the slow-server sentence appears after two seconds, and a stored token renders the dashboard shell with skeletons while the profile request is in flight, including the redirect when that token is rejected.",
+    "The cold-start behavior is documented in docs/guide/Architecture.md as a non-blocking notice on the sign-in form."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0003/T-001",
+      "description": "Keep sign-in interactive and open the dashboard shell while the profile loads",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "src/components/ApiWakeGate.tsx",
+        "src/components/ApiWakeGate.test.tsx",
+        "src/auth/AuthProvider.tsx",
+        "src/auth/AuthProvider.test.tsx",
+        "src/App.tsx",
+        "src/App.session.test.tsx",
+        "src/screens/LoginScreen.tsx",
+        "src/screens/LoginScreen.test.tsx",
+        "src/i18n/en.ts",
+        "src/i18n/pt.ts",
+        "src/test/mockApi.ts",
+        "src/main.tsx"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0003/T-002",
+      "description": "Document the non-blocking cold start",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/guide/Architecture.md",
+        "docs/guide/Overview.md",
+        "README.md",
+        "CHANGELOG.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

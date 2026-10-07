@@ -71,7 +71,7 @@ TanStack Query caches dashboard responses:
 | Queen's Tips | Once per session when modal opens (`staleTime: Infinity`) |
 | Chat | Per message (`useMutation`) |
 
-The Render free tier may cold-start. On boot, `ApiWakeGate` calls `GET /health`. A fast reply leaves the UI alone. After about 1.5s a wake screen covers the shell and keeps probing until 90s. See [Architecture](Architecture.md).
+The Render free tier may cold-start. On boot, `ApiWakeGate` calls `GET /health`. The sign-in form stays on screen. A fast reply leaves it alone. After about 1.5s a notice sits above the fields until the probe succeeds or 90s pass. A stored session opens the dashboard with skeletons while the profile loads. See [Architecture](Architecture.md).
 
 ---
 

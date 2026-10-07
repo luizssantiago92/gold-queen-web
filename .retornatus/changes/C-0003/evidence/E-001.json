@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0003/E-001",
+  "type": "repository_observation",
+  "subject": "docs/guide/Architecture.md",
+  "source": "python3 -c 'from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"does not use `inert`\",\"sign-in form\",\"skeletons\",\"GET /health\"]; missing=[n for n in needles if n not in text];\nimport sys\nprint(\"\\n\".join(needles))\nsys.exit(\"missing: \"+\", \".join(missing) if missing else 0)'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T00:50:31.253079Z",
+  "subject_state": "commit:12d41392cda3008f907977211f04dcf0f184976a",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"does not use `inert`\",\"sign-in form\",\"skeletons\",\"GET /health\"]; missing=[n for n in needles if n not in text];\nimport sys\nprint(\"\\n\".join(needles))\nsys.exit(\"missing: \"+\", \".join(missing) if missing else 0)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T00:50:31.229036Z",
+  "ended_at": "2026-10-07T00:50:31.247804Z",
+  "duration_ms": 18,
+  "output_sha256": "31efebd466553c0d1cf7412d616b7a95ecc635a155a7d1af90f45bf953f4986b",
+  "output_tail": "does not use `inert`\nsign-in form\nskeletons\nGET /health\n",
+  "output_artifact": ".retornatus/changes/C-0003/evidence/E-001.output.txt",
+  "git_commit": "12d41392cda3008f907977211f04dcf0f184976a",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0003/claim-done-2",
+      "note": null
+    }
+  ]
+}

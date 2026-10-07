@@ -1,15 +1,19 @@
-import { render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { useAuth } from '@/auth/context'
+import { ApiWakeGate } from '@/components/ApiWakeGate'
+import { en } from '@/i18n/en'
+import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
+import { pt } from '@/i18n/pt'
 import { readToken } from '@/lib/api'
 import { SIGNUP_CLOSED_MESSAGE } from '@/lib/demoAccount'
-import { installApiMock } from '@/test/mockApi'
+import { installApiMock, type MockResult } from '@/test/mockApi'
 import { AppProviders } from '@/test/providers'
 import type { User } from '@/types/api'
 
-import { LoginScreen } from './LoginScreen'
+import { LOGIN_SLOW_AFTER_MS, LoginScreen } from './LoginScreen'
 
 const queen: User = {
   id: 1,
@@ -28,6 +32,8 @@ describe('LoginScreen', () => {
 
   afterEach(() => {
     restore?.()
+    vi.unstubAllGlobals()
+    vi.useRealTimers()
   })
 
   it('shows the API error when the credentials are rejected', async () => {
@@ -105,5 +111,82 @@ describe('LoginScreen', () => {
     await user.click(screen.getByRole('button', { name: 'Sign in with the demo account' }))
     expect(screen.getByLabelText('Email')).toHaveValue('queen@goldqueen.dev')
     expect(screen.getByLabelText('Password')).toHaveValue('QueenDemo123!')
+  })
+
+  it('keeps the form editable and starts a health warmup while the court is waking', async () => {
+    vi.useFakeTimers()
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    const fetchMock = vi.fn((_input: RequestInfo | URL, init?: RequestInit) => {
+      return new Promise<Response>((_resolve, reject) => {
+        const abort = () => reject(new DOMException('Aborted', 'AbortError'))
+        if (init?.signal?.aborted) {
+          abort()
+          return
+        }
+        init?.signal?.addEventListener('abort', abort, { once: true })
+      })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    render(
+      <AppProviders>
+        <ApiWakeGate>
+          <LoginScreen />
+        </ApiWakeGate>
+      </AppProviders>,
+    )
+
+    const email = screen.getByLabelText('Email')
+    expect(email).toBeEnabled()
+    expect(email).toHaveValue('queen@goldqueen.dev')
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://127.0.0.1:8000/health',
+      expect.objectContaining({ method: 'GET' }),
+    )
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1_500)
+    })
+
+    expect(screen.getByRole('status')).toHaveTextContent(en.wakeTitle)
+    expect(screen.getByLabelText('Email')).toBeEnabled()
+    expect(screen.getByLabelText('Password')).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Sign in' })).toBeEnabled()
+    expect(email.closest('[inert]')).toBeNull()
+
+    vi.unstubAllGlobals()
+    vi.useRealTimers()
+  })
+
+  it('explains a slow sign-in after two seconds, in the active language', async () => {
+    vi.useFakeTimers()
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    restore = installApiMock(() => new Promise<MockResult>(() => {}))
+
+    render(
+      <AppProviders>
+        <LoginScreen />
+      </AppProviders>,
+    )
+
+    fireEvent.submit(screen.getByLabelText('Email').closest('form')!)
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(LOGIN_SLOW_AFTER_MS - 1)
+    })
+    expect(screen.queryByText(en.loginSlow)).not.toBeInTheDocument()
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1)
+    })
+
+    const submit = screen.getByRole('button', { name: 'Opening the gates...' })
+    expect(submit).toBeDisabled()
+    expect(submit).toHaveAttribute('aria-busy', 'true')
+    expect(screen.getByText(en.loginSlow)).toBeInTheDocument()
+    expect(pt.loginSlow).toMatch(/formulário/i)
+    expect(en.loginSlow).toMatch(/form/i)
+
+    vi.useRealTimers()
   })
 })

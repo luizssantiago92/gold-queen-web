@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Sign-in stays on screen while the free server wakes. The health probe starts with the page and the notice does not cover the form. A stored session opens the dashboard with skeletons while the profile loads. A slow sign-in explains itself after 2 seconds, in English and Portuguese.
 - Code-split chat, Queen's Tips, transaction detail, and the monthly spending chart so the first JavaScript chunk stays under Vite's 500 kB warning.
 - Type-check Vitest files in `npm run build` via `tsconfig.test.json`.
 - CI runs `npm run test:coverage` (`@vitest/coverage-v8`) and enforces modest thresholds.

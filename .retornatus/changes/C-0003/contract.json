@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0003",
+  "version": 2,
+  "what": "Keep the sign-in form interactive while GET /health warms the API, show a non-blocking wake notice, render the dashboard shell with skeletons while GET /v1/auth/me runs in parallel with dashboard queries, and show the slow-server sentence earlier in English and Portuguese.",
+  "constraints": [],
+  "done_criteria": [
+    "src/screens/LoginScreen.test.tsx proves the sign-in form stays enabled while the wake probe is still quiet, the slow-server sentence appears after two seconds, and a stored token renders the dashboard shell with skeletons while the profile request is in flight, including the redirect when that token is rejected.",
+    "The cold-start behavior is documented in docs/guide/Architecture.md as a non-blocking notice on the sign-in form.",
+    "Manual review of src/auth/AuthProvider.tsx confirms a rejected session returns to the sign-in form."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T00:51:39.301209Z"
+}

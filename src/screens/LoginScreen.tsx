@@ -2,6 +2,7 @@ import { Loader2, ShieldCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
+import { WakeNotice } from '@/components/ApiWakeGate'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
@@ -9,6 +10,9 @@ import { useI18n } from '@/i18n/useI18n'
 import { api, errorMessage } from '@/lib/api'
 import { DEMO_EMAIL, DEMO_PASSWORD } from '@/lib/demoAccount'
 import { greetingKey } from '@/lib/greeting'
+
+/** Show the slow-server sentence well before a cold login used to stay silent. */
+export const LOGIN_SLOW_AFTER_MS = 2_000
 
 export function LoginScreen() {
   const { login } = useAuth()
@@ -23,7 +27,7 @@ export function LoginScreen() {
 
   useEffect(() => {
     if (!pending) return
-    const timer = setTimeout(() => setSlow(true), 6_000)
+    const timer = setTimeout(() => setSlow(true), LOGIN_SLOW_AFTER_MS)
     return () => clearTimeout(timer)
   }, [pending])
 
@@ -78,7 +82,10 @@ export function LoginScreen() {
         <p className="mt-2 text-sm text-muted">{t('loginSubtitle')}</p>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-4">
+      <div className="space-y-4">
+        <WakeNotice />
+
+        <form onSubmit={onSubmit} className="space-y-4">
         {mode === 'signup' && (
           <label className="block">
             <span className="mb-1.5 block text-xs font-medium tracking-wide text-muted">
@@ -135,6 +142,7 @@ export function LoginScreen() {
         <button
           type="submit"
           disabled={pending}
+          aria-busy={pending || undefined}
           className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gold py-3.5 text-sm font-bold text-void shadow-gold-glow transition hover:brightness-105 disabled:opacity-60"
         >
           {pending ? <Loader2 className="animate-spin" size={16} /> : null}
@@ -170,7 +178,8 @@ export function LoginScreen() {
         {slow && mode === 'login' && (
           <p className="text-center text-[11px] leading-relaxed text-muted">{t('loginSlow')}</p>
         )}
-      </form>
+        </form>
+      </div>
 
       <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-[11px] text-muted">
         <ShieldCheck size={13} className="text-gold/60" />

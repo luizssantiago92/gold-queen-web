@@ -1,0 +1,5 @@
+reviewed AuthProvider session rejection
+present: confirmSession
+present: setStatus('anonymous')
+present: setStatus('loading')
+present: generation

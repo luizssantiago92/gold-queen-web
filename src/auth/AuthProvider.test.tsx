@@ -112,4 +112,35 @@ describe('AuthProvider', () => {
     expect(screen.getByText('anonymous:')).toBeInTheDocument()
     expect(readToken()).toBeNull()
   })
+
+  it('opens the shell as soon as the token arrives and confirms the profile beside it', async () => {
+    const user = userEvent.setup()
+    let releaseProfile: (result: { status: number; data: unknown }) => void = () => {}
+    const profile = new Promise<{ status: number; data: unknown }>((resolve) => {
+      releaseProfile = resolve
+    })
+    restore = installApiMock((config) => {
+      if (config.url === '/v1/auth/login') {
+        return {
+          status: 200,
+          data: { access_token: 'fresh-token', token_type: 'bearer', expires_in_minutes: 60 },
+        }
+      }
+      return profile
+    })
+
+    render(
+      <AppProviders>
+        <SessionProbe />
+      </AppProviders>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Sign in probe' }))
+
+    expect(await screen.findByText('loading:')).toBeInTheDocument()
+    expect(readToken()).toBe('fresh-token')
+
+    releaseProfile({ status: 200, data: queen })
+    expect(await screen.findByText('authenticated:queen@goldqueen.dev')).toBeInTheDocument()
+  })
 })

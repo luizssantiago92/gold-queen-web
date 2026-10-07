@@ -28,7 +28,7 @@ No React Router. Navigation is local state (`home` | `profile`) inside `App.tsx`
 ```text
 I18nProvider (readLocale → en default, pt if browser/storage says so)
   └── QueryClientProvider (staleTime 60s, no retry on 401)
-        └── ApiWakeGate (GET /health before the shell needs the API)
+        └── ApiWakeGate (GET /health in parallel; does not block the shell)
               └── AuthProvider (JWT)
                     └── App
 ```
@@ -94,7 +94,9 @@ Cards do **not** show chevrons unless they navigate somewhere (none do today).
 
 ### Cold-start wake (`ApiWakeGate`)
 
-On boot, `wakeApi` calls `GET /health` on the same `API_BASE_URL` (not the shared Axios client, so the JWT retry interceptor does not spend the wake budget). A reply in under 1.5s leaves the UI untouched. After that, a status screen with a progress bar covers login, home, and profile — every current screen needs the API — and keeps probing until 90s. Each attempt waits up to 60s; fast failures back off from 1s to 8s. The failure state offers a manual retry. Motion on the spinner and bar is limited to `motion-safe:` so `prefers-reduced-motion` keeps them still.
+On boot — the moment the sign-in page opens for a visitor without a session — `wakeApi` calls `GET /health` on the same `API_BASE_URL` (not the shared Axios client, so the JWT retry interceptor does not spend the wake budget). The form stays editable the whole time. A reply in under 1.5s leaves the form alone. After that, a notice with a progress bar sits above the fields until the probe succeeds or 90s pass. The notice does not use `inert` and does not cover the screen. Each attempt waits up to 60s; fast failures back off from 1s to 8s. The failure state offers a retry next to the still-usable form. Motion on the spinner and bar is limited to `motion-safe:` so `prefers-reduced-motion` keeps them still.
+
+A stored token skips the full-screen spinner. `App` renders the dashboard shell immediately, so the balance and spending cards show their skeletons while `GET /v1/auth/me` and the dashboard queries run together. A rejected token returns the visitor to the sign-in form. After a successful password check, the shell appears as soon as the access token is stored; the profile request does not hold the button.
 
 ---
 

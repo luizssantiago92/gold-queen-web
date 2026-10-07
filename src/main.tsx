@@ -24,8 +24,8 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nProvider>
       <QueryClientProvider client={queryClient}>
-        {/* Login, home, and profile all call the API. A future static page
-            should render outside this gate so a cold start does not cover it. */}
+        {/* The health probe starts with the first paint, including the sign-in
+            page, and does not cover the tree. */}
         <ApiWakeGate>
           <AuthProvider>
             <App />
