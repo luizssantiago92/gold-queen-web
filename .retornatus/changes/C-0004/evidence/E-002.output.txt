@@ -1,4 +1,0 @@
-
-> gold-queen-web@1.0.0 lint
-> oxlint
-
