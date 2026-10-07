@@ -47,6 +47,12 @@ export const pt: Messages = {
 
   balanceTitle: 'Saldo em contas',
   updatedNow: 'Atualizado agora',
+  updatedAt: 'Atualizado em {{date}}',
+  notSyncedYet: 'Ainda sem sincronização',
+  figureDetailRecent: 'Das transações recentes nesta tela.',
+  figureDetailNone: 'Nenhuma dessas transações recentes corresponde.',
+  figureDetailLoading: 'As transações recentes ainda estão a caminho.',
+  figureOpenDay: 'Abrir {{day}}',
   noBanksYet: 'Nenhum banco no tesouro real ainda.',
 
   monthIncome: 'Rendas do mês',

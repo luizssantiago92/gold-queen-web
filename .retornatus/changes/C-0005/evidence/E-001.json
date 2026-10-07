@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0005/E-001",
+  "type": "repository_observation",
+  "subject": "docs/guide/Architecture.md",
+  "source": "python3 -c 'from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"A tap on the figures already on the home screen\", \"last sync\", \"No extra API route\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T03:17:43.819809Z",
+  "subject_state": "commit:c40be55f25ec0692e0f621d52f16b23256538098",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"A tap on the figures already on the home screen\", \"last sync\", \"No extra API route\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T03:17:43.795476Z",
+  "ended_at": "2026-10-07T03:17:43.813505Z",
+  "duration_ms": 18,
+  "output_sha256": "8f21ada602252f855482b30ca2f1c03917ef2777634b75ce280f28fde5e403af",
+  "output_tail": "A tap on the figures already on the home screen\nlast sync\nNo extra API route\n",
+  "output_artifact": ".retornatus/changes/C-0005/evidence/E-001.output.txt",
+  "git_commit": "c40be55f25ec0692e0f621d52f16b23256538098",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0005/claim-done-2",
+      "note": null
+    }
+  ]
+}

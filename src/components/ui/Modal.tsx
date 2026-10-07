@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 
 import { useI18n } from '@/i18n/useI18n'
@@ -12,6 +12,8 @@ interface ModalProps {
   children: ReactNode
 }
 
+const dismissStack: Array<() => void> = []
+
 /**
  * Rendered inside the phone shell rather than in a portal on `body`, so on
  * desktop the sheet stays within the simulated device instead of covering the
@@ -19,16 +21,38 @@ interface ModalProps {
  */
 export function Modal({ open, title, subtitle, onClose, children }: ModalProps) {
   const { t } = useI18n()
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const restoreFocus = useRef<HTMLElement | null>(null)
+  const onCloseRef = useRef(onClose)
+
+  useEffect(() => {
+    onCloseRef.current = onClose
+  })
 
   useEffect(() => {
     if (!open) return
 
+    restoreFocus.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null
+    dialogRef.current?.focus()
+
+    const dismiss = () => onCloseRef.current()
+    dismissStack.push(dismiss)
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key !== 'Escape') return
+      if (dismissStack[dismissStack.length - 1] !== dismiss) return
+      event.preventDefault()
+      dismiss()
     }
     window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [open, onClose])
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      const index = dismissStack.lastIndexOf(dismiss)
+      if (index >= 0) dismissStack.splice(index, 1)
+      restoreFocus.current?.focus()
+    }
+  }, [open])
 
   if (!open) return null
 
@@ -42,10 +66,12 @@ export function Modal({ open, title, subtitle, onClose, children }: ModalProps) 
       />
 
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative flex max-h-[88%] flex-col rounded-t-3xl border-t border-gold/25 bg-surface shadow-gold-glow"
+        tabIndex={-1}
+        className="relative flex max-h-[88%] flex-col rounded-t-3xl border-t border-gold/25 bg-surface shadow-gold-glow focus:outline-none"
       >
         <header className="flex items-start justify-between gap-3 border-b border-gold/10 px-5 py-4">
           <div>

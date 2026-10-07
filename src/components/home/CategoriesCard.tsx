@@ -1,3 +1,5 @@
+import { ChevronRight } from 'lucide-react'
+
 import { Card } from '@/components/ui/Card'
 import { EmptyState, Skeleton } from '@/components/ui/Skeleton'
 import { useI18n } from '@/i18n/useI18n'
@@ -5,12 +7,15 @@ import { formatMoney } from '@/lib/format'
 import { categoryColor, categoryLabel } from '@/lib/palette'
 import type { CategoriesResponse } from '@/types/api'
 
+import type { FigureSelection } from './figureDetail'
+
 interface Props {
   categories?: CategoriesResponse
   loading: boolean
+  onOpenCategory: (selection: Extract<FigureSelection, { kind: 'category' }>) => void
 }
 
-export function CategoriesCard({ categories, loading }: Props) {
+export function CategoriesCard({ categories, loading, onOpenCategory }: Props) {
   const { locale, t } = useI18n()
 
   if (loading) {
@@ -30,6 +35,7 @@ export function CategoriesCard({ categories, loading }: Props) {
     <Card
       title={t('categoriesTitle')}
       subtitle={t('categoriesSubtitle')}
+      showChevron
       action={
         <span className="text-[11px] text-muted">
           {items.length}{' '}
@@ -58,22 +64,36 @@ export function CategoriesCard({ categories, loading }: Props) {
             ))}
           </div>
 
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1">
             {items.slice(0, 5).map((item, index) => (
-              <li key={item.category} className="flex items-center gap-2.5 text-sm">
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: categoryColor(item.category, index) }}
-                />
-                <span className="min-w-0 flex-1 truncate text-parchment/85">
-                  {categoryLabel(item.category, locale)}
-                </span>
-                <span className="shrink-0 text-xs text-muted">
-                  {item.share_percentage.toFixed(0)}%
-                </span>
-                <span className="shrink-0 font-semibold text-parchment">
-                  {formatMoney(item.total, locale)}
-                </span>
+              <li key={item.category}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onOpenCategory({
+                      kind: 'category',
+                      category: item.category,
+                      total: item.total,
+                      count: item.transaction_count,
+                    })
+                  }
+                  className="flex w-full items-center gap-2.5 rounded-xl py-1.5 text-left text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
+                >
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: categoryColor(item.category, index) }}
+                  />
+                  <span className="min-w-0 flex-1 truncate text-parchment/85">
+                    {categoryLabel(item.category, locale)}
+                  </span>
+                  <span className="shrink-0 text-xs text-muted">
+                    {item.share_percentage.toFixed(0)}%
+                  </span>
+                  <span className="shrink-0 font-semibold text-parchment">
+                    {formatMoney(item.total, locale)}
+                  </span>
+                  <ChevronRight size={14} className="shrink-0 text-muted/70" aria-hidden />
+                </button>
               </li>
             ))}
           </ul>
