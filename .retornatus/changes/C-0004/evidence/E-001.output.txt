@@ -1,0 +1,4 @@
+speech bubble
+one short line
+No dots, no auto-advance
+portrait

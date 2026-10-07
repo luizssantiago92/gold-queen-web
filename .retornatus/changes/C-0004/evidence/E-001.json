@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0004/E-001",
+  "type": "repository_observation",
+  "subject": "docs/guide/Architecture.md",
+  "source": "python3 -c 'from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"speech bubble\", \"one short line\", \"No dots, no auto-advance\", \"portrait\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T01:19:10.822373Z",
+  "subject_state": null,
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"speech bubble\", \"one short line\", \"No dots, no auto-advance\", \"portrait\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T01:19:10.801050Z",
+  "ended_at": "2026-10-07T01:19:10.820239Z",
+  "duration_ms": 19,
+  "output_sha256": "f2efbcf8345f58c41dd8f85426dc0cecdb9f5b25c88565c4799cd431ff2f8128",
+  "output_tail": "speech bubble\none short line\nNo dots, no auto-advance\nportrait\n",
+  "output_artifact": ".retornatus/changes/C-0004/evidence/E-001.output.txt",
+  "git_commit": "6d5a04b022ef23de192328b17179b56ed6bdb6ea",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0004/claim-done-2",
+      "note": null
+    }
+  ]
+}
