@@ -14,6 +14,14 @@ export const pt: Messages = {
   transactionGuardedBadge: 'Protegido pela Rainha',
   appLoading: 'Abrindo o tesouro real...',
   demoBannerDismiss: 'Fechar banner',
+  demoBannerSpeak: 'A Rainha fala',
+  demoBannerNext: 'Ouvir outra',
+
+  demoBannerShortProduct: 'Reúno suas contas num tesouro só.',
+  demoBannerShortOpenFinance: 'Conecte bancos reais, e eu leio as moedas.',
+  demoBannerShortLimits: 'Esta corte mostra um banco de teste, de propósito.',
+  demoBannerShortQueen: 'Pergunte-me sobre seu ouro. Não invento dados.',
+  demoBannerShortPlan: 'O plano gratuito guarda três bancos e um conselho ao dia.',
 
   demoBannerProduct:
     'Rainha Dourada agrega suas contas via Open Finance e mostra saldo, gastos e categorias do mês em um painel único.',

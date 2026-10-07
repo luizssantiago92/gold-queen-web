@@ -61,7 +61,7 @@ Global modals (controlled by `App.tsx`):
 | `MobileShell` | Phone frame on desktop (~412px); full viewport on mobile |
 | `SceneBackdrop` | Wallpaper per scene; slideshow on home (5s interval) |
 | `BottomNav` | Home · **Advisor** (opens chat) · Profile |
-| `HomeHeader` | Queen portrait, `DemoInfoBanner`, greeting + Demo badge |
+| `HomeHeader` | Queen portrait, speech bubble aimed at it, greeting + Demo badge |
 | `LanguageToggle` | EN/PT segmented control (Login + Profile) |
 
 ---
@@ -154,7 +154,7 @@ See [Internationalization.md](Internationalization.md) for locale detection, cat
 | Feature | Behaviour |
 | --- | --- |
 | `ConnectBankButton` | Modal only — no Pluggy widget |
-| `DemoInfoBanner` | Auto-rotate, manual dots, dismiss, pause on hover |
+| `DemoInfoBanner` | Speech bubble: one short line, tap or key reveals the rest, dismiss. No dots, no auto-advance |
 | Profile cards / invest | Static placeholders |
 | Home header | No logout button |
 

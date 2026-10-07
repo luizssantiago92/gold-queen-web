@@ -12,6 +12,14 @@ export const en = {
   transactionGuardedBadge: 'Guarded by the Queen',
   appLoading: 'Opening the royal treasury...',
   demoBannerDismiss: 'Dismiss banner',
+  demoBannerSpeak: 'The Queen speaks',
+  demoBannerNext: 'Hear another',
+
+  demoBannerShortProduct: 'I gather your accounts in one treasury.',
+  demoBannerShortOpenFinance: 'Link real banks, and I will read the coins.',
+  demoBannerShortLimits: 'This court keeps one sandbox bank, on purpose.',
+  demoBannerShortQueen: 'Ask me of your gold. I do not invent it.',
+  demoBannerShortPlan: 'The free plan holds three banks and a daily counsel.',
 
   demoBannerProduct:
     'Gold Queen aggregates your accounts via Open Finance and shows balance, spending, and monthly categories in one dashboard.',

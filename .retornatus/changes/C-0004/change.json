@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0004",
+  "title": "Queen speech bubble",
+  "demand": {
+    "schema_version": 1,
+    "statement": "Replace the demo banner carousel with a speech bubble that points at the Gold Queen portrait.",
+    "kind": "BEHAVIOR"
+  },
+  "lane": "STANDARD",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-07T01:17:44.808491Z"
+}

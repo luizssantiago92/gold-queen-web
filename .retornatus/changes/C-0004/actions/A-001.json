@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "id": "C-0004/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Show one short line in a speech bubble with an arrow toward the RoyalCrown portrait, reveal the longer remark on tap or keyboard, keep dismiss, and drop pagination dots and auto-advance. Copy stays in English and Portuguese.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "src/components/home/DemoInfoBanner.test.tsx proves one short line stays on screen, a tap or key press reveals the longer remark, dismiss hides the bubble, and the line does not advance on a timer.",
+    "The speech bubble is documented in docs/guide/Architecture.md as one line, an arrow toward the portrait, and no auto-advance."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0004/T-001",
+      "description": "Replace the carousel with an accessible speech bubble",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "src/components/home/DemoInfoBanner.tsx",
+        "src/components/home/DemoInfoBanner.test.tsx",
+        "src/components/home/HomeHeader.tsx",
+        "src/lib/slideshow.ts",
+        "src/i18n/en.ts",
+        "src/i18n/pt.ts"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0004/T-002",
+      "description": "Document the speech bubble in the guide and changelog",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/guide/Architecture.md",
+        "docs/guide/Overview.md",
+        "CHANGELOG.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

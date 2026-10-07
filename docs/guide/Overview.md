@@ -81,7 +81,7 @@ The UI is built for **recruiter and visitor demos**:
 
 - One sandbox bank is enough to show the full dashboard
 - Connect bank opens an explanation modal, not Pluggy
-- A rotating demo banner explains product vision and limits
+- A speech bubble from the Queen explains product vision and limits
 - Profile shows roadmap placeholders (cards, investments)
 
 Production Open Finance flows remain in the API for future UI work.
