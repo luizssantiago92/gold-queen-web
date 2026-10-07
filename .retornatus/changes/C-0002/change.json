@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0002",
+  "title": "Record the UX polish plan",
+  "demand": {
+    "schema_version": 1,
+    "statement": "Record the UX audit and the numbered polish plan so later PRs can be reviewed one at a time. Do not change the UI in this change.",
+    "kind": "MAINTENANCE"
+  },
+  "lane": "QUICK",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-07T00:13:00.887629Z"
+}

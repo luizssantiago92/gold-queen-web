@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0002",
+  "version": 1,
+  "what": "Add a proposal document under docs/ that records the live-app audit, file pointers, and the ordered PR plan. Retornatus adoption stays as merged PR 19; this change does not reinstall it and does not redesign the UI.",
+  "constraints": [],
+  "done_criteria": [
+    "docs/plans/ux-polish.md exists, is linked from docs/README.md as a proposal rather than the current guide, and names PR 1 as the already-merged Retornatus adoption.",
+    "No files under src/ change."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T00:13:00.896883Z"
+}
