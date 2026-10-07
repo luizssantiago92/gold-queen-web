@@ -8,14 +8,23 @@ import { categoryColor, categoryLabel } from '@/lib/palette'
 import type { CategoriesResponse } from '@/types/api'
 
 import type { FigureSelection } from './figureDetail'
+import { QueryError } from './QueryError'
 
 interface Props {
   categories?: CategoriesResponse
   loading: boolean
+  error?: boolean
+  onRetry?: () => void
   onOpenCategory: (selection: Extract<FigureSelection, { kind: 'category' }>) => void
 }
 
-export function CategoriesCard({ categories, loading, onOpenCategory }: Props) {
+export function CategoriesCard({
+  categories,
+  loading,
+  error = false,
+  onRetry,
+  onOpenCategory,
+}: Props) {
   const { locale, t } = useI18n()
 
   if (loading) {
@@ -27,7 +36,12 @@ export function CategoriesCard({ categories, loading, onOpenCategory }: Props) {
     )
   }
 
-  if (!categories) return null
+  if (!categories) {
+    if (error && onRetry) {
+      return <QueryError title={t('categoriesTitle')} onRetry={onRetry} />
+    }
+    return null
+  }
 
   const items = categories.categories
 

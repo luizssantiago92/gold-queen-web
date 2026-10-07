@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0006/E-005",
+  "type": "repository_observation",
+  "subject": "docs/guide/Architecture.md.",
+  "source": "python3 -c 'from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"Next page\", \"Try again\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T03:47:57.265251Z",
+  "subject_state": "commit:13f9b5cc84f5490b7e6175f275b4129d9d8615b8",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"Next page\", \"Try again\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T03:47:57.241632Z",
+  "ended_at": "2026-10-07T03:47:57.260275Z",
+  "duration_ms": 18,
+  "output_sha256": "dec414ce8bdffcd7bd0e4354266b99817338282d85cda6a4f0e902a4329ad6f4",
+  "output_tail": "Next page\nTry again\n",
+  "output_artifact": ".retornatus/changes/C-0006/evidence/E-005.output.txt",
+  "git_commit": "13f9b5cc84f5490b7e6175f275b4129d9d8615b8",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0006/claim-done-2",
+      "note": null
+    }
+  ]
+}

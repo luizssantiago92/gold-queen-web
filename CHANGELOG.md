@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The home transaction list loads the next page while the header total is larger than the rows on screen. Those pages stay available to the figure detail sheet. A home card that fails to load stays visible with Try again.
 - Dashboard figures open a detail sheet. Income, spending, balance, a bank, a category, and a chart day show the matching transactions or the bank breakdown from data already on screen. A bank row shows its last sync time.
 - The Queen banner is a speech bubble aimed at her portrait. One short line stays visible; a tap reveals the rest. Pagination dots and auto-advance are gone.
 - Sign-in stays on screen while the free server wakes. The health probe starts with the page and the notice does not cover the form. A stored session opens the dashboard with skeletons while the profile loads. A slow sign-in explains itself after 2 seconds, in English and Portuguese.

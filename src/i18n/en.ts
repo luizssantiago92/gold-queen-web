@@ -66,6 +66,9 @@ export const en = {
   transactionsTitle: 'Recent transactions',
   transactionsTotal: '{{count}} total',
   transactionsEmpty: 'The transaction scroll is empty.',
+  transactionsNext: 'Next page',
+  cardLoadFailed: 'This card could not load.',
+  tryAgain: 'Try again',
 
   transactionDetailTitle: 'Transaction details',
   transactionAmount: 'Amount',

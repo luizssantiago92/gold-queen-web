@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0006",
+  "title": "Next transaction page and card retry",
+  "demand": {
+    "schema_version": 1,
+    "statement": "The home transaction list stops at the first page while the header shows the full total, and a failed home card disappears.",
+    "kind": "BEHAVIOR"
+  },
+  "lane": "STANDARD",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-07T03:41:44.807860Z"
+}

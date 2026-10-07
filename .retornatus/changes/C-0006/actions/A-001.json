@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "id": "C-0006/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "The home transaction list loads the next page while the loaded count is shorter than the total, and those loaded rows stay available to the figure detail sheet. When a home card query fails, the card stays on screen with a Try again control that asks the query to run again.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "src/components/home/TransactionFeed.test.tsx proves the next page control appears while the scroll is shorter than the total, and a failed card keeps a Try again control that asks the query to run again.",
+    "The next page and the retry control are documented in docs/guide/Architecture.md."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0006/T-001",
+      "description": "Load the next transaction page and keep a failed home card with retry",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "src/components/home/TransactionFeed.tsx",
+        "src/components/home/TransactionFeed.test.tsx",
+        "src/components/home/QueryError.tsx",
+        "src/components/home/QueryError.test.tsx",
+        "src/components/home/CashFlowRow.tsx",
+        "src/components/home/CashFlowRow.test.tsx",
+        "src/components/home/BalanceCard.tsx",
+        "src/components/home/BalanceCard.test.tsx",
+        "src/components/home/CategoriesCard.tsx",
+        "src/components/home/CategoriesCard.test.tsx",
+        "src/components/home/MonthChartCard.tsx",
+        "src/components/home/MonthChartCard.test.tsx",
+        "src/screens/HomeScreen.tsx",
+        "src/screens/HomeScreen.test.tsx",
+        "src/lib/queries.ts",
+        "src/i18n/en.ts",
+        "src/i18n/pt.ts"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0006/T-002",
+      "description": "Document the next page and the card retry",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/guide/Architecture.md",
+        "CHANGELOG.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}
