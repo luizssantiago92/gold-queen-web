@@ -1,4 +1,4 @@
-import { CheckCircle2, Info, Landmark } from 'lucide-react'
+import { CheckCircle2, Info, Landmark, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { Modal } from '@/components/ui/Modal'
@@ -14,6 +14,7 @@ export function ConnectBankButton() {
   const [error, setError] = useState<string | null>(null)
 
   const connectedBank = connections.data?.[0]?.institution_name
+  const pending = connectToken.isPending
 
   async function onConnect() {
     setError(null)
@@ -30,11 +31,16 @@ export function ConnectBankButton() {
       <button
         type="button"
         onClick={() => void onConnect()}
-        disabled={connectToken.isPending}
+        disabled={pending}
+        aria-busy={pending || undefined}
         className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/3 py-3.5 text-sm font-medium text-muted transition hover:border-gold/40 hover:text-gold disabled:opacity-60"
       >
-        <Landmark size={15} />
-        {t('connectBank')}
+        {pending ? (
+          <Loader2 className="motion-safe:animate-spin" size={15} aria-hidden />
+        ) : (
+          <Landmark size={15} />
+        )}
+        {pending ? t('connectPending') : t('connectBank')}
       </button>
 
       <Modal
@@ -43,7 +49,13 @@ export function ConnectBankButton() {
         subtitle={t('demoConnectSubtitle')}
         onClose={() => setOpen(false)}
       >
-        <div className="space-y-4 text-sm text-parchment/80">
+        <div className="space-y-4 text-sm text-parchment/80" aria-live="polite" aria-busy={pending || undefined}>
+          {pending && (
+            <p className="flex items-center gap-2 text-gold">
+              <Loader2 className="motion-safe:animate-spin" size={16} aria-hidden />
+              {t('connectPending')}
+            </p>
+          )}
           {error && (
             <p role="alert" className="rounded-2xl bg-blood/15 px-3 py-2.5 text-xs text-debit">
               {error}

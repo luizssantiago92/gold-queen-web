@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0007",
+  "version": 1,
+  "what": "Connect, Sync, and Remove show an accessible spinner while the action is pending. Demo read-only and closed sign-up copy follow the active locale, and an uncoded API detail is not shown. Plan, bank count, card art, and investments open a short not-in-this-demo sheet. Queen's Tips shows three scroll skeletons and a retry control while the request is still loading.",
+  "constraints": [],
+  "done_criteria": [
+    "src/screens/ProfileScreen.test.tsx proves Sync and Remove stay busy with a spinner while the action is pending, and plan, bank count, card art, and investments open a not-in-this-demo sheet.",
+    "src/lib/api.test.ts proves a coded demo error follows the active locale and an uncoded detail stays off the screen.",
+    "src/components/QueenTipsModal.test.tsx proves three scroll skeletons and a retry control while tips are still loading.",
+    "The pending controls and the not-in-this-demo sheet are documented in docs/guide/Architecture.md for profile and Queen tips."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T11:04:38.726385Z"
+}

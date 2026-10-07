@@ -1,8 +1,10 @@
-import { Loader2, ScrollText, ShieldCheck, Swords } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { ScrollText, ShieldCheck, Swords } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { Modal } from '@/components/ui/Modal'
+import { Skeleton } from '@/components/ui/Skeleton'
 import { useI18n } from '@/i18n/useI18n'
 import { errorMessage } from '@/lib/api'
 import { useQueenTips } from '@/lib/queries'
@@ -14,7 +16,13 @@ interface Props {
 
 export function QueenTipsModal({ open, onClose }: Props) {
   const { t } = useI18n()
-  const { data, isLoading, error } = useQueenTips(open)
+  const queryClient = useQueryClient()
+  const { data, isFetching, error, refetch } = useQueenTips(open)
+  const waiting = isFetching && !data
+
+  function retryTips() {
+    return queryClient.cancelQueries({ queryKey: ['queen-tips'] }).then(() => refetch())
+  }
 
   return (
     <Modal
@@ -23,17 +31,35 @@ export function QueenTipsModal({ open, onClose }: Props) {
       subtitle={t('tipsSubtitle')}
       onClose={onClose}
     >
-      {isLoading && (
-        <div className="flex items-center justify-center gap-2 py-10 text-sm text-muted">
-          <Loader2 className="animate-spin text-gold" size={18} />
-          {t('tipsLoading')}
+      {waiting && (
+        <div aria-busy="true" aria-live="polite">
+          <p className="mb-3 text-center text-sm text-muted">{t('tipsLoading')}</p>
+          <div className="space-y-3">
+            {[0, 1, 2].map((row) => (
+              <Skeleton key={row} className="h-24 w-full rounded-2xl" />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => retryTips()}
+            className="mt-4 w-full rounded-2xl bg-gold px-4 py-2.5 text-xs font-bold text-void shadow-gold-glow transition hover:brightness-105"
+          >
+            {t('tryAgain')}
+          </button>
         </div>
       )}
 
-      {error && (
-        <p role="alert" className="py-6 text-center text-sm text-debit">
-          {errorMessage(error, t('tipsError'))}
-        </p>
+      {error && !waiting && (
+        <div role="alert" className="py-6 text-center">
+          <p className="text-sm text-debit">{errorMessage(error, t('tipsError'))}</p>
+          <button
+            type="button"
+            onClick={() => retryTips()}
+            className="mt-4 rounded-2xl bg-gold px-4 py-2.5 text-xs font-bold text-void shadow-gold-glow transition hover:brightness-105"
+          >
+            {t('tryAgain')}
+          </button>
+        </div>
       )}
 
       {data && (

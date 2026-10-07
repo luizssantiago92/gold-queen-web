@@ -89,6 +89,8 @@ export const en = {
   demoConnectOneBank: 'Only 1 bank can stay connected in this demonstration.',
   demoConnectAlready: '{{bank}} is already linked to the royal treasury.',
   syncing: 'Collecting the real statement...',
+  connectPending: 'Opening the portal...',
+  removePending: 'Unlinking...',
   connectLimit: 'The free plan allows only 3 banks in the treasury.',
   connectError: 'Could not open the Open Finance portal.',
   syncError: 'The bank responded, but synchronization failed.',
@@ -137,6 +139,9 @@ export const en = {
   signupPending: 'Opening the ledger...',
   signupBack: 'Sign in with the demo account',
   signupError: 'Could not create the account.',
+  signupClosed:
+    'Sign-up is closed in this demonstration. Sign in with the demo account already filled in: {{email}} / {{password}}.',
+  demoReadOnly: 'The demo account is read-only.',
   syncConnection: 'Sync',
   removeConnection: 'Remove',
   removeError: 'Could not unlink this bank.',
@@ -162,6 +167,8 @@ export const en = {
   profileStandard: 'Standard',
   profilePlatinum: 'Platinum',
   profileSoon: 'Coming soon',
+  notInDemoTitle: 'Not in this demo',
+  notInDemoBody: 'This part of the treasury is not part of this demonstration.',
   noBanksConnected: 'No banks connected to the treasury.',
 
   coldStart:

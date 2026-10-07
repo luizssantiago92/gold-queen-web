@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import { en } from '@/i18n/en'
 import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
-import { DEMO_READ_ONLY_MESSAGE, SIGNUP_CLOSED_MESSAGE } from '@/lib/demoAccount'
+import { demoReadOnlyMessage, signupClosedMessage } from '@/lib/demoAccount'
 import {
   UNAUTHORIZED_EVENT,
   api,
@@ -106,7 +106,7 @@ describe('401 handling', () => {
 })
 
 describe('errorMessage', () => {
-  it('prefers the API detail string', () => {
+  it('keeps an uncoded detail off the screen', () => {
     const error = new AxiosError('bad request')
     error.response = {
       status: 400,
@@ -116,7 +116,7 @@ describe('errorMessage', () => {
       config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
-    expect(errorMessage(error, 'fallback')).toBe('Invalid credentials')
+    expect(errorMessage(error, 'fallback')).toBe('fallback')
   })
 
   it('explains a missing response as a cold start', () => {
@@ -130,7 +130,7 @@ describe('errorMessage', () => {
     expect(errorMessage(new Error('nope'), 'fallback')).toBe('fallback')
   })
 
-  it('explains a closed sign-up in pt-BR and points at the demo account', () => {
+  it('follows the active locale for a closed sign-up and points at the demo account', () => {
     const error = new AxiosError('forbidden')
     error.response = {
       status: 403,
@@ -140,12 +140,18 @@ describe('errorMessage', () => {
       config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
-    expect(errorMessage(error, 'fallback')).toBe(SIGNUP_CLOSED_MESSAGE)
-    expect(SIGNUP_CLOSED_MESSAGE).toContain('queen@goldqueen.dev')
-    expect(SIGNUP_CLOSED_MESSAGE).toContain('QueenDemo123!')
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    expect(errorMessage(error, 'fallback')).toBe(signupClosedMessage())
+    expect(signupClosedMessage()).toContain('queen@goldqueen.dev')
+    expect(signupClosedMessage()).toContain('QueenDemo123!')
+    expect(signupClosedMessage()).not.toContain('Registration is disabled')
+
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'pt')
+    expect(errorMessage(error, 'fallback')).toContain('cadastro está fechado')
+    expect(errorMessage(error, 'fallback')).not.toContain('Registration is disabled')
   })
 
-  it('explains a read-only demo account in pt-BR', () => {
+  it('follows the active locale for a read-only demo account', () => {
     const error = new AxiosError('forbidden')
     error.response = {
       status: 403,
@@ -155,10 +161,16 @@ describe('errorMessage', () => {
       config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
-    expect(errorMessage(error, 'fallback')).toBe(DEMO_READ_ONLY_MESSAGE)
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    expect(errorMessage(error, 'fallback')).toBe('The demo account is read-only.')
+    expect(errorMessage(error, 'fallback')).not.toContain('The public demo account is read-only')
+
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'pt')
+    expect(errorMessage(error, 'fallback')).toBe(demoReadOnlyMessage())
+    expect(demoReadOnlyMessage()).toBe('A conta demo é somente leitura.')
   })
 
-  it('keeps the API detail for other coded errors', () => {
+  it('uses the locale limit copy for a coded connection limit', () => {
     const error = new AxiosError('forbidden')
     error.response = {
       status: 403,
@@ -168,6 +180,8 @@ describe('errorMessage', () => {
       config: { headers: {} } as InternalAxiosRequestConfig,
     }
 
-    expect(errorMessage(error, 'fallback')).toBe('Connection limit reached')
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    expect(errorMessage(error, 'fallback')).toBe(en.connectLimit)
+    expect(errorMessage(error, 'fallback')).not.toBe('Connection limit reached')
   })
 })

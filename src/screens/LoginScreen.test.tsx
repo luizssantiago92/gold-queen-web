@@ -8,7 +8,7 @@ import { en } from '@/i18n/en'
 import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
 import { pt } from '@/i18n/pt'
 import { readToken } from '@/lib/api'
-import { SIGNUP_CLOSED_MESSAGE } from '@/lib/demoAccount'
+import { signupClosedMessage } from '@/lib/demoAccount'
 import { installApiMock, type MockResult } from '@/test/mockApi'
 import { AppProviders } from '@/test/providers'
 import type { User } from '@/types/api'
@@ -52,7 +52,10 @@ describe('LoginScreen', () => {
     expect(screen.getByLabelText('Email')).toHaveValue('queen@goldqueen.dev')
     await user.click(screen.getByRole('button', { name: 'Sign in' }))
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('Invalid credentials')
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'The realm guards did not recognize these credentials.',
+    )
+    expect(screen.getByRole('alert')).not.toHaveTextContent('Invalid credentials')
     expect(readToken()).toBeNull()
   })
 
@@ -93,6 +96,7 @@ describe('LoginScreen', () => {
       return { status: 500, data: { detail: 'unexpected' } }
     })
 
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
     render(
       <AppProviders>
         <LoginScreen />
@@ -105,7 +109,8 @@ describe('LoginScreen', () => {
     await user.type(screen.getByLabelText('Password'), 'long-enough-password')
     await user.click(screen.getByRole('button', { name: 'Create account' }))
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(SIGNUP_CLOSED_MESSAGE)
+    expect(await screen.findByRole('alert')).toHaveTextContent(signupClosedMessage())
+    expect(screen.getByRole('alert')).not.toHaveTextContent('Registration is disabled')
     expect(readToken()).toBeNull()
 
     await user.click(screen.getByRole('button', { name: 'Sign in with the demo account' }))
