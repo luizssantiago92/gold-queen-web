@@ -74,10 +74,12 @@ Global modals (controlled by `App.tsx`):
 | `BalanceCard` | `overview`, `connections.last_synced_at` | Tap the total for the bank breakdown. Tap a bank for that institution's loaded transactions. The row shows the last sync time. |
 | `MonthChartCard` | `monthly-series` | Tap a day on the chart or its day control. The sheet lists loaded transactions for that date. |
 | `CategoriesCard` | `categories` | Tap a category. The sheet lists loaded transactions in that category. |
-| `TransactionFeed` | `transactions` page 1 | Tap → detail modal |
+| `TransactionFeed` | `transactions`, one page at a time | The header shows the total. **Next page** loads another page while the loaded count is shorter than that total. Loaded pages stay on the figure detail sheet. Tap a row for the detail modal. |
 | `ConnectBankButton` | — | Shown **early** when `banks.length === 0`, else at bottom |
 
 A tap on the figures already on the home screen opens this sheet. It uses the same `Modal` as `TransactionDetailModal`. Choosing a row in that sheet opens the transaction detail. No extra API route is involved. The dialog takes focus when it opens, and Escape closes it. Cards that open a sheet show a chevron.
+
+The next page control appends the following transaction page to that same list, so the sheet can match rows beyond the first page. When a home query fails, the card stays on screen with a Try again control that runs the query again.
 
 ---
 

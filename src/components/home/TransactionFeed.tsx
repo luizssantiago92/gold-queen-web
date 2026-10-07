@@ -10,6 +10,8 @@ import { formatMoney, toNumber } from '@/lib/format'
 import { bankColor, categoryLabel } from '@/lib/palette'
 import type { Transaction, TransactionPage } from '@/types/api'
 
+import { QueryError } from './QueryError'
+
 const TransactionDetailModal = lazy(() =>
   import('@/components/TransactionDetailModal').then((module) => ({
     default: module.TransactionDetailModal,
@@ -19,9 +21,22 @@ const TransactionDetailModal = lazy(() =>
 interface Props {
   page?: TransactionPage
   loading: boolean
+  loadingMore?: boolean
+  hasMore?: boolean
+  error?: boolean
+  onLoadMore?: () => void
+  onRetry?: () => void
 }
 
-export function TransactionFeed({ page, loading }: Props) {
+export function TransactionFeed({
+  page,
+  loading,
+  loadingMore = false,
+  hasMore = false,
+  error = false,
+  onLoadMore,
+  onRetry,
+}: Props) {
   const { locale, t } = useI18n()
   const [selected, setSelected] = useState<Transaction | null>(null)
 
@@ -37,7 +52,12 @@ export function TransactionFeed({ page, loading }: Props) {
     )
   }
 
-  if (!page) return null
+  if (!page) {
+    if (error && onRetry) {
+      return <QueryError title={t('transactionsTitle')} onRetry={onRetry} />
+    }
+    return null
+  }
 
   return (
     <>
@@ -108,6 +128,35 @@ export function TransactionFeed({ page, loading }: Props) {
               )
             })}
           </ul>
+        )}
+        {loadingMore && (
+          <div className="mt-3 space-y-3">
+            <Skeleton className="h-14 w-full rounded-2xl" />
+            <Skeleton className="h-14 w-full rounded-2xl" />
+          </div>
+        )}
+        {error && onRetry && (
+          <div className="mt-3">
+            <p className="text-sm text-parchment/85">{t('cardLoadFailed')}</p>
+            <button
+              type="button"
+              onClick={onRetry}
+              className="mt-3 rounded-2xl bg-gold px-4 py-2 text-xs font-bold text-void shadow-gold-glow transition hover:brightness-105"
+            >
+              {t('tryAgain')}
+            </button>
+          </div>
+        )}
+        {hasMore && onLoadMore && (
+          <button
+            type="button"
+            onClick={onLoadMore}
+            disabled={loadingMore}
+            aria-busy={loadingMore || undefined}
+            className="mt-3 w-full rounded-2xl border border-gold/30 bg-gold/10 py-2.5 text-xs font-bold text-gold transition hover:bg-gold/20 disabled:opacity-60"
+          >
+            {t('transactionsNext')}
+          </button>
         )}
       </Card>
 

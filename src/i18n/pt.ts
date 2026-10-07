@@ -68,6 +68,9 @@ export const pt: Messages = {
   transactionsTitle: 'Movimentações recentes',
   transactionsTotal: '{{count}} no total',
   transactionsEmpty: 'O pergaminho de movimentações está vazio.',
+  transactionsNext: 'Próxima página',
+  cardLoadFailed: 'Este cartão não carregou.',
+  tryAgain: 'Tentar de novo',
 
   transactionDetailTitle: 'Detalhes da movimentação',
   transactionAmount: 'Valor',

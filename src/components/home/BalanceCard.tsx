@@ -8,10 +8,13 @@ import { bankColor } from '@/lib/palette'
 import type { OverviewResponse } from '@/types/api'
 
 import { describeSync, type FigureSelection } from './figureDetail'
+import { QueryError } from './QueryError'
 
 interface Props {
   overview?: OverviewResponse
   loading: boolean
+  error?: boolean
+  onRetry?: () => void
   syncedAtByConnection?: Record<number, string | null>
   onOpenBalance: () => void
   onOpenBank: (selection: Extract<FigureSelection, { kind: 'bank' }>) => void
@@ -20,6 +23,8 @@ interface Props {
 export function BalanceCard({
   overview,
   loading,
+  error = false,
+  onRetry,
   syncedAtByConnection,
   onOpenBalance,
   onOpenBank,
@@ -36,7 +41,12 @@ export function BalanceCard({
     )
   }
 
-  if (!overview) return null
+  if (!overview) {
+    if (error && onRetry) {
+      return <QueryError title={t('balanceTitle')} onRetry={onRetry} />
+    }
+    return null
+  }
 
   const banks = overview.banks
 

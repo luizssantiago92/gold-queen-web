@@ -153,4 +153,80 @@ describe('HomeScreen', () => {
     expect(await screen.findByText('The transaction scroll is empty.')).toBeInTheDocument()
     expect(screen.getByText('0 total')).toBeInTheDocument()
   })
+
+  it('loads the next page into the list and the income sheet', async () => {
+    const user = userEvent.setup()
+    const pageTwo: TransactionPage = {
+      items: [
+        {
+          id: 8,
+          description: 'Royal salary',
+          amount: '4000.00',
+          transaction_date: '2026-09-01',
+          category: 'Income',
+          display_category: 'Income',
+          is_guarded: false,
+          institution_name: 'Nubank',
+          account_name: 'Checking',
+        },
+      ],
+      page: 2,
+      limit: 20,
+      total: 2,
+    }
+    restore = installApiMock((config) => {
+      const url = config.url ?? ''
+      if (url === '/v1/dashboard/overview') return { status: 200, data: overview }
+      if (url === '/v1/dashboard/monthly-series') return { status: 200, data: series }
+      if (url === '/v1/dashboard/categories') return { status: 200, data: categories }
+      if (url === '/v1/dashboard/transactions') {
+        const requested = Number((config.params as { page?: number } | undefined)?.page ?? 1)
+        return { status: 200, data: requested === 2 ? pageTwo : { ...transactions, total: 2 } }
+      }
+      if (url === '/v1/connections') return { status: 200, data: [] }
+      return { status: 404, data: { detail: `unexpected ${url}` } }
+    })
+    renderHome()
+
+    expect(await screen.findByText('Padaria Real')).toBeInTheDocument()
+    expect(screen.getByText('2 total')).toBeInTheDocument()
+    expect(screen.queryByText('Royal salary')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Next page' }))
+    expect(await screen.findByText('Royal salary')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Monthly income/ }))
+    const dialog = await screen.findByRole('dialog')
+    expect(dialog).toHaveTextContent('Royal salary')
+    expect(dialog).not.toHaveTextContent('From the recent transactions on this screen.')
+  })
+
+  it('keeps failed cards and retries the overview', async () => {
+    const user = userEvent.setup()
+    let overviewFails = true
+    restore = installApiMock((config) => {
+      const url = config.url ?? ''
+      if (url === '/v1/dashboard/overview') {
+        if (overviewFails) return { status: 500, data: { detail: 'down' } }
+        return { status: 200, data: overview }
+      }
+      if (url === '/v1/dashboard/monthly-series') return { status: 200, data: series }
+      if (url === '/v1/dashboard/categories') return { status: 200, data: categories }
+      if (url === '/v1/dashboard/transactions') return { status: 200, data: transactions }
+      if (url === '/v1/connections') return { status: 200, data: [] }
+      return { status: 404, data: { detail: `unexpected ${url}` } }
+    })
+    renderHome()
+
+    const retries = await screen.findAllByRole('button', { name: 'Try again' })
+    expect(retries.length).toBeGreaterThan(0)
+    expect(screen.queryByText(/2,500\.00/)).not.toBeInTheDocument()
+    expect(screen.getByText('Padaria Real')).toBeInTheDocument()
+
+    overviewFails = false
+    await user.click(retries[0])
+    expect((await screen.findAllByText(/2,500\.00/)).length).toBeGreaterThan(0)
+    expect(screen.queryByRole('button', { name: 'Try again' })).not.toBeInTheDocument()
+  })
 })

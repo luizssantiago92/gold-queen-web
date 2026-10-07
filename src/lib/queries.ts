@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useQueries } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import { useI18n } from '@/i18n/useI18n'
 import type { Locale } from '@/i18n/types'
@@ -51,14 +52,55 @@ export function useMonthlySeries() {
   })
 }
 
-export function useTransactions(page = 1, limit = 20) {
-  return useQuery({
-    queryKey: queryKeys.transactions(page),
-    queryFn: async () =>
-      (await api.get<TransactionPage>('/v1/dashboard/transactions', { params: { page, limit } }))
-        .data,
-    refetchInterval: 60_000,
+/** Pages 2+ load only after `loadMore`. Page 1 keeps the usual refresh. */
+export function useTransactionPages(limit = 20) {
+  const [pageCount, setPageCount] = useState(1)
+  const results = useQueries({
+    queries: Array.from({ length: pageCount }, (_, index) => {
+      const page = index + 1
+      return {
+        queryKey: queryKeys.transactions(page),
+        queryFn: async () =>
+          (
+            await api.get<TransactionPage>('/v1/dashboard/transactions', {
+              params: { page, limit },
+            })
+          ).data,
+        refetchInterval: page === 1 ? 60_000 : (false as const),
+      }
+    }),
   })
+
+  const items = results.flatMap((result) => result.data?.items ?? [])
+  const total = results[0]?.data?.total
+  const first = results[0]
+  const later = results.slice(1)
+  const laterError = later.some((result) => result.isError && !result.isFetching)
+  const isLoadingMore = later.some((result) => result.isFetching && !result.data)
+  const hasMore = total !== undefined && items.length < total && !laterError
+  const isLoading = !first?.data && Boolean(first?.isPending || first?.isFetching)
+
+  function loadMore() {
+    if (!hasMore || isLoadingMore) return
+    setPageCount((count) => count + 1)
+  }
+
+  function retry() {
+    const failed = results.find((result) => result.isError)
+    void failed?.refetch()
+  }
+
+  return {
+    items,
+    total,
+    hasMore,
+    isLoading,
+    isError: Boolean(first?.isError && !first.data),
+    laterError,
+    isLoadingMore,
+    loadMore,
+    retry,
+  }
 }
 
 export function useTransactionDetail(transactionId: number | null) {

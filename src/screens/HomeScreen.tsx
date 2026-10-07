@@ -17,7 +17,7 @@ import {
   useConnections,
   useMonthlySeries,
   useOverview,
-  useTransactions,
+  useTransactionPages,
 } from '@/lib/queries'
 
 const MonthChartCard = lazy(() =>
@@ -35,7 +35,7 @@ export function HomeScreen({ onOpenTips }: Props) {
   const overview = useOverview()
   const series = useMonthlySeries()
   const categories = useCategories()
-  const transactions = useTransactions(1, 20)
+  const transactions = useTransactionPages(20)
   const connections = useConnections()
   const [selection, setSelection] = useState<FigureSelection | null>(null)
 
@@ -78,13 +78,17 @@ export function HomeScreen({ onOpenTips }: Props) {
 
         <CashFlowRow
           overview={overview.data}
-          loading={overview.isLoading}
+          loading={overview.isPending || (overview.isFetching && overview.data === undefined)}
+          error={overview.isError}
+          onRetry={() => void overview.refetch()}
           onOpenIncome={() => setSelection({ kind: 'income' })}
           onOpenExpenses={() => setSelection({ kind: 'expenses' })}
         />
         <BalanceCard
           overview={overview.data}
-          loading={overview.isLoading}
+          loading={overview.isPending || (overview.isFetching && overview.data === undefined)}
+          error={overview.isError}
+          onRetry={() => void overview.refetch()}
           syncedAtByConnection={syncedAtByConnection}
           onOpenBalance={() => setSelection({ kind: 'balance' })}
           onOpenBank={setSelection}
@@ -92,25 +96,46 @@ export function HomeScreen({ onOpenTips }: Props) {
         <Suspense fallback={<ChartCardFallback />}>
           <MonthChartCard
             series={series.data}
-            loading={series.isLoading}
+            loading={series.isPending || (series.isFetching && series.data === undefined)}
+            error={series.isError}
+            onRetry={() => void series.refetch()}
             onOpenDay={(date) => setSelection({ kind: 'day', date })}
           />
         </Suspense>
         <CategoriesCard
           categories={categories.data}
-          loading={categories.isLoading}
+          loading={categories.isPending || (categories.isFetching && categories.data === undefined)}
+          error={categories.isError}
+          onRetry={() => void categories.refetch()}
           onOpenCategory={setSelection}
         />
-        <TransactionFeed page={transactions.data} loading={transactions.isLoading} />
+        <TransactionFeed
+          page={
+            transactions.items.length > 0 || transactions.total !== undefined
+              ? {
+                  items: transactions.items,
+                  page: 1,
+                  limit: 20,
+                  total: transactions.total ?? transactions.items.length,
+                }
+              : undefined
+          }
+          loading={transactions.isLoading}
+          loadingMore={transactions.isLoadingMore}
+          hasMore={transactions.hasMore}
+          error={transactions.isError || transactions.laterError}
+          onLoadMore={transactions.loadMore}
+          onRetry={transactions.retry}
+        />
 
         {!noBanks && <ConnectBankButton />}
       </div>
 
       <FigureDetailSheet
         selection={selection}
-        transactions={transactions.data?.items ?? []}
+        transactions={transactions.items}
         transactionsReady={!transactions.isLoading}
-        partial={(transactions.data?.total ?? 0) > (transactions.data?.items.length ?? 0)}
+        partial={(transactions.total ?? 0) > transactions.items.length}
         banks={(overview.data?.banks ?? []).map((bank) => ({
           ...bank,
           syncedLabel: syncLabel(bank.connection_id),

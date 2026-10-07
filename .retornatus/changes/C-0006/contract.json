@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0006",
+  "version": 1,
+  "what": "The home transaction list loads the next page while the loaded count is shorter than the total, and those loaded rows stay available to the figure detail sheet. When a home card query fails, the card stays on screen with a Try again control that asks the query to run again.",
+  "constraints": [],
+  "done_criteria": [
+    "src/components/home/TransactionFeed.test.tsx proves the next page control appears while the scroll is shorter than the total, and a failed card keeps a Try again control that asks the query to run again.",
+    "The next page and the retry control are documented in docs/guide/Architecture.md."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T03:41:44.815917Z"
+}

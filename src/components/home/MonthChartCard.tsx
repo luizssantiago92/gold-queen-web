@@ -8,13 +8,23 @@ import { formatDay } from '@/lib/localeFormat'
 import { formatMoney, toNumber } from '@/lib/format'
 import type { MonthlySeriesResponse } from '@/types/api'
 
+import { QueryError } from './QueryError'
+
 interface Props {
   series?: MonthlySeriesResponse
   loading: boolean
+  error?: boolean
+  onRetry?: () => void
   onOpenDay: (date: string) => void
 }
 
-export function MonthChartCard({ series, loading, onOpenDay }: Props) {
+export function MonthChartCard({
+  series,
+  loading,
+  error = false,
+  onRetry,
+  onOpenDay,
+}: Props) {
   const { locale, t } = useI18n()
 
   if (loading) {
@@ -25,7 +35,12 @@ export function MonthChartCard({ series, loading, onOpenDay }: Props) {
     )
   }
 
-  if (!series) return null
+  if (!series) {
+    if (error && onRetry) {
+      return <QueryError title={t('monthExpensesTitle')} onRetry={onRetry} />
+    }
+    return null
+  }
 
   const data = series.points.map((point) => ({
     date: point.date,

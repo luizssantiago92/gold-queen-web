@@ -6,14 +6,25 @@ import { useI18n } from '@/i18n/useI18n'
 import { formatMoney } from '@/lib/format'
 import type { OverviewResponse } from '@/types/api'
 
+import { QueryError } from './QueryError'
+
 interface Props {
   overview?: OverviewResponse
   loading: boolean
+  error?: boolean
+  onRetry?: () => void
   onOpenIncome: () => void
   onOpenExpenses: () => void
 }
 
-export function CashFlowRow({ overview, loading, onOpenIncome, onOpenExpenses }: Props) {
+export function CashFlowRow({
+  overview,
+  loading,
+  error = false,
+  onRetry,
+  onOpenIncome,
+  onOpenExpenses,
+}: Props) {
   const { locale, t } = useI18n()
 
   if (loading) {
@@ -31,7 +42,12 @@ export function CashFlowRow({ overview, loading, onOpenIncome, onOpenExpenses }:
     )
   }
 
-  if (!overview) return null
+  if (!overview) {
+    if (error && onRetry) {
+      return <QueryError title={t('monthIncome')} onRetry={onRetry} />
+    }
+    return null
+  }
 
   return (
     <div className="grid grid-cols-2 gap-3">
