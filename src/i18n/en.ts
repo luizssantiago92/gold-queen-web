@@ -45,6 +45,12 @@ export const en = {
 
   balanceTitle: 'Account balance',
   updatedNow: 'Updated just now',
+  updatedAt: 'Updated {{date}}',
+  notSyncedYet: 'Not synced yet',
+  figureDetailRecent: 'From the recent transactions on this screen.',
+  figureDetailNone: 'None of those recent transactions match.',
+  figureDetailLoading: 'The recent transactions are still on their way.',
+  figureOpenDay: 'Open {{day}}',
   noBanksYet: 'No banks linked to the royal treasury yet.',
 
   monthIncome: 'Monthly income',

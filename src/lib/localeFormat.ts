@@ -11,6 +11,25 @@ export function formatReferenceMonth(value: string, locale: Locale): string {
     : `${label.charAt(0).toUpperCase()}${label.slice(1)} ${year}`
 }
 
+/** Naive API timestamps are UTC. A zone suffix on the string is left as-is. */
+export function formatSyncedAt(value: string, locale: Locale): string {
+  const hasZone = /(?:z|Z|[+-]\d{2}:?\d{2})$/.test(value)
+  const date = new Date(hasZone ? value : `${value}Z`)
+  if (Number.isNaN(date.getTime())) return value
+  const tag = locale === 'pt' ? 'pt-BR' : 'en-US'
+  return new Intl.DateTimeFormat(tag, {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'UTC',
+    hourCycle: 'h23',
+  })
+    .format(date)
+    .replace('.', '')
+}
+
 export function formatDay(value: string, locale: Locale): string {
   const [year, month, day] = value.split('-').map(Number)
   const tag = locale === 'pt' ? 'pt-BR' : 'en-US'

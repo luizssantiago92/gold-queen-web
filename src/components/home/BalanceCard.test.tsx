@@ -7,6 +7,11 @@ import type { OverviewResponse } from '@/types/api'
 
 import { BalanceCard } from './BalanceCard'
 
+const idle = {
+  onOpenBalance: () => {},
+  onOpenBank: () => {},
+}
+
 const emptyOverview: OverviewResponse = {
   total_balance: '0.00',
   currency: 'BRL',
@@ -21,7 +26,7 @@ describe('BalanceCard', () => {
     localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
     render(
       <I18nProvider>
-        <BalanceCard loading={false} overview={emptyOverview} />
+        <BalanceCard loading={false} overview={emptyOverview} {...idle} />
       </I18nProvider>,
     )
 
@@ -35,6 +40,8 @@ describe('BalanceCard', () => {
       <I18nProvider>
         <BalanceCard
           loading={false}
+          {...idle}
+          syncedAtByConnection={{ 7: '2026-08-28T07:25:54' }}
           overview={{
             ...emptyOverview,
             total_balance: '1500.50',
@@ -51,16 +58,19 @@ describe('BalanceCard', () => {
       </I18nProvider>,
     )
 
-    expect(screen.getByText('Nubank')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Nubank/ })).toBeInTheDocument()
     expect(screen.getByText('100%')).toBeInTheDocument()
     expect(screen.getAllByText(/1,500\.50/)).toHaveLength(2)
+    expect(screen.getByText(/Updated/)).toHaveTextContent(/2026/)
+    expect(screen.getByText(/Updated/)).toHaveTextContent(/07:25/)
+    expect(screen.queryByText('Updated just now')).not.toBeInTheDocument()
   })
 
   it('keeps the balance hidden while the overview is loading', () => {
     localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
     render(
       <I18nProvider>
-        <BalanceCard loading overview={emptyOverview} />
+        <BalanceCard loading overview={emptyOverview} {...idle} />
       </I18nProvider>,
     )
 

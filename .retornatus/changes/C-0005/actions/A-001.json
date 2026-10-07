@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "C-0005/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "A tap or key press on income, spending, balance, a bank, a category, or a chart day opens a sheet of the matching transactions or the bank breakdown, using transactions already loaded and the existing transaction detail modal. Bank rows show last_synced_at.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "src/components/home/FigureDetailSheet.test.tsx proves a tap or key press on income, spending, balance, a bank, a category, and a chart day opens a sheet of the matching transactions or the bank breakdown.",
+    "The drill-in sheet is documented in docs/guide/Architecture.md as a tap on the figures already on the home screen."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0005/T-001",
+      "description": "Open a detail sheet from the dashboard figures",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "src/components/home/figureDetail.ts",
+        "src/components/home/figureDetail.test.ts",
+        "src/components/home/FigureDetailSheet.tsx",
+        "src/components/home/FigureDetailSheet.test.tsx",
+        "src/components/home/CashFlowRow.tsx",
+        "src/components/home/BalanceCard.tsx",
+        "src/components/home/BalanceCard.test.tsx",
+        "src/components/home/CategoriesCard.tsx",
+        "src/components/home/MonthChartCard.tsx",
+        "src/components/ui/Modal.tsx",
+        "src/screens/HomeScreen.tsx",
+        "src/screens/HomeScreen.test.tsx",
+        "src/lib/localeFormat.ts",
+        "src/i18n/en.ts",
+        "src/i18n/pt.ts"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0005/T-002",
+      "description": "Document the drill-in sheet",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/guide/Architecture.md",
+        "CHANGELOG.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

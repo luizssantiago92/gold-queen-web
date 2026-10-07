@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0005",
+  "version": 1,
+  "what": "A tap or key press on income, spending, balance, a bank, a category, or a chart day opens a sheet of the matching transactions or the bank breakdown, using transactions already loaded and the existing transaction detail modal. Bank rows show last_synced_at.",
+  "constraints": [],
+  "done_criteria": [
+    "src/components/home/FigureDetailSheet.test.tsx proves a tap or key press on income, spending, balance, a bank, a category, and a chart day opens a sheet of the matching transactions or the bank breakdown.",
+    "The drill-in sheet is documented in docs/guide/Architecture.md as a tap on the figures already on the home screen."
+  ],
+  "active": true,
+  "activated_at": "2026-10-07T03:13:28.040466Z"
+}
