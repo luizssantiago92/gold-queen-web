@@ -160,7 +160,7 @@ See [Internationalization.md](Internationalization.md) for locale detection, cat
 | Profile cards / invest | Buttons that open a short not-in-this-demo sheet |
 | Home header | No logout button |
 
-Connect, Sync, and Remove are pending controls: each shows a spinner and `aria-busy` while its mutation is in flight. Queen's Tips uses the same idea with three skeletons and a retry control. Plan, bank count, card art, and investments open the not-in-this-demo sheet. A coded demo error follows the active locale. An uncoded API detail stays off the screen and the screen shows its own fallback copy.
+Connect, Sync, and Remove are pending controls: each shows a spinner and `aria-busy` while its mutation is in flight. Queen's Tips uses the same idea with three scroll skeletons and a retry control. Plan, bank count, card art, and investments open the not-in-this-demo sheet. A coded demo error follows the active locale. An uncoded API detail stays off the screen and the screen shows its own fallback copy.
 
 ---
 
