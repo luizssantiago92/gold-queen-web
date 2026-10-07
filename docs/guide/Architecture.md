@@ -71,7 +71,7 @@ Global modals (controlled by `App.tsx`):
 | Component | API source | Notes |
 | --- | --- | --- |
 | `CashFlowRow` | `overview` | Tap income or spending. The sheet lists matching rows from the transactions already loaded. |
-| `BalanceCard` | `overview`, `connections.last_synced_at` | Tap the total for the bank breakdown. Tap a bank for that institution's loaded transactions. The row shows the real sync time. |
+| `BalanceCard` | `overview`, `connections.last_synced_at` | Tap the total for the bank breakdown. Tap a bank for that institution's loaded transactions. The row shows the last sync time. |
 | `MonthChartCard` | `monthly-series` | Tap a day on the chart or its day control. The sheet lists loaded transactions for that date. |
 | `CategoriesCard` | `categories` | Tap a category. The sheet lists loaded transactions in that category. |
 | `TransactionFeed` | `transactions` page 1 | Tap → detail modal |
