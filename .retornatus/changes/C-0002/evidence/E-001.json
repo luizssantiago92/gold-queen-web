@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0002/E-001",
+  "type": "repository_observation",
+  "subject": "docs/plans/ux-polish.md",
+  "source": "python3 -c 'from pathlib import Path; plan=Path(\"docs/plans/ux-polish.md\").read_text(); readme=Path(\"docs/README.md\").read_text(); assert \"plans/ux-polish.md\" in readme; assert \"Proposal\" in readme; assert \"already merged\" in plan.lower() and \"pull request 19\" in plan.lower() or \"PR 19\" in plan; print(\"ok\")'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T00:15:38.125434Z",
+  "subject_state": "commit:65eb4126768b894747b4a6720637963f9ff1e7b2",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; plan=Path(\"docs/plans/ux-polish.md\").read_text(); readme=Path(\"docs/README.md\").read_text(); assert \"plans/ux-polish.md\" in readme; assert \"Proposal\" in readme; assert \"already merged\" in plan.lower() and \"pull request 19\" in plan.lower() or \"PR 19\" in plan; print(\"ok\")"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T00:15:38.102849Z",
+  "ended_at": "2026-10-07T00:15:38.121021Z",
+  "duration_ms": 18,
+  "output_sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+  "output_tail": "ok\n",
+  "output_artifact": ".retornatus/changes/C-0002/evidence/E-001.output.txt",
+  "git_commit": "65eb4126768b894747b4a6720637963f9ff1e7b2",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0002/claim-done-1",
+      "note": null
+    }
+  ]
+}
