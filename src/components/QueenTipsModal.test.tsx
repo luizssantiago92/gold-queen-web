@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
@@ -57,24 +58,43 @@ describe('QueenTipsModal', () => {
     expect(dialog).toHaveTextContent("recovered from today's scroll")
   })
 
-  it('shows the loading line while the Queen is still reading', async () => {
+  it('shows three scroll skeletons and a retry control while tips are still loading', async () => {
+    const user = userEvent.setup()
+    let calls = 0
     const previous = api.defaults.adapter
-    api.defaults.adapter = () => new Promise(() => {})
+    api.defaults.adapter = () => {
+      calls += 1
+      return new Promise(() => {})
+    }
     restore = () => {
       api.defaults.adapter = previous
     }
     renderTips(true)
 
     expect(await screen.findByText('The Queen is reading the scrolls...')).toBeInTheDocument()
+    expect(document.querySelectorAll('.animate-shimmer')).toHaveLength(3)
+    const region = screen.getByText('The Queen is reading the scrolls...').parentElement
+    expect(region).toHaveAttribute('aria-busy', 'true')
+    await user.click(screen.getByRole('button', { name: 'Try again' }))
+    expect(calls).toBeGreaterThan(1)
   })
 
-  it('shows the advisor error when the request fails', async () => {
-    restore = installApiMock(() => ({
-      status: 503,
-      data: { detail: 'The advisors are away.' },
-    }))
+  it('keeps a localized retry when the tips request fails', async () => {
+    const user = userEvent.setup()
+    let calls = 0
+    restore = installApiMock(() => {
+      calls += 1
+      if (calls === 1) {
+        return { status: 503, data: { detail: 'The advisors are away.' } }
+      }
+      return { status: 200, data: tips }
+    })
     renderTips(true)
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('The advisors are away.')
+    const alert = await screen.findByRole('alert')
+    expect(alert).toHaveTextContent('The royal advisors are unavailable right now.')
+    expect(alert).not.toHaveTextContent('The advisors are away.')
+    await user.click(screen.getByRole('button', { name: 'Try again' }))
+    expect(await screen.findByText('Cut the feast budget.')).toBeInTheDocument()
   })
 })

@@ -1,13 +1,25 @@
+import { en } from '@/i18n/en'
+import { pt } from '@/i18n/pt'
+import { readLocale } from '@/i18n/locale'
+
 /** Public demo credentials, also printed in the README and prefilled on the login form. */
 export const DEMO_EMAIL = 'queen@goldqueen.dev'
 export const DEMO_PASSWORD = 'QueenDemo123!'
 
-/**
- * Fixed pt-BR copy for the production demo gates. The API answers these 403s
- * in English (`detail`), which is the wrong voice for a visitor who just tried
- * to sign up or change the shared treasury.
- */
-export const SIGNUP_CLOSED_MESSAGE =
-  `O cadastro está fechado nesta demonstração. Entre com a conta demo já preenchida: ${DEMO_EMAIL} / ${DEMO_PASSWORD}.`
+function catalog() {
+  return readLocale() === 'en' ? en : pt
+}
 
-export const DEMO_READ_ONLY_MESSAGE = 'A conta demo é somente leitura.'
+/**
+ * The API answers these 403s in English (`detail`). Visitors see the catalog
+ * for the active locale instead of that string.
+ */
+export function signupClosedMessage(): string {
+  return catalog()
+    .signupClosed.replaceAll('{{email}}', DEMO_EMAIL)
+    .replaceAll('{{password}}', DEMO_PASSWORD)
+}
+
+export function demoReadOnlyMessage(): string {
+  return catalog().demoReadOnly
+}

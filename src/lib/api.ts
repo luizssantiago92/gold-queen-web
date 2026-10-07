@@ -4,11 +4,15 @@ import { en } from '@/i18n/en'
 import { acceptLanguageHeader, readLocale } from '@/i18n/locale'
 import { pt } from '@/i18n/pt'
 
-import { DEMO_READ_ONLY_MESSAGE, SIGNUP_CLOSED_MESSAGE } from './demoAccount'
+import { demoReadOnlyMessage, signupClosedMessage } from './demoAccount'
 
-const FRIENDLY_CODE_MESSAGES: Record<string, string> = {
-  registration_disabled: SIGNUP_CLOSED_MESSAGE,
-  demo_read_only: DEMO_READ_ONLY_MESSAGE,
+function codedMessage(code: string | undefined): string | undefined {
+  if (code === 'registration_disabled') return signupClosedMessage()
+  if (code === 'demo_read_only') return demoReadOnlyMessage()
+  if (code === 'connection_limit_reached') {
+    return readLocale() === 'en' ? en.connectLimit : pt.connectLimit
+  }
+  return undefined
 }
 
 function coldStartMessage(): string {
@@ -103,18 +107,17 @@ api.interceptors.response.use(
   },
 )
 
-/** The API answers errors as `{ "detail": string, "code"?: string }`. */
+/**
+ * The API answers errors as `{ "detail": string, "code"?: string }`.
+ * Known codes use the active locale. Any other detail stays off the screen
+ * and the caller fallback is shown instead.
+ */
 export function errorMessage(error: unknown, fallback: string): string {
   if (error instanceof AxiosError) {
-    const data = error.response?.data as { detail?: unknown; code?: unknown } | undefined
+    const data = error.response?.data as { code?: unknown } | undefined
     const code = typeof data?.code === 'string' ? data.code : undefined
-    if (code && FRIENDLY_CODE_MESSAGES[code]) {
-      return FRIENDLY_CODE_MESSAGES[code]
-    }
-    const detail = data?.detail
-    if (typeof detail === 'string' && detail.length > 0) {
-      return detail
-    }
+    const coded = codedMessage(code)
+    if (coded) return coded
     // Both cases mean the server never answered. On the free tier that is almost
     // always the instance waking up, so the copy points at retrying rather than
     // implying the app is broken.

@@ -1,8 +1,10 @@
-import { render, screen } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { DEMO_READ_ONLY_MESSAGE } from '@/lib/demoAccount'
+import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
+import { api } from '@/lib/api'
+import { demoReadOnlyMessage } from '@/lib/demoAccount'
 import { installApiMock } from '@/test/mockApi'
 import { AppProviders } from '@/test/providers'
 import type { BankConnection } from '@/types/api'
@@ -57,11 +59,92 @@ describe('ProfileScreen connection actions', () => {
       </AppProviders>,
     )
 
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
     await user.click(await screen.findByRole('button', { name: 'Sync Pluggy Bank' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent(DEMO_READ_ONLY_MESSAGE)
+    expect(await screen.findByRole('alert')).toHaveTextContent(demoReadOnlyMessage())
+    expect(screen.getByRole('alert')).not.toHaveTextContent('The public demo account is read-only')
 
     await user.click(screen.getByRole('button', { name: 'Remove Pluggy Bank' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent(DEMO_READ_ONLY_MESSAGE)
+    expect(await screen.findByRole('alert')).toHaveTextContent(demoReadOnlyMessage())
     expect(calls).toEqual(['sync', 'delete'])
+  })
+
+  it('shows a busy spinner while sync and remove are pending', async () => {
+    const user = userEvent.setup()
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+
+    function hangMutations() {
+      const previous = api.defaults.adapter
+      api.defaults.adapter = (config) => {
+        const method = (config.method ?? 'get').toLowerCase()
+        const url = config.url ?? ''
+        if (method === 'get' && url === '/v1/connections') {
+          return Promise.resolve({
+            data: [pluggy],
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config,
+          })
+        }
+        return new Promise(() => {})
+      }
+      return () => {
+        api.defaults.adapter = previous
+      }
+    }
+
+    restore = hangMutations()
+    render(
+      <AppProviders>
+        <ProfileScreen />
+      </AppProviders>,
+    )
+    await user.click(await screen.findByRole('button', { name: 'Sync Pluggy Bank' }))
+    expect(
+      await screen.findByRole('button', { name: 'Collecting the real statement...' }),
+    ).toHaveAttribute('aria-busy', 'true')
+
+    cleanup()
+    restore()
+    restore = hangMutations()
+    render(
+      <AppProviders>
+        <ProfileScreen />
+      </AppProviders>,
+    )
+    await user.click(await screen.findByRole('button', { name: 'Remove Pluggy Bank' }))
+    expect(await screen.findByRole('button', { name: 'Unlinking...' })).toHaveAttribute(
+      'aria-busy',
+      'true',
+    )
+  })
+
+  it('opens a not-in-this-demo sheet from plan, bank count, card art, and investments', async () => {
+    const user = userEvent.setup()
+    restore = installApiMock(() => ({ status: 200, data: [] }))
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    render(
+      <AppProviders>
+        <ProfileScreen />
+      </AppProviders>,
+    )
+
+    await user.click(await screen.findByRole('button', { name: /Free/ }))
+    expect(await screen.findByRole('dialog', { name: 'Not in this demo' })).toHaveTextContent(
+      'This part of the treasury is not part of this demonstration.',
+    )
+    await user.click(screen.getAllByRole('button', { name: 'Close' })[0])
+
+    await user.click(screen.getByRole('button', { name: /Connections/ }))
+    expect(await screen.findByRole('dialog', { name: 'Not in this demo' })).toBeInTheDocument()
+    await user.click(screen.getAllByRole('button', { name: 'Close' })[0])
+
+    await user.click(screen.getByRole('button', { name: /Standard/ }))
+    expect(await screen.findByRole('dialog', { name: 'Not in this demo' })).toBeInTheDocument()
+    await user.click(screen.getAllByRole('button', { name: 'Close' })[0])
+
+    await user.click(screen.getByRole('button', { name: /forging investment/ }))
+    expect(await screen.findByRole('dialog', { name: 'Not in this demo' })).toBeInTheDocument()
   })
 })

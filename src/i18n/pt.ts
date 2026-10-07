@@ -91,6 +91,8 @@ export const pt: Messages = {
   demoConnectOneBank: 'Apenas 1 banco pode ficar conectado nesta demonstração.',
   demoConnectAlready: '{{bank}} já está conectado ao tesouro real.',
   syncing: 'Recolhendo o extrato real...',
+  connectPending: 'Abrindo o portal...',
+  removePending: 'Desvinculando...',
   connectLimit: 'O plano livre permite apenas 3 bancos no tesouro.',
   connectError: 'Não foi possível abrir o portal do Open Finance.',
   syncError: 'O banco respondeu, mas a sincronização falhou.',
@@ -139,6 +141,9 @@ export const pt: Messages = {
   signupPending: 'Abrindo o livro...',
   signupBack: 'Entrar com a conta demo',
   signupError: 'Não foi possível criar a conta.',
+  signupClosed:
+    'O cadastro está fechado nesta demonstração. Entre com a conta demo já preenchida: {{email}} / {{password}}.',
+  demoReadOnly: 'A conta demo é somente leitura.',
   syncConnection: 'Sincronizar',
   removeConnection: 'Remover',
   removeError: 'Não foi possível desligar este banco.',
@@ -164,6 +169,8 @@ export const pt: Messages = {
   profileStandard: 'Standard',
   profilePlatinum: 'Platinum',
   profileSoon: 'Em breve',
+  notInDemoTitle: 'Fora desta demonstração',
+  notInDemoBody: 'Esta parte do tesouro não faz parte desta demonstração.',
   noBanksConnected: 'Nenhum banco conectado ao tesouro.',
 
   coldStart:

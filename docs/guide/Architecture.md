@@ -41,16 +41,16 @@ I18nProvider (readLocale → en default, pt if browser/storage says so)
 | --- | --- | --- |
 | `LoginScreen` | `status === 'anonymous'` | Demo credentials, language toggle, cold-start messaging |
 | `HomeScreen` | `tab === 'home'` | Dashboard cards, demo banner, connect CTA, tips entry |
-| `ProfileScreen` | `tab === 'profile'` | User info, language, banks, logout |
+| `ProfileScreen` | `tab === 'profile'` | User info, language, banks, logout. Plan, bank count, card art, and investments open a not-in-this-demo sheet. Sync and Remove show a spinner while the action is pending. |
 
 Global modals (controlled by `App.tsx`):
 
 | Modal | Trigger | API |
 | --- | --- | --- |
-| `QueenTipsModal` | "Learn to manage your wealth" button | `GET /v1/advisor/queen-tips?locale=` |
+| `QueenTipsModal` | "Learn to manage your wealth" button | `GET /v1/advisor/queen-tips?locale=`. Three scroll skeletons and a retry control stay on screen while the request is still loading. |
 | `ChatModal` | Bottom nav **Advisor** | `POST /v1/chat/query` `{ question, locale }` |
 | `TransactionDetailModal` | Tap row in feed | `GET /v1/dashboard/transactions/:id` |
-| Connect bank info | `ConnectBankButton` | `POST /v1/connections/connect`, then an explanation modal. The public demo rejects the call as read-only and does not open Pluggy. |
+| Connect bank info | `ConnectBankButton` | `POST /v1/connections/connect`, then an explanation modal. The button and the sheet show a spinner while that call is pending. The public demo rejects the call as read-only and does not open Pluggy. |
 
 ---
 
@@ -157,8 +157,10 @@ See [Internationalization.md](Internationalization.md) for locale detection, cat
 | --- | --- |
 | `ConnectBankButton` | Modal only — no Pluggy widget |
 | `DemoInfoBanner` | Speech bubble: one short line, tap or key reveals the rest, dismiss. No dots, no auto-advance |
-| Profile cards / invest | Static placeholders |
+| Profile cards / invest | Buttons that open a short not-in-this-demo sheet |
 | Home header | No logout button |
+
+Connect, Sync, and Remove are pending controls: each shows a spinner and `aria-busy` while its mutation is in flight. Queen's Tips uses the same idea with three skeletons and a retry control. Plan, bank count, card art, and investments open the not-in-this-demo sheet. A coded demo error follows the active locale. An uncoded API detail stays off the screen and the screen shows its own fallback copy.
 
 ---
 

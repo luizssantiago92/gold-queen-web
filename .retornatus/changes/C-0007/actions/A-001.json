@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "C-0007/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Connect, Sync, and Remove show an accessible spinner while the action is pending. Demo read-only and closed sign-up copy follow the active locale, and an uncoded API detail is not shown. Plan, bank count, card art, and investments open a short not-in-this-demo sheet. Queen's Tips shows three scroll skeletons and a retry control while the request is still loading.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "src/screens/ProfileScreen.test.tsx proves Sync and Remove stay busy with a spinner while the action is pending, and plan, bank count, card art, and investments open a not-in-this-demo sheet.",
+    "src/lib/api.test.ts proves a coded demo error follows the active locale and an uncoded detail stays off the screen.",
+    "src/components/QueenTipsModal.test.tsx proves three scroll skeletons and a retry control while tips are still loading.",
+    "The pending controls and the not-in-this-demo sheet are documented in docs/guide/Architecture.md for profile and Queen tips."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0007/T-001",
+      "description": "Show pending spinners, locale-aware errors, the demo sheet, and tips skeletons",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "src/components/ConnectBankButton.tsx",
+        "src/components/ConnectBankButton.test.tsx",
+        "src/screens/ProfileScreen.tsx",
+        "src/screens/ProfileScreen.test.tsx",
+        "src/lib/demoAccount.ts",
+        "src/lib/api.ts",
+        "src/lib/api.test.ts",
+        "src/components/QueenTipsModal.tsx",
+        "src/components/QueenTipsModal.test.tsx",
+        "src/components/ChatModal.test.tsx",
+        "src/screens/LoginScreen.test.tsx",
+        "src/i18n/en.ts",
+        "src/i18n/pt.ts"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0007/T-002",
+      "description": "Document pending controls and the demo sheet",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/guide/Architecture.md",
+        "CHANGELOG.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

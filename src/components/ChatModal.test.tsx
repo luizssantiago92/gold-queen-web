@@ -89,7 +89,8 @@ describe('ChatModal', () => {
     await user.type(screen.getByPlaceholderText('Ask about your gold...'), 'One more coin?')
     await user.click(screen.getByRole('button', { name: 'Send question' }))
 
-    expect(await screen.findByText('The Queen has heard enough for today.')).toBeInTheDocument()
+    expect(await screen.findByText('The court is silent. Try again in a moment.')).toBeInTheDocument()
+    expect(screen.queryByText('The Queen has heard enough for today.')).not.toBeInTheDocument()
     expect(screen.getByText('0 questions left today')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('The Queen has retired')).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Send question' })).toBeDisabled()
