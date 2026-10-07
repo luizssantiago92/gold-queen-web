@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "id": "C-0002/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Add a proposal document under docs/ that records the live-app audit, file pointers, and the ordered PR plan. Retornatus adoption stays as merged PR 19; this change does not reinstall it and does not redesign the UI.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "docs/plans/ux-polish.md exists, is linked from docs/README.md as a proposal rather than the current guide, and names PR 1 as the already-merged Retornatus adoption.",
+    "No files under src/ change."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0002/T-001",
+      "description": "Write docs/plans/ux-polish.md with the audit and numbered plan",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/plans/ux-polish.md"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0002/T-002",
+      "description": "Link the proposal from docs/README.md",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "docs/README.md"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

@@ -22,6 +22,10 @@ The repository [README](../README.md) summarizes the product, onboarding steps, 
 
 [history/prd.md](history/prd.md) is the original product brief. It is not the current reference.
 
+## Proposal
+
+[plans/ux-polish.md](plans/ux-polish.md) is a review note for later pull requests (login wait, Queen speech bubble, drill-in). It is not the current guide. PR 1 in that note is the Retornatus adoption already merged as pull request 19.
+
 ## Related
 
 - **Backend:** https://github.com/luizssantiago92/gold-queen-api
