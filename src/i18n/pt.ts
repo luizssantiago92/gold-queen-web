@@ -109,9 +109,9 @@ export const pt: Messages = {
   loginPending: 'Abrindo os portões...',
   loginError: 'Os guardas do reino não reconheceram estas credenciais.',
   loginSlow:
-    'O servidor gratuito hiberna quando ocioso e pode levar até um minuto para despertar. Aguardai — a Rainha já foi chamada.',
+    'O servidor gratuito estava dormindo e pode levar cerca de um minuto. Seus dados continuam neste formulário — a Rainha já está a caminho.',
   wakeTitle: 'A corte está acordando',
-  wakeBody: 'O servidor gratuito estava dormindo e pode levar cerca de um minuto.',
+  wakeBody: 'O servidor gratuito estava dormindo. Preencha o formulário enquanto ele acorda — cerca de um minuto.',
   wakeFailed: 'Não conseguimos acordar o servidor agora.',
   wakeRetry: 'Tentar de novo',
   wakeProgress: 'Progresso ao acordar o servidor',

@@ -5,7 +5,7 @@ import { I18nProvider } from '@/i18n/context'
 import { LOCALE_STORAGE_KEY } from '@/i18n/locale'
 import { pt } from '@/i18n/pt'
 
-import { ApiWakeGate } from './ApiWakeGate'
+import { ApiWakeGate, WakeNotice } from './ApiWakeGate'
 
 const awake = { status: 'ok', pluggy_live: true, ai_live: false }
 
@@ -14,6 +14,7 @@ function renderGate() {
   return render(
     <I18nProvider>
       <ApiWakeGate>
+        <WakeNotice />
         <p>treasury</p>
       </ApiWakeGate>
     </I18nProvider>,
@@ -86,8 +87,10 @@ describe('ApiWakeGate', () => {
     expect(status).toHaveTextContent(pt.wakeTitle)
     expect(status).toHaveTextContent(pt.wakeBody)
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '2')
-    expect(screen.getByText('treasury').closest('[aria-hidden="true"]')).not.toBeNull()
-    expect(screen.getByText('treasury').closest('[inert]')).not.toBeNull()
+    const treasury = screen.getByText('treasury')
+    expect(treasury).toBeVisible()
+    expect(treasury.closest('[aria-hidden="true"]')).toBeNull()
+    expect(treasury.closest('[inert]')).toBeNull()
   })
 
   it('offers a retry after the budget and clears the screen when health recovers', async () => {

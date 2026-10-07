@@ -107,9 +107,9 @@ export const en = {
   loginPending: 'Opening the gates...',
   loginError: 'The realm guards did not recognize these credentials.',
   loginSlow:
-    'The free server hibernates when idle and can take up to a minute to wake. Hold on — the Queen has been summoned.',
+    'The free server was asleep and can take about a minute. Your details stay on this form — the Queen is on her way.',
   wakeTitle: 'The court is waking',
-  wakeBody: 'The free server was asleep and can take about a minute.',
+  wakeBody: 'The free server was asleep. Fill in the form while it wakes — about a minute.',
   wakeFailed: 'We could not wake the server just now.',
   wakeRetry: 'Try again',
   wakeProgress: 'Server wake progress',

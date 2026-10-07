@@ -8,11 +8,11 @@ export interface MockResult {
 }
 
 export function installApiMock(
-  handler: (config: InternalAxiosRequestConfig) => MockResult,
+  handler: (config: InternalAxiosRequestConfig) => MockResult | Promise<MockResult>,
 ): () => void {
   const previous = api.defaults.adapter
   api.defaults.adapter = async (config) => {
-    const result = handler(config)
+    const result = await handler(config)
     const response: AxiosResponse = {
       data: result.data,
       status: result.status,

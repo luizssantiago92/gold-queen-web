@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0003",
+  "title": "Usable sign-in during cold start",
+  "demand": {
+    "schema_version": 1,
+    "statement": "Make sign-in usable during a Render cold start and stop blocking a stored session behind a full-screen spinner.",
+    "kind": "BEHAVIOR"
+  },
+  "lane": "STANDARD",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-07T00:35:15.304434Z"
+}
