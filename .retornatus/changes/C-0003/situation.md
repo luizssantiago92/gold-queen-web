@@ -66,3 +66,7 @@ Agents and humans express intent. Retornatus owns structure.
 ## Agent narrative
 
 PR 2 of the approved UX plan. ApiWakeGate currently sets the tree inert and covers every screen after 1.5s, for up to 90s. App.tsx shows a full-screen spinner while a stored token is confirmed with GET /v1/auth/me, and login() waits for that call before leaving the form. The slow-server sentence waits 6s. This change keeps the form editable, starts the health probe when the gate mounts (the sign-in page on a cold visit), and opens the dashboard shell as soon as a token exists.
+
+## Reopened Situation
+
+AuthProvider is a sensitive path, so the contract now includes a review of the session rejection path.

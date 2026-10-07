@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "C-0003/E-005",
+  "type": "review_result",
+  "subject": "src/auth/AuthProvider.tsx",
+  "source": "python3 /tmp/review-auth.py",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T00:51:51.319127Z",
+  "subject_state": "commit:12d41392cda3008f907977211f04dcf0f184976a",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "/tmp/review-auth.py"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T00:51:51.295781Z",
+  "ended_at": "2026-10-07T00:51:51.313530Z",
+  "duration_ms": 17,
+  "output_sha256": "a290d40b53643ac490e438bc5f52a73e112c5748e3026015ef473a63d2d8a67d",
+  "output_tail": "reviewed AuthProvider session rejection\npresent: confirmSession\npresent: setStatus('anonymous')\npresent: setStatus('loading')\npresent: generation\n",
+  "output_artifact": ".retornatus/changes/C-0003/evidence/E-005.output.txt",
+  "git_commit": "ede4b6ae90d32a0538572d0a5bfb8d6fb9ae6b72",
+  "worktree_dirty": true,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0003/claim-done-3",
+      "note": null
+    }
+  ]
+}
