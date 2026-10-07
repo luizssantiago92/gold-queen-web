@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0004/E-004",
+  "type": "test_result",
+  "subject": "src/components/home/DemoInfoBanner.test.tsx",
+  "source": "npm run test:coverage",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T01:19:50.380249Z",
+  "subject_state": "commit:6d5a04b022ef23de192328b17179b56ed6bdb6ea",
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "run",
+    "test:coverage"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T01:19:42.250581Z",
+  "ended_at": "2026-10-07T01:19:50.371388Z",
+  "duration_ms": 8120,
+  "output_sha256": "874dd40237864fdc9c3085775edaf68491f27177d9941f90056d1622c8fab178",
+  "output_tail": "ment 46%, tests 23%, import 13%, setup 10%, transform 4%, worker 3%)\n\nEnvironment  jsdom was created 19 times · 8.73s total, 46% of tracked time\n             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)\n             learn more: https://vitest.dev/guide/improving-performance#test-environments\n\n % Coverage report from v8\n-------------------|---------|----------|---------|---------|-------------------\nFile               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \n-------------------|---------|----------|---------|---------|-------------------\nAll files          |   89.44 |    81.45 |   87.19 |   92.64 |                   \n src               |      52 |    57.14 |      10 |   57.14 |                   \n  App.tsx          |   59.09 |    66.66 |   11.11 |   66.66 | 14,17,41-55       \n  main.tsx         |       0 |        0 |       0 |       0 | 12-23             \n src/auth          |   88.88 |       70 |     100 |   90.24 |                   \n  AuthProvider.tsx |      90 |       75 |     100 |   91.66 | 36-38             \n  context.ts       |      80 |       50 |     100 |      80 | 17                \n src/components    |   94.03 |    87.27 |   87.03 |   96.12 |                   \n  ApiWakeGate.tsx  |   98.18 |    84.61 |   93.75 |     100 | 55-57,67-90       \n  BottomNav.tsx    |      80 |       75 |      75 |      80 | 24                \n  ChatModal.tsx    |   97.05 |    90.47 |     100 |     100 | 48-64             \n  ...ankButton.tsx |   92.85 |       75 |      75 |   92.85 | 44                \n  ...ageToggle.tsx |      60 |      100 |      50 |      60 | 15-20             \n  ...eBackdrop.tsx |   86.36 |       85 |   77.77 |   93.33 | 23                \n  ...tailModal.tsx |     100 |    83.33 |     100 |     100 | 35-51             \n ...omponents/home |      92 |    81.25 |   96.15 |   98.43 |                   \n  BalanceCard.tsx  |   88.88 |    83.33 |     100 |     100 | 28                \n  CashFlowRow.tsx  |   83.33 |       75 |     100 |     100 | 32                \n  ...oriesCard.tsx |   88.88 |     62.5 |     100 |     100 | 25-40             \n  ...ChartCard.tsx |   81.81 |    66.66 |      75 |    87.5 | 75                \n  ...ctionFeed.tsx |   94.44 |    85.71 |     100 |     100 | 40,61             \n src/components/ui |   94.11 |       92 |     100 |     100 |                   \n  Card.tsx         |     100 |    94.11 |     100 |     100 | 42                \n  Modal.tsx        |    92.3 |     87.5 |     100 |     100 | 27                \n src/i18n          |   88.57 |    81.25 |    90.9 |    93.1 |                   \n  context.tsx      |   89.47 |    83.33 |    87.5 |    87.5 | 20-21             \n  locale.ts        |   88.88 |     87.5 |     100 |     100 | 11                \n  useI18n.ts       |      80 |       50 |     100 |     100 | 17                \n src/lib           |   85.64 |       72 |   87.09 |   89.26 |                   \n  api.ts           |      84 |    70.73 |   81.81 |    87.5 | 78-80,97-99       \n  format.ts        |     100 |    71.42 |     100 |     100 | 6,10              \n  greeting.ts      |      50 |       25 |     100 |      50 | 5-6               \n  localeFormat.ts  |     100 |       50 |     100 |     100 | 5-57              \n  palette.ts       |     100 |       50 |     100 |     100 | 21-44             \n  queries.ts       |    90.9 |       75 |   89.28 |    90.9 | 81,110,121        \n  wakeApi.ts       |   82.71 |    84.31 |   78.57 |   88.05 | ...5-76,89-91,134 \n src/screens       |     100 |    96.07 |     100 |     100 |                   \n  ...ileScreen.tsx |     100 |     87.5 |     100 |     100 | 80,91             \n-------------------|---------|----------|---------|---------|-------------------\n\n=============================== Coverage summary ===============================\nStatements   : 89.44% ( 551/616 )\nBranches     : 81.45% ( 325/399 )\nFunctions    : 87.19% ( 177/203 )\nLines        : 92.64% ( 504/544 )\n================================================================================\n",
+  "output_artifact": ".retornatus/changes/C-0004/evidence/E-004.output.txt",
+  "git_commit": "1cb22c80962b42b4ee60bfdda50e3c2821f86540",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0004/claim-done-1",
+      "note": null
+    }
+  ]
+}
