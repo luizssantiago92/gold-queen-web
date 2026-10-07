@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0007/E-001",
+  "type": "repository_observation",
+  "subject": "docs/guide/Architecture.md",
+  "source": "python3 -c 'from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"pending controls\", \"not-in-this-demo sheet\", \"three scroll skeletons\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)'",
+  "producer": "retornatus",
+  "observed_at": "2026-10-07T11:10:14.094540Z",
+  "subject_state": "commit:3fb8dbb0740db779d2842812c53769dafb6395af",
+  "provenance": "executed",
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; text=Path(\"docs/guide/Architecture.md\").read_text(); needles=[\"pending controls\", \"not-in-this-demo sheet\", \"three scroll skeletons\"]; missing=[n for n in needles if n not in text]; import sys; print(\"\\n\".join(needles)); sys.exit(\"missing: \"+\", \".join(missing) if missing else 0)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-07T11:10:14.067438Z",
+  "ended_at": "2026-10-07T11:10:14.086803Z",
+  "duration_ms": 19,
+  "output_sha256": "dcbde7cb7bc356d088b9584c95bfa9012d7991558aed16224d9231a3d271b1d4",
+  "output_tail": "pending controls\nnot-in-this-demo sheet\nthree scroll skeletons\n",
+  "output_artifact": ".retornatus/changes/C-0007/evidence/E-001.output.txt",
+  "git_commit": "3fb8dbb0740db779d2842812c53769dafb6395af",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0007/claim-done-4",
+      "note": null
+    }
+  ]
+}
