@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Monthly spending no longer lists a button for each day. The sign-in screen has no language control. English is the default even when the browser language is Portuguese. Profile settings still switch the language, and a saved choice is remembered.
 - Connect, Sync, and Remove show a spinner while they are pending. Queen's Tips shows three skeletons and a retry control during the advisor request. Profile plan, bank count, card art, and investments open a short not-in-this-demo sheet. Demo read-only and closed sign-up copy follow the active locale, and raw API error text stays off the screen.
 - The home transaction list loads the next page while the header total is larger than the rows on screen. Those pages stay available to the figure detail sheet. A home card that fails to load stays visible with Try again.
 - Dashboard figures open a detail sheet. Income, spending, balance, a bank, a category, and a chart day show the matching transactions or the bank breakdown from data already on screen. A bank row shows its last sync time.

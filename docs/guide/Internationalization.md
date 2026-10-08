@@ -1,6 +1,6 @@
 # Internationalization
 
-Gold Queen Web supports **English** and **Portuguese (Brazil)**. English is the default; Portuguese is opt-in via toggle or browser detection.
+Gold Queen Web supports **English** and **Portuguese (Brazil)**. English is always the default. Portuguese is chosen only in Profile settings.
 
 ---
 
@@ -10,8 +10,7 @@ Gold Queen Web supports **English** and **Portuguese (Brazil)**. English is the 
 
 ```text
 1. localStorage gold-queen.locale → if "en" or "pt", use it
-2. navigator.language starts with "pt" → "pt"
-3. otherwise → "en"
+2. otherwise → "en"
 ```
 
 `I18nProvider` persists changes when the user picks a language in `LanguageToggle`.
@@ -46,10 +45,7 @@ Interpolation: `{{count}}` placeholders in catalog strings.
 
 ## Language toggle
 
-`LanguageToggle` — shared component on:
-
-- `LoginScreen` (top of screen)
-- `ProfileScreen` (inside Language card)
+`LanguageToggle` lives on `ProfileScreen`, inside the Language card. The sign-in screen does not offer a language control.
 
 Do not duplicate ad-hoc EN/PT buttons elsewhere.
 
@@ -105,10 +101,9 @@ Hooks read `locale` from `useI18n()` so switching language affects the next AI c
 
 ## Testing checklist
 
-1. Fresh browser (no `localStorage`) on non-PT system → English UI
-2. Browser `pt-BR` with no storage → Portuguese UI
-3. Toggle on Login → persists after login
-4. Toggle on Profile → dashboard copy and formats update
-5. Queen's Tips and chat return Portuguese when `locale=pt`
+1. Fresh browser (no `localStorage`) → English UI, including when the browser language is Portuguese
+2. Sign-in screen has no English or Portuguese buttons
+3. Toggle on Profile → persists and dashboard copy and formats update
+4. Queen's Tips and chat return Portuguese when `locale=pt`
 
 Back to [guide index](README.md)

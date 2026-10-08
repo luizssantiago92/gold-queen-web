@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 
 import { WakeNotice } from '@/components/ApiWakeGate'
-import { LanguageToggle } from '@/components/LanguageToggle'
 import { RoyalCrown } from '@/components/RoyalCrown'
 import { useAuth } from '@/auth/context'
 import { useI18n } from '@/i18n/useI18n'
@@ -62,10 +61,6 @@ export function LoginScreen() {
 
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-7 py-10">
-      <div className="absolute top-6 right-6 left-6">
-        <LanguageToggle />
-      </div>
-
       <div className="mb-6 text-center">
         <div className="mx-auto mb-4 size-20 overflow-hidden rounded-full border border-gold/35 shadow-gold-glow">
           <RoyalCrown />

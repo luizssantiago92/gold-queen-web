@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "C-0009/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Remove the monthly-spending day buttons and keep language selection in settings, with English as the only default.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "Monthly spending renders the chart without a day-button row.",
+    "Login does not render English or Portuguese buttons.",
+    "readLocale returns en unless gold-queen.locale is already en or pt.",
+    "Profile still renders the language control."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0009/T-001",
+      "description": "Remove the day-button row from MonthChartCard and drop the unused open-day copy.",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": []
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0009/T-002",
+      "description": "Remove the language control from LoginScreen and default readLocale to English unless a saved choice exists.",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": []
+    },
+    {
+      "schema_version": 1,
+      "id": "C-0009/T-003",
+      "description": "Update tests and the guide so the chart and locale behavior match the contract.",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": []
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

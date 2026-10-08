@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "change_id": "C-0009",
+  "version": 1,
+  "what": "The monthly spending card no longer lists a button for each day. The sign-in screen has no language control. A fresh visit is English. Profile settings still switch between English and Portuguese, and that choice is remembered.",
+  "constraints": [],
+  "done_criteria": [
+    "Monthly spending renders the chart without a day-button row.",
+    "Login does not render English or Portuguese buttons.",
+    "readLocale returns en unless gold-queen.locale is already en or pt.",
+    "Profile still renders the language control."
+  ],
+  "active": true,
+  "activated_at": "2026-10-08T03:06:00.160342Z"
+}

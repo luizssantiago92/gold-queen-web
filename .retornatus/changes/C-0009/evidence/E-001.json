@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "C-0009/E-001",
+  "type": "test_result",
+  "subject": "MonthChartCard has no day buttons",
+  "source": "npm test -- src/components/home/MonthChartCard.test.tsx src/components/home/FigureDetailSheet.test.tsx",
+  "producer": "retornatus",
+  "observed_at": "2026-10-08T03:08:18.258187Z",
+  "subject_state": null,
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "src/components/home/MonthChartCard.test.tsx",
+    "src/components/home/FigureDetailSheet.test.tsx"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-08T03:08:16.078723Z",
+  "ended_at": "2026-10-08T03:08:18.253187Z",
+  "duration_ms": 2174,
+  "output_sha256": "127c0288be44155af7a250522765304c7c1bd27eda1d7b6af1e2b71db1f31221",
+  "output_tail": "\n> gold-queen-web@1.0.0 test\n> vitest run src/components/home/MonthChartCard.test.tsx src/components/home/FigureDetailSheet.test.tsx\n\n\n RUN  v5.0.3 /workspace\n\n\n Test Files  2 passed (2)\n      Tests  4 passed (4)\n   Start at  03:08:16\n   Duration  1.78s (tests 39%, environment 30%, import 14%, transform 11%, setup 5%)\n\n",
+  "output_artifact": ".retornatus/changes/C-0009/evidence/E-001.output.txt",
+  "git_commit": "2ec6a6e3ece2b01b622d28fa1b5c453d11a1e904",
+  "worktree_dirty": true,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0009/claim-done-1",
+      "note": null
+    }
+  ]
+}
