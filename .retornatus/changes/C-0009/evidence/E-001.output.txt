@@ -1,0 +1,13 @@
+
+> gold-queen-web@1.0.0 test
+> vitest run src/components/home/MonthChartCard.test.tsx src/components/home/FigureDetailSheet.test.tsx
+
+
+ RUN  v5.0.3 /workspace
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  03:08:16
+   Duration  1.78s (tests 39%, environment 30%, import 14%, transform 11%, setup 5%)
+

@@ -52,7 +52,6 @@ export const pt: Messages = {
   figureDetailRecent: 'Das transações recentes nesta tela.',
   figureDetailNone: 'Nenhuma dessas transações recentes corresponde.',
   figureDetailLoading: 'As transações recentes ainda estão a caminho.',
-  figureOpenDay: 'Abrir {{day}}',
   noBanksYet: 'Nenhum banco no tesouro real ainda.',
 
   monthIncome: 'Rendas do mês',

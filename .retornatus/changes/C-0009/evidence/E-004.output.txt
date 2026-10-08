@@ -1,0 +1,13 @@
+
+> gold-queen-web@1.0.0 test
+> vitest run src/screens/ProfileScreen.test.tsx
+
+
+ RUN  v5.0.3 /workspace
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  03:08:21
+   Duration  1.33s (tests 42%, environment 30%, transform 11%, import 11%, setup 5%)
+

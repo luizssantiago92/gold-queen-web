@@ -26,7 +26,7 @@ No React Router. Navigation is local state (`home` | `profile`) inside `App.tsx`
 ## Bootstrap (`main.tsx`)
 
 ```text
-I18nProvider (readLocale → en default, pt if browser/storage says so)
+I18nProvider (readLocale → en unless settings saved en or pt)
   └── QueryClientProvider (staleTime 60s, no retry on 401)
         └── ApiWakeGate (GET /health in parallel; does not block the shell)
               └── AuthProvider (JWT)
@@ -39,7 +39,7 @@ I18nProvider (readLocale → en default, pt if browser/storage says so)
 
 | Screen | When shown | Responsibilities |
 | --- | --- | --- |
-| `LoginScreen` | `status === 'anonymous'` | Demo credentials, language toggle, cold-start messaging |
+| `LoginScreen` | `status === 'anonymous'` | Demo credentials, cold-start messaging |
 | `HomeScreen` | `tab === 'home'` | Dashboard cards, demo banner, connect CTA, tips entry |
 | `ProfileScreen` | `tab === 'profile'` | User info, language, banks, logout. Plan, bank count, card art, and investments open a not-in-this-demo sheet. Sync and Remove show a spinner while the action is pending. |
 
@@ -62,7 +62,7 @@ Global modals (controlled by `App.tsx`):
 | `SceneBackdrop` | Wallpaper per scene; slideshow on home (5s interval) |
 | `BottomNav` | Home · **Advisor** (opens chat) · Profile |
 | `HomeHeader` | Queen portrait, speech bubble aimed at it, greeting + Demo badge |
-| `LanguageToggle` | EN/PT segmented control (Login + Profile) |
+| `LanguageToggle` | EN/PT segmented control on Profile |
 
 ---
 
@@ -72,7 +72,7 @@ Global modals (controlled by `App.tsx`):
 | --- | --- | --- |
 | `CashFlowRow` | `overview` | Tap income or spending. The sheet lists matching rows from the transactions already loaded. |
 | `BalanceCard` | `overview`, `connections.last_synced_at` | Tap the total for the bank breakdown. Tap a bank for that institution's loaded transactions. The row shows the last sync time. |
-| `MonthChartCard` | `monthly-series` | Tap a day on the chart or its day control. The sheet lists loaded transactions for that date. |
+| `MonthChartCard` | `monthly-series` | The chart has no day buttons. A tap on the chart still opens the sheet for that date. |
 | `CategoriesCard` | `categories` | Tap a category. The sheet lists loaded transactions in that category. |
 | `TransactionFeed` | `transactions`, one page at a time | The header shows the total. **Next page** loads another page while the loaded count is shorter than that total. Loaded pages stay on the figure detail sheet. Tap a row for the detail modal. |
 | `ConnectBankButton` | — | Shown **early** when `banks.length === 0`, else at bottom |

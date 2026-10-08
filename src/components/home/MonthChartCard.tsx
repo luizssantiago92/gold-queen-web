@@ -114,25 +114,6 @@ export function MonthChartCard({
           </ResponsiveContainer>
         </div>
       )}
-      {!spentNothing && (
-        <ul className="mt-2 flex gap-2 overflow-x-auto pb-1">
-          {series.points.map((point) => {
-            const day = formatDay(point.date, locale)
-            return (
-              <li key={point.date} className="shrink-0">
-                <button
-                  type="button"
-                  onClick={() => onOpenDay(point.date)}
-                  aria-label={t('figureOpenDay', { day })}
-                  className="min-h-11 rounded-full border border-gold/25 px-3 text-xs text-parchment focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
-                >
-                  {day}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      )}
     </Card>
   )
 }

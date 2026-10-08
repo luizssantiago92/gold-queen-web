@@ -1,0 +1,13 @@
+
+> gold-queen-web@1.0.0 test
+> vitest run src/i18n/locale.test.ts
+
+
+ RUN  v5.0.3 /workspace
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  03:08:20
+   Duration  580ms (environment 77%, setup 14%, transform 6%, worker 2%, tests 1%, import 1%)
+
