@@ -23,7 +23,7 @@
       "schema_version": 1,
       "id": "C-0010/T-001",
       "description": "Declare the fifteen pull-request files as this Change scope and prove them with the required checks.",
-      "lifecycle": "PENDING",
+      "lifecycle": "COMPLETED",
       "depends_on": [],
       "resources": [
         "CHANGELOG.md",
