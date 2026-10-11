@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "C-0010",
+  "title": "Scope the month and locale pull request",
+  "demand": {
+    "schema_version": 1,
+    "statement": "PR 28 already changes the monthly spending chart and the login language default. Retornatus rejects it because C-0009 declares no file scope and its claim evidence is narrow npm test runs. Replace that governance record without changing product behavior.",
+    "kind": "MAINTENANCE"
+  },
+  "lane": "STANDARD",
+  "active_contract_version": 1,
+  "relations": [],
+  "created_at": "2026-10-11T05:36:13.433108Z"
+}
