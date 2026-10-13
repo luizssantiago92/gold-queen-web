@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "id": "C-0010/A-001",
+  "origin_kind": "CONTRACT",
+  "origin_ref": "contract@v1",
+  "objective": "Record scope and full lint, build, and coverage evidence for the existing month and locale diff.",
+  "scope": null,
+  "constraints": [],
+  "success_conditions": [
+    "Monthly spending renders the chart without a day-button row.",
+    "Login does not render English or Portuguese buttons.",
+    "readLocale returns en unless gold-queen.locale is already en or pt.",
+    "Profile still renders the language control.",
+    "npm run lint, npm run build, and npm run test:coverage pass."
+  ],
+  "authority": {
+    "schema_version": 1,
+    "category": "DELEGATED",
+    "rationale": "routine"
+  },
+  "tasks": [
+    {
+      "schema_version": 1,
+      "id": "C-0010/T-001",
+      "description": "Declare the fifteen pull-request files as this Change scope and prove them with the required checks.",
+      "lifecycle": "COMPLETED",
+      "depends_on": [],
+      "resources": [
+        "CHANGELOG.md",
+        "README.md",
+        "docs/guide/Architecture.md",
+        "docs/guide/Internationalization.md",
+        "docs/history/prd.md",
+        "src/components/home/FigureDetailSheet.test.tsx",
+        "src/components/home/MonthChartCard.test.tsx",
+        "src/components/home/MonthChartCard.tsx",
+        "src/i18n/en.ts",
+        "src/i18n/locale.test.ts",
+        "src/i18n/locale.ts",
+        "src/i18n/pt.ts",
+        "src/screens/LoginScreen.test.tsx",
+        "src/screens/LoginScreen.tsx",
+        "src/screens/ProfileScreen.test.tsx"
+      ]
+    }
+  ],
+  "relations": [],
+  "max_attempts": null,
+  "attempt_count": 0
+}

@@ -2,13 +2,10 @@ import type { Locale } from './types'
 
 export const LOCALE_STORAGE_KEY = 'gold-queen.locale'
 
-/** Default EN; auto-detect PT only when the browser locale is Portuguese. */
+/** English unless Settings already saved `en` or `pt`. The browser language is ignored. */
 export function readLocale(): Locale {
   const stored = localStorage.getItem(LOCALE_STORAGE_KEY)
   if (stored === 'en' || stored === 'pt') return stored
-
-  const nav = navigator.language.toLowerCase()
-  if (nav.startsWith('pt')) return 'pt'
   return 'en'
 }
 

@@ -1,6 +1,6 @@
 # Product Requirement Document (PRD) — Front-end Web (Mobile Shell)
 
-> **Historical document.** Current behavior is in the [README](../../README.md) and the [guide](../README.md). Deltas since this brief: the demo does not open Pluggy Connect; the default locale is English, with Portuguese when the browser language is Portuguese; the home badge says Demo; the bottom nav says Advisor; Pluggy widget packages are not in the bundle.
+> **Historical document.** Current behavior is in the [README](../../README.md) and the [guide](../README.md). Deltas since this brief: the demo does not open Pluggy Connect; the default locale is always English, and Portuguese is chosen in Profile settings; the home badge says Demo; the bottom nav says Advisor; Pluggy widget packages are not in the bundle.
 
 ## 1. Identificação do Repositório
 

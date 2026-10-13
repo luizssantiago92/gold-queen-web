@@ -50,6 +50,8 @@ describe('LoginScreen', () => {
     )
 
     expect(screen.getByLabelText('Email')).toHaveValue('queen@goldqueen.dev')
+    expect(screen.queryByRole('button', { name: 'English' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Portuguese' })).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Sign in' }))
 
     expect(await screen.findByRole('alert')).toHaveTextContent(

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-0010/E-002",
+  "type": "build_result",
+  "subject": "npm run lint, npm run build, and npm run test:coverage pass.",
+  "source": "build",
+  "producer": "retornatus",
+  "observed_at": "2026-10-11T05:37:06.070132Z",
+  "subject_state": "commit:407bef09937b3319f7d99a8c7102c5a3ad8e009f",
+  "provenance": "executed",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-11T05:36:53.588576Z",
+  "ended_at": "2026-10-11T05:36:54.758975Z",
+  "duration_ms": 1170,
+  "output_sha256": "880d1e352c13459a68ed3cc66f8ca17a2fbd89b5ae87c43c3567a275e932c6c5",
+  "output_tail": "\n> gold-queen-web@1.0.0 build\n> tsc -b && vite build\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 2607 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                   2.48 kB │ gzip:   0.81 kB\ndist/assets/index-DobhnPzG.css                   44.11 kB │ gzip:   7.43 kB\ndist/assets/TransactionDetailModal-BKqgx8ly.js    2.12 kB │ gzip:   0.64 kB\ndist/assets/QueenTipsModal-NiihRVmT.js            2.69 kB │ gzip:   1.16 kB\ndist/assets/ChatModal-PGb1CdVk.js                 3.00 kB │ gzip:   1.42 kB\ndist/assets/MonthChartCard-DU1U3rAl.js          347.02 kB │ gzip: 101.32 kB\ndist/assets/index-CpyiYPSd.js                   382.85 kB │ gzip: 119.95 kB\n\n✓ built in 376ms\n",
+  "output_artifact": ".retornatus/changes/C-0010/evidence/E-002.output.txt",
+  "git_commit": "407bef09937b3319f7d99a8c7102c5a3ad8e009f",
+  "worktree_dirty": false,
+  "timed_out": false,
+  "relations": [
+    {
+      "type": "SUPPORTS",
+      "target_id": "C-0010/claim-done-5",
+      "note": null
+    }
+  ]
+}

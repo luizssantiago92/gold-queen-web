@@ -157,7 +157,7 @@ describe('FigureDetailSheet', () => {
     expect(await within(detailDialog).findByText('CHECKING')).toBeInTheDocument()
   })
 
-  it('opens spending, the balance breakdown, a bank, a category, and a chart day', async () => {
+  it('opens spending, the balance breakdown, a bank, and a category without day buttons', async () => {
     const user = userEvent.setup()
     restore = renderHome()
 
@@ -186,10 +186,7 @@ describe('FigureDetailSheet', () => {
     expect(within(dialog).getByRole('button', { name: /Padaria Real/ })).toBeInTheDocument()
     await user.keyboard('{Escape}')
 
-    await user.click(await screen.findByRole('button', { name: /Open Sep 12/ }))
-    dialog = await screen.findByRole('dialog', { name: /Sep 12/ })
-    expect(within(dialog).getByRole('button', { name: /Padaria Real/ })).toBeInTheDocument()
-    expect(within(dialog).queryByText('Salary')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /^Sep 12$/ })).not.toBeInTheDocument()
     expect(pt.figureDetailNone).toMatch(/Nenhuma/)
   })
 })

@@ -147,4 +147,17 @@ describe('ProfileScreen connection actions', () => {
     await user.click(screen.getByRole('button', { name: /forging investment/ }))
     expect(await screen.findByRole('dialog', { name: 'Not in this demo' })).toBeInTheDocument()
   })
+
+  it('keeps the language control in settings', async () => {
+    restore = installApiMock(() => ({ status: 200, data: [] }))
+    localStorage.setItem(LOCALE_STORAGE_KEY, 'en')
+    render(
+      <AppProviders>
+        <ProfileScreen />
+      </AppProviders>,
+    )
+
+    expect(await screen.findByRole('button', { name: 'English' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Portuguese' })).toBeInTheDocument()
+  })
 })
